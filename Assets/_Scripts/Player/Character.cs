@@ -103,22 +103,38 @@ public class Character : MonoBehaviour
         if(Physics.Raycast(playerRay, out hit, interactionRayLength, groundMask)){
 
             VoxelType hitBlock = CheckTerrain(hit);
-            if(VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
-                ModifyTerrain(hit);
+
+            if(!VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
+                return;
             }
             
+            bool modifiedTerrain = ModifyTerrain(hit);
+            
+            if(!modifiedTerrain){
+                Debug.Log(hitBlock);
+            }
 
         }
 
     }
 
-    private void ModifyTerrain(RaycastHit hit){
-
-        world.SetVoxel(hit, VoxelType.Air);
+    private bool ModifyTerrain(RaycastHit hit){
+        
+        if(world == null){
+            return false;
+        }
+        
+        
+        return world.SetVoxel(hit, VoxelType.Air);
 
     }
 
     private VoxelType CheckTerrain(RaycastHit hit){
+        
+        if(world == null){
+            return VoxelType.Nothing;
+        }
+
         return world.CheckVoxel(hit);
     }
 
