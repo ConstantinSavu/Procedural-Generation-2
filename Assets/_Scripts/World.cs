@@ -295,14 +295,13 @@ public class World : MonoBehaviour
 
     public bool SetVoxel(RaycastHit hit, VoxelType voxelType){
 
-        ChunkRenderer chunk = hit.collider.GetComponent<ChunkRenderer>();
+        ChunkRenderer chunk = hit.transform.parent.GetComponent<ChunkRenderer>();
         
         if(chunk == null){
             return false;
         }
 
         Vector3Int worldPos = GetBlockPosition(hit);
-        Debug.Log(worldPos);
 
         WorldDataHelper.SetVoxelFromWorldCoordinates(chunk.ChunkData.worldReference, worldPos, voxelType);
         chunk.modifiedByPlayer = true;
@@ -318,7 +317,7 @@ public class World : MonoBehaviour
 
     internal VoxelType CheckVoxel(RaycastHit hit)
     {
-        ChunkRenderer chunk = hit.collider.GetComponent<ChunkRenderer>();
+        ChunkRenderer chunk = hit.transform.parent.GetComponent<ChunkRenderer>();
         
 
         if(chunk == null){
