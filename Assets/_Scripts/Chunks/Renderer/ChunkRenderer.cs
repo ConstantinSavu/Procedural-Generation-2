@@ -1,20 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(MeshCollider))]
+
 
 public class ChunkRenderer : MonoBehaviour
 {
-    MeshFilter meshFilter;
-    MeshCollider solidMeshCollider;
-    MeshCollider waterMeshCollider;
-    Mesh mesh;
+    
     public bool showGizmo = false;
+
+    public LiquidRenderer liquidRenderer;
+    public SolidRenderer solidRenderer;
 
     public ChunkData ChunkData {get; private set;}
 
@@ -31,11 +26,6 @@ public class ChunkRenderer : MonoBehaviour
 
     private void Awake(){
 
-        meshFilter = GetComponent<MeshFilter>();
-        solidMeshCollider = GetComponent<MeshCollider>();
-
-        mesh = meshFilter.mesh;
-
     }
 
     public void InitialiseChunk(ChunkData data){
@@ -43,24 +33,9 @@ public class ChunkRenderer : MonoBehaviour
     }
 
     private void RenderMesh(MeshData meshData){
-        mesh.Clear();
 
-        mesh.subMeshCount = 2;
-        mesh.vertices = meshData.vertices.Concat(meshData.waterMesh.vertices).ToArray();
-
-        mesh.SetTriangles(meshData.triangles.ToArray(), 0);
-        mesh.SetTriangles(meshData.waterMesh.triangles.Select(val => val + meshData.vertices.Count).ToArray(), 1);
-
-        mesh.uv = meshData.uv.Concat(meshData.waterMesh.uv).ToArray();
-        mesh.RecalculateNormals();
-
-        solidMeshCollider.sharedMesh = null;
-        Mesh collisionMesh = new Mesh();
-        collisionMesh.vertices = meshData.colliderVertices.ToArray();
-        collisionMesh.triangles = meshData.colliderTriangles.ToArray();
-        collisionMesh.RecalculateNormals();
-
-        solidMeshCollider.sharedMesh = collisionMesh;
+        solidRenderer.RenderMesh(meshData);
+        liquidRenderer.RenderMesh(meshData);
 
     }
 

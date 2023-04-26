@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950e92e6ef076d94198954ed117d9b55, type: 3}
   m_Name: WorldSettings
   m_EditorClassIdentifier: 
-  chunkSize: {x: 16, y: 32, z: 16}
-  chunkDrawingRange: {x: 4, y: 2, z: 4}
+  chunkSize: {x: 16, y: 16, z: 16}
+  chunkDrawingRange: {x: 2, y: 2, z: 2}
   mapSeedOffset: {x: 0, y: 0, z: 0}
   waterThreshold: 32
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
-  voxelMaxMapDimensions: {x: 0, y: 128, z: 0}
+  voxelMaxMapDimensions: {x: 0, y: 32, z: 0}

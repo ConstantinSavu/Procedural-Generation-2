@@ -86,8 +86,6 @@ public class World : MonoBehaviour
             foreach(var pos in chunkDataList){
                 WorldDataHelper.RemoveChunkData(this, pos);
             }   
-
-            SceneManager.LoadScene("VoxelWorld");
         
         }
     }
@@ -220,16 +218,16 @@ public class World : MonoBehaviour
                 placedVoxels.Add(worldPosition, voxelType);
             }
             
-            Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
-            Debug.Log(placedVoxels.ToString());
+            //Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
+            //Debug.Log(placedVoxels.ToString());
 
             chunkData.outOfChunkBoundsVoxelDictionary = 
                 chunkData.outOfChunkBoundsVoxelDictionary.Where(x => placedVoxels.ContainsKey(x.Key) == false)
                 .ToDictionary(x => x.Key, x => x.Value);
 
-            Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
-            Debug.Log("");
-            Debug.Log("");
+            //Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
+            //Debug.Log("");
+            //Debug.Log("");
 
         }
 
