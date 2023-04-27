@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     public float detectionTime = 0.5f;
     public CinemachineVirtualCamera camera_VM;
 
+    public UnityEvent inWater, onSolid; 
+
     public void Awake(){
         
         camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y * 4, 0);
@@ -24,8 +27,32 @@ public class GameManager : MonoBehaviour
     }
 
     public void Update(){
-        
+
+        if(player == null){
+            return;
+        }
+
+        CheckIfInWater();
+
     }
+
+    void CheckIfInWater()
+    {
+
+        VoxelType voxelType = WorldDataHelper.GetVoxelFromWorldCoorinates(world, Vector3Int.RoundToInt(player.transform.position));
+
+        if(voxelType == VoxelType.Water){
+            
+            inWater?.Invoke();
+            
+        }
+        else{
+            
+            onSolid?.Invoke();
+        }
+
+    }
+
     public void SpawnPlayer(){
 
         if (player != null)
@@ -39,7 +66,12 @@ public class GameManager : MonoBehaviour
 
             player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
             camera_VM.Follow = player.transform.GetChild(0);
-            StartCheckingTheMap();
+
+            inWater.AddListener(player.GetComponent<Character>().InWater);
+            onSolid.AddListener(player.GetComponent<Character>().OnSolid);
+
+            //StartCheckingTheMap();
+            
             return;
         }
 
@@ -49,16 +81,19 @@ public class GameManager : MonoBehaviour
         Debug.Log(world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30);
         player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
         camera_VM.Follow = player.transform.GetChild(0);
-        StartCheckingTheMap();
+        //StartCheckingTheMap();
+        
         
     }
 
-    public void StartCheckingTheMap(){
-        SetCurrentChunkCoordinates();
-        StopAllCoroutines();
-        StartCoroutine(CheckIfShouldLoadNextPosition());
-    }
+    
 
+    /*
+    public void StartCheckingTheMap(){
+        StopAllCoroutines();
+        StartCoroutine(CheckIfInWater());
+    }
+    
     private void SetCurrentChunkCoordinates(){
         currentPlayerChunkPosition = WorldDataHelper.ChunkPositionFromVoxelCoords(world, Vector3Int.RoundToInt(player.transform.position));
 
@@ -76,14 +111,15 @@ public class GameManager : MonoBehaviour
             Mathf.Abs(currentChunkCenter.y - player.transform.position.y) > world.worldData.worldSettings.chunkSize.y ||
             Mathf.Abs(currentChunkCenter.z - player.transform.position.z) > world.worldData.worldSettings.chunkSize.z
         ){
+            
             //world.LoadAdditionalChunksRequest(player);
-            SetCurrentChunkCoordinates();
+            
         }
         else{
             StartCoroutine(CheckIfShouldLoadNextPosition());
         }
     }
 
-
+    */
 
 }

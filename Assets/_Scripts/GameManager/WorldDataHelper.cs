@@ -40,8 +40,8 @@ public class WorldDataHelper
     }
 
     public static List<Vector3Int> GetDataPositionsAroundPlayer(World world, Vector3Int playerPosition){
-        Vector3Int start = playerPosition - (world.worldData.worldSettings.chunkDrawingRange) * world.worldData.worldSettings.chunkSize;
-        Vector3Int end = playerPosition + (world.worldData.worldSettings.chunkDrawingRange) * world.worldData.worldSettings.chunkSize;
+        Vector3Int start = playerPosition - (world.worldData.worldSettings.chunkDrawingRange + Vector3Int.one) * world.worldData.worldSettings.chunkSize;
+        Vector3Int end = playerPosition + (world.worldData.worldSettings.chunkDrawingRange + Vector3Int.one) * world.worldData.worldSettings.chunkSize;
         
 
         List<Vector3Int> dataPositionsToCreate = new List<Vector3Int>();
