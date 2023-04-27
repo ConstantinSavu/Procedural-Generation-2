@@ -70,27 +70,6 @@ public class World : MonoBehaviour
         await GenerateWorld(startingPosition);
         
     }
-
-    void Update(){
-        
-        if(Input.GetKeyDown(KeyCode.R)){
-
-            List<Vector3Int> chunkList = new List<Vector3Int>(worldData.chunkDictionary.Keys);
-            List<Vector3Int> chunkDataList = new List<Vector3Int>(worldData.chunkDataDictionary.Keys);
-            
-
-            foreach(var pos in chunkList){
-                WorldDataHelper.RemoveChunk(this, pos);
-            }
-
-            foreach(var pos in chunkDataList){
-                WorldDataHelper.RemoveChunkData(this, pos);
-            }   
-
-            SceneManager.LoadScene("VoxelWorld");
-        
-        }
-    }
     
 
     private async Task GenerateWorld(Vector3Int position){
@@ -220,16 +199,16 @@ public class World : MonoBehaviour
                 placedVoxels.Add(worldPosition, voxelType);
             }
             
-            Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
-            Debug.Log(placedVoxels.ToString());
+            //Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
+            //Debug.Log(placedVoxels.ToString());
 
             chunkData.outOfChunkBoundsVoxelDictionary = 
                 chunkData.outOfChunkBoundsVoxelDictionary.Where(x => placedVoxels.ContainsKey(x.Key) == false)
                 .ToDictionary(x => x.Key, x => x.Value);
 
-            Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
-            Debug.Log("");
-            Debug.Log("");
+            //Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
+            //Debug.Log("");
+            //Debug.Log("");
 
         }
 
@@ -245,7 +224,7 @@ public class World : MonoBehaviour
 
         return Task.Run(() => 
         {
-            foreach (Vector3Int pos in chunkDataPositionsToCreate)
+            Parallel.ForEach(chunkDataPositionsToCreate, pos =>
             {
                 if (taskTokenSource.Token.IsCancellationRequested)
                 {
@@ -254,7 +233,7 @@ public class World : MonoBehaviour
                 ChunkData data = new ChunkData(worldData.worldSettings.chunkSize, this, pos);
                 ChunkData newData = terrainGenerator.GenerateChunkData(data);
                 dictionary.TryAdd(pos, newData);
-            }
+            });
             return dictionary;
         },
         taskTokenSource.Token
@@ -269,7 +248,9 @@ public class World : MonoBehaviour
         
         return Task.Run(() =>
         {
-            foreach(ChunkData data in dataToRender){
+            
+            Parallel.ForEach(dataToRender, data =>
+            {
 
                 if(taskTokenSource.Token.IsCancellationRequested){
                     taskTokenSource.Token.ThrowIfCancellationRequested();
@@ -278,7 +259,7 @@ public class World : MonoBehaviour
                 MeshData meshData = Chunk.GetChunkMeshData(data);
                 meshDictionary.TryAdd(data.worldPosition, meshData);
 
-            }
+            });
 
             return meshDictionary;
         },

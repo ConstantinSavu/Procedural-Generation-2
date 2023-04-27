@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class Character : MonoBehaviour
     public LayerMask groundMask;
 
     public bool fly = false;
+    public bool inWater = false;
 
     public Animator animator;
     bool isWaiting = false;
@@ -45,6 +47,14 @@ public class Character : MonoBehaviour
         fly = !fly;
     }
 
+    public void InWater(){
+        inWater = true;
+    }
+
+    public void OnSolid(){
+        inWater = false;
+    }
+
     void Update(){
 
         if(fly){
@@ -56,6 +66,19 @@ public class Character : MonoBehaviour
             return;
         }
 
+        if(inWater){
+            WaterMovement();
+            return;
+        }
+
+        
+        SolidMovement();
+        
+            
+    }
+
+    private void SolidMovement()
+    {
         animator.SetBool("isGrounded", playerMovement.IsGrounded);
 
         bool setJump = true;
@@ -83,7 +106,40 @@ public class Character : MonoBehaviour
         animator.SetFloat("speed", playerInput.MovementInput.magnitude);
         playerMovement.HandleGravity(playerInput.IsJumping);
         playerMovement.Walk(playerInput.MovementInput, playerInput.RunningPressed);
-            
+    }
+
+    private void WaterMovement()
+    {   
+        Debug.Log("In Water");
+        
+        animator.SetBool("isGrounded", playerMovement.IsGrounded);
+
+        bool setJump = true;
+
+        if(!playerMovement.IsGrounded){
+            setJump = false;
+        }
+
+        if(!playerInput.IsJumping){
+            setJump = false;
+        }
+
+        if(isWaiting){
+            setJump = false;
+        }
+
+        if(setJump){
+            animator.SetTrigger("jump");
+            isWaiting = true;
+            StopAllCoroutines();
+            StartCoroutine(ResetWaiting());
+        }
+
+
+        animator.SetFloat("speed", playerInput.MovementInput.magnitude);
+        playerMovement.HandleWaterGravity(playerInput.IsJumping);
+        playerMovement.WaterWalk(playerInput.MovementInput, playerInput.RunningPressed);
+
     }
 
     IEnumerator ResetWaiting(){

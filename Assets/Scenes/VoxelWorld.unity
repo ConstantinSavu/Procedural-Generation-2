@@ -1387,7 +1387,7 @@ MonoBehaviour:
   biomeNoiseSettings: {fileID: 11400000, guid: f3b071cb33539c44ca5c040388a1e95f, type: 2}
   domainWarping: {fileID: 1481222501}
   useDomainWarping: 0
-  firstLayer: {fileID: 1573538488}
+  firstLayer: {fileID: 655229428}
   additionalLayerHandlres:
   - {fileID: 548013548}
   structureGenerators:
@@ -1837,7 +1837,7 @@ MonoBehaviour:
   currentPlayerChunkPosition: {x: 0, y: 0, z: 0}
   currentChunkCenter: {x: 0, y: 0, z: 0}
   world: {fileID: 327497404}
-  detectionTime: 1
+  detectionTime: 0.2
   camera_VM: {fileID: 1605820597}
 --- !u!4 &1950918151
 Transform:
