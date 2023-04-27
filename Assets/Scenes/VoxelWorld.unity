@@ -1475,12 +1475,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -1834,6 +1834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 116692708104115924, guid: d43e9bef6cf8dc74dbbc13269406cc57,
     type: 3}
+  RenderedChunks: {fileID: 1526382758}
   currentPlayerChunkPosition: {x: 0, y: 0, z: 0}
   currentChunkCenter: {x: 0, y: 0, z: 0}
   world: {fileID: 327497404}
@@ -1996,5 +1997,20 @@ PrefabInstance:
       propertyPath: liquidRenderer
       value: 
       objectReference: {fileID: 615506749}
+    - target: {fileID: 8447306649960786786, guid: 5fb4ed6ad64807a4294fcfd329d5964a,
+        type: 3}
+      propertyPath: m_VoxelSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447306649960786786, guid: 5fb4ed6ad64807a4294fcfd329d5964a,
+        type: 3}
+      propertyPath: m_LayerMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447306649960786786, guid: 5fb4ed6ad64807a4294fcfd329d5964a,
+        type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fb4ed6ad64807a4294fcfd329d5964a, type: 3}

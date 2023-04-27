@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Unity.AI;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject player;
     
+    public GameObject RenderedChunks;
     public Vector3Int currentPlayerChunkPosition;
     public Vector3Int currentChunkCenter = Vector3Int.zero;
 
@@ -18,9 +21,17 @@ public class GameManager : MonoBehaviour
     public float detectionTime = 0.5f;
     public CinemachineVirtualCamera camera_VM;
 
-    public UnityEvent inWater, onSolid; 
+    public UnityEvent inWater, onSolid;
+
+    private NavMeshSurface surface;
 
     public void Awake(){
+
+        if(RenderedChunks == null){
+
+            Debug.Log("Rendered Chunks is null or dosen't have Navmesh Component, pls fix");
+
+        }
         
         camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y * 4, 0);
         camera_VM.transform.rotation *= Quaternion.Euler(Vector3.right * 90);
@@ -33,6 +44,10 @@ public class GameManager : MonoBehaviour
         }
 
         CheckIfInWater();
+
+        if(Input.GetKeyDown(KeyCode.B)){
+            CreateNavMeshes();
+        }
 
     }
 
@@ -60,6 +75,8 @@ public class GameManager : MonoBehaviour
         Vector3Int raycastStartposition = world.startingPosition;
         raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
         RaycastHit hit;
+
+        //CreateNavMeshes();
         
         if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
         {
@@ -86,9 +103,14 @@ public class GameManager : MonoBehaviour
         
     }
 
-    
+    private void CreateNavMeshes()
+    {
+        surface = RenderedChunks.GetComponent<NavMeshSurface>();
+        surface.BuildNavMesh();
+        
 
-    
+    }
+
     public void StartCheckingTheMap(){
         SetCurrentChunkCoordinates();
         StopAllCoroutines();
