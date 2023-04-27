@@ -1839,6 +1839,12 @@ MonoBehaviour:
   world: {fileID: 327497404}
   detectionTime: 0.2
   camera_VM: {fileID: 1605820597}
+  inWater:
+    m_PersistentCalls:
+      m_Calls: []
+  onSolid:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1950918151
 Transform:
   m_ObjectHideFlags: 0

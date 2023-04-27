@@ -107,9 +107,9 @@ public class World : MonoBehaviour
             worldData.chunkDataDictionary.TryAdd(calculatedData.Key, calculatedData.Value);
         }
 
-        foreach(ChunkData chunkData in worldData.chunkDataDictionary.Values){
+        Parallel.ForEach(worldData.chunkDataDictionary.Values,  chunkData  => {
             AddOutOfChunkBoundsVoxel(chunkData);
-        }
+        });
     
         ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary = new ConcurrentDictionary<Vector3Int, MeshData>();
 
@@ -176,7 +176,7 @@ public class World : MonoBehaviour
 
             worldData.chunkDictionary.TryAdd(position, chunkRenderer);
 
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         if (IsWorldCreated == false)
         {

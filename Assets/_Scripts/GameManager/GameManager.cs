@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
             inWater.AddListener(player.GetComponent<Character>().InWater);
             onSolid.AddListener(player.GetComponent<Character>().OnSolid);
 
-            //StartCheckingTheMap();
+            StartCheckingTheMap();
             
             return;
         }
@@ -81,17 +81,18 @@ public class GameManager : MonoBehaviour
         Debug.Log(world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30);
         player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
         camera_VM.Follow = player.transform.GetChild(0);
-        //StartCheckingTheMap();
+        StartCheckingTheMap();
         
         
     }
 
     
 
-    /*
+    
     public void StartCheckingTheMap(){
+        SetCurrentChunkCoordinates();
         StopAllCoroutines();
-        StartCoroutine(CheckIfInWater());
+        StartCoroutine(CheckIfShouldLoadNextPosition());
     }
     
     private void SetCurrentChunkCoordinates(){
@@ -120,6 +121,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    */
+    
 
 }
