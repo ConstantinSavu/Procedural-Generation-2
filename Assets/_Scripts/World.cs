@@ -29,8 +29,8 @@ public class World : MonoBehaviour
     };
 
     public struct WorldData{
-        public ConcurrentDictionary<Vector3Int, ChunkData> chunkDataDictionary;
-        public ConcurrentDictionary<Vector3Int, ChunkRenderer> chunkDictionary;
+        public ChunkData[] chunkDataMatrix;
+        public ChunkRenderer[] chunkRendererMatrix;
         public WorldSettings worldSettings;
     };
 
@@ -39,27 +39,21 @@ public class World : MonoBehaviour
 
     CancellationTokenSource taskTokenSource = new CancellationTokenSource();
 
-    private WorldGenerationData GetWorldGenerationDataAroundPlayer(Vector3Int playerPosition){
-        List<Vector3Int> allChunkPositionsNeeded = WorldDataHelper.GetChunkPositionsAroundPlayer(this, playerPosition);
-        List<Vector3Int> allChunkDataPositionsNeeded = WorldDataHelper.GetDataPositionsAroundPlayer(this, playerPosition);
-
-
-        WorldGenerationData data = new WorldGenerationData
-        {
-            chunkPositionsToCreate = WorldDataHelper.SelectPositonsToCreate(worldData, allChunkPositionsNeeded, playerPosition),
-            chunkDataPositionsToCreate = WorldDataHelper.SelectDataPositonsToCreate(worldData, allChunkDataPositionsNeeded, playerPosition),
-            chunkPositionsToRemove = WorldDataHelper.GetUnnededChunks(worldData, allChunkPositionsNeeded),
-            chunkDataToRemove = WorldDataHelper.GetUnnededData(worldData, allChunkDataPositionsNeeded)
-        };
-
-        return data;
-    }
-
     private void Awake(){
+        int chunkDataSize = 
+        2 * worldSettings.chunkDrawingRange.x *
+        2 * worldSettings.chunkDrawingRange.y *
+        2 * worldSettings.chunkDrawingRange.z;
+
+        int chunkRenderSize = 
+        2 * (worldSettings.chunkDrawingRange.x + 1) *
+        2 * (worldSettings.chunkDrawingRange.y + 1) *
+        2 * (worldSettings.chunkDrawingRange.z + 1);
+
         worldData = new WorldData{
             worldSettings = this.worldSettings,
-            chunkDataDictionary = new ConcurrentDictionary<Vector3Int, ChunkData>(),
-            chunkDictionary = new ConcurrentDictionary<Vector3Int, ChunkRenderer>()
+            chunkDataMatrix = new ChunkData[chunkDataSize],
+            chunkRendererMatrix = new ChunkRenderer[chunkDataSize]
         };
         IsWorldCreated = false;
     }
@@ -72,39 +66,20 @@ public class World : MonoBehaviour
     }
 
     public void DeleteWorld(){
-
-        List<Vector3Int> worldChunkData = new List<Vector3Int>(worldData.chunkDataDictionary.Keys);
-        List<Vector3Int> worldChunk = new List<Vector3Int>(worldData.chunkDictionary.Keys);
     
-        foreach(var pos in worldChunk){
-            WorldDataHelper.RemoveChunk(this, pos);
-        }
-
-        foreach(var pos in worldChunkData){
-            WorldDataHelper.RemoveChunkData(this, pos);
-        }
     
     }
     
 
     private async Task GenerateWorld(Vector3Int position){
+        
+        List<Vector3Int> chunkDataPositionsToCreate = WorldDataHelper.GetChunkDataPositionsAroundPlayer(this, position);
 
-        WorldGenerationData worldGenerationData = GetWorldGenerationDataAroundPlayer(position);
-
-        foreach(var pos in worldGenerationData.chunkPositionsToRemove){
-            WorldDataHelper.RemoveChunk(this, pos);
-        }
-
-        foreach(var pos in worldGenerationData.chunkDataToRemove){
-            WorldDataHelper.RemoveChunkData(this, pos);
-        }
-
-    
-        ConcurrentDictionary<Vector3Int, ChunkData> dataDictionary = null;
+        List<Vector3Int> chunkRedererPositionsToCreate = WorldDataHelper.GetChunkRendererPositionsAroundPlayer(this, position);
 
         try
         {
-            dataDictionary = await CalculateWorldChunkData(worldGenerationData.chunkDataPositionsToCreate);
+            await CalculateWorldChunkData(chunkDataPositionsToCreate);
         }
         catch (Exception ex)
         {
@@ -143,6 +118,7 @@ public class World : MonoBehaviour
         }
 
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
+        
         /*
         foreach(var item in meshDataDictionary){
 
@@ -185,9 +161,6 @@ public class World : MonoBehaviour
 
             ChunkRenderer chunkRenderer = worldRenderer.RenderChunk(worldData.chunkDataDictionary[position], position, meshData);
         
-            if(worldData.chunkDictionary.ContainsKey(position)){
-                WorldDataHelper.RemoveChunkData(this, position);
-            }
 
             worldData.chunkDictionary.TryAdd(position, chunkRenderer);
 
@@ -233,23 +206,21 @@ public class World : MonoBehaviour
    
     
 
-    private Task<ConcurrentDictionary<Vector3Int, ChunkData>> CalculateWorldChunkData(List<Vector3Int> chunkDataPositionsToCreate){
-
-        ConcurrentDictionary<Vector3Int, ChunkData> dictionary = new ConcurrentDictionary<Vector3Int, ChunkData>();
+    private Task CalculateWorldChunkData(List<Vector3Int> chunkDataPositionsToCreate){
 
         return Task.Run(() => 
         {
-            Parallel.ForEach(chunkDataPositionsToCreate, pos =>
+            Parallel.ForEach(chunkDataPositionsToCreate, worldPosition =>
             {
                 if (taskTokenSource.Token.IsCancellationRequested)
                 {
                     taskTokenSource.Token.ThrowIfCancellationRequested();
                 }
-                ChunkData data = new ChunkData(worldData.worldSettings.chunkSize, this, pos);
-                ChunkData newData = terrainGenerator.GenerateChunkData(data);
-                dictionary.TryAdd(pos, newData);
+                ChunkData chunkData = new ChunkData(worldData.worldSettings.chunkSize, this, pos);
+                ChunkData newData = terrainGenerator.GenerateChunkData(chunkData);
+                WorldDataHelper.AddChunkDataToChunkDataMatrix(worldPosition, chunkData);
             });
-            return dictionary;
+            
         },
         taskTokenSource.Token
         );
@@ -340,7 +311,7 @@ public class World : MonoBehaviour
                 continue;
             }
             
-            ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
+            ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunkRendererFromWorldPosition(neighbourData.worldReference, neighbourData.worldPosition);
 
             if(chunkToUpdate != null){
                 chunkToUpdate.UpdateChunk();

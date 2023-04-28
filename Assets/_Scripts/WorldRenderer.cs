@@ -10,7 +10,7 @@ public class WorldRenderer : MonoBehaviour
 
     public void Clear(World.WorldData worldData){
 
-        foreach(var item in worldData.chunkDictionary.Values){
+        foreach(ChunkRenderer item in worldData.chunkRendererMatrix){
             Destroy(item.gameObject);
         }
 

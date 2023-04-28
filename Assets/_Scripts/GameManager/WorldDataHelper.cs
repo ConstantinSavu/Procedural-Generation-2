@@ -2,11 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using System;
 
 public class WorldDataHelper
 {
-    
+    public static Vector3Int GetPositionFromIndex(WorldSettings worldSettings, int index){
+
+        int x = index % worldSettings.chunkDrawingRange.x;
+        int y = (index / worldSettings.chunkDrawingRange.x) % worldSettings.chunkDrawingRange.y;
+        int z = index / (worldSettings.chunkDrawingRange.x * worldSettings.chunkDrawingRange.y);
+
+
+        return new Vector3Int(x, y, z);
+    }
+
+    public static Vector3Int GetMatrixPositionFromWorldPosition(WorldSettings worldSettings, Vector3Int chunkRange, Vector3Int worldPosition){
+        
+        Vector3Int matrixChunkPosition = new Vector3Int(
+            worldPosition.x / worldSettings.chunkSize.x,
+            worldPosition.y / worldSettings.chunkSize.y,
+            worldPosition.z / worldSettings.chunkSize.z
+        );
+        
+        return new Vector3Int(
+            matrixChunkPosition.x % chunkRange.x + chunkRange.x,
+            matrixChunkPosition.y % chunkRange.y + chunkRange.y,
+            matrixChunkPosition.z % chunkRange.z + chunkRange.z
+        );
+    }
+
+    public static int GetIndexFromPosition(WorldSettings worldSettings, Vector3Int worldPosition){
+
+        return worldPosition.x + worldSettings.chunkDrawingRange.x * worldPosition.y + worldSettings.chunkDrawingRange.x * worldSettings.chunkDrawingRange.y * worldPosition.z;
+
+    }
     public static Vector3Int ChunkPositionFromVoxelCoords(World world, Vector3Int pos){
 
         return new Vector3Int(
@@ -17,32 +46,52 @@ public class WorldDataHelper
 
     }
 
-    public static List<Vector3Int> GetChunkPositionsAroundPlayer(World world, Vector3Int playerPosition)
+    public static List<Vector3Int> GetChunkRendererPositionsAroundPlayer(World world, Vector3Int playerPosition)
     {
         Vector3Int start = playerPosition - (world.worldData.worldSettings.chunkDrawingRange) * world.worldData.worldSettings.chunkSize;
         Vector3Int end = playerPosition + (world.worldData.worldSettings.chunkDrawingRange) * world.worldData.worldSettings.chunkSize;
         
 
-        List<Vector3Int> chunkPositionsToCreate = new List<Vector3Int>();
+        WorldSettings worldSettings = world.worldSettings;
+        Vector3Int chunkDrawingRange = world.worldSettings.chunkDrawingRange;
+
+        List<Vector3Int> chunkRendererPositionsToCreate = new List<Vector3Int>();
         for (int x = start.x; x <= end.x; x += world.worldData.worldSettings.chunkSize.x)
         {
             for (int z = start.z; z <= end.z; z += world.worldData.worldSettings.chunkSize.z)
             {
                 for (int y = start.y; y <= end.y; y += world.worldData.worldSettings.chunkSize.y)
                 {
-                    Vector3Int chunkPos = ChunkPositionFromVoxelCoords(world, new Vector3Int(x, y, z));
-                    chunkPositionsToCreate.Add(chunkPos);
+                    Vector3Int chunkWorldPosition = ChunkPositionFromVoxelCoords(world, new Vector3Int(x, y, z));
+
+                    Vector3Int matrixPosition = GetMatrixPositionFromWorldPosition(world.worldSettings, chunkDrawingRange, chunkWorldPosition);
+
+                    int index = GetIndexFromPosition(world.worldSettings, matrixPosition);
+
+                    ChunkRenderer currentChunk = world.worldData.chunkRendererMatrix[index];
+
+                    if(currentChunk == null){
+                        chunkRendererPositionsToCreate.Add(chunkWorldPosition);
+                        continue;
+                    }
+
+
+                    if(currentChunk.ChunkData.worldPosition != chunkWorldPosition){
+                        chunkRendererPositionsToCreate.Add(chunkWorldPosition);
+                    }
                 }
             }
         }
 
-        return chunkPositionsToCreate;
+        return chunkRendererPositionsToCreate;
     }
 
-    public static List<Vector3Int> GetDataPositionsAroundPlayer(World world, Vector3Int playerPosition){
+    public static List<Vector3Int> GetChunkDataPositionsAroundPlayer(World world, Vector3Int playerPosition){
         Vector3Int start = playerPosition - (world.worldData.worldSettings.chunkDrawingRange + Vector3Int.one) * world.worldData.worldSettings.chunkSize;
         Vector3Int end = playerPosition + (world.worldData.worldSettings.chunkDrawingRange + Vector3Int.one) * world.worldData.worldSettings.chunkSize;
         
+        WorldSettings worldSettings = world.worldSettings;
+        Vector3Int chunkDrawingRange = world.worldSettings.chunkDrawingRange;
 
         List<Vector3Int> dataPositionsToCreate = new List<Vector3Int>();
         for (int x = start.x; x <= end.x; x += world.worldData.worldSettings.chunkSize.x)
@@ -51,60 +100,27 @@ public class WorldDataHelper
             {
                 for (int y = start.y; y <= end.y; y += world.worldData.worldSettings.chunkSize.y)
                 {
-                    Vector3Int chunkPos = ChunkPositionFromVoxelCoords(world, new Vector3Int(x, y, z));
-                    dataPositionsToCreate.Add(chunkPos);
+                    Vector3Int chunkWorldPosition = ChunkPositionFromVoxelCoords(world, new Vector3Int(x, y, z));
+
+                    Vector3Int matrixPosition = GetMatrixPositionFromWorldPosition(world.worldSettings, chunkDrawingRange + Vector3Int.one, chunkWorldPosition);
+
+                    int index = GetIndexFromPosition(world.worldSettings, matrixPosition);
+
+                    ChunkRenderer currentChunk = world.worldData.chunkRendererMatrix[index];
+
+                    if(currentChunk == null){
+                        dataPositionsToCreate.Add(chunkWorldPosition);
+                        continue;
+                    }
+
+                    if(currentChunk.ChunkData.worldPosition != chunkWorldPosition){
+                        dataPositionsToCreate.Add(chunkWorldPosition);
+                    }
                 }
             }
         }
 
         return dataPositionsToCreate;
-    }
-
-    public static List<Vector3Int> SelectPositonsToCreate(World.WorldData worldData, List<Vector3Int> allChunkPositionsNeeded, Vector3Int playerPosition){
-        return allChunkPositionsNeeded
-                .Where(pos => worldData.chunkDictionary.ContainsKey(pos) == false)
-                .OrderBy(pos => Vector3.Distance(playerPosition, pos))
-                .ToList();
-                
-    }
-
-    public static List<Vector3Int> SelectDataPositonsToCreate(World.WorldData worldData, List<Vector3Int> allDataPositionsNeeded, Vector3Int playerPosition){
-        return allDataPositionsNeeded
-                .Where(pos => worldData.chunkDataDictionary.ContainsKey(pos) == false)
-                .OrderBy(pos => Vector3.Distance(playerPosition, pos))
-                .ToList();
-    }
-
-    public static List<Vector3Int> GetUnnededData(World.WorldData worldData, List<Vector3Int> allChunkPositionsNeeded){
-        return worldData.chunkDataDictionary.Keys
-                .Where(pos => allChunkPositionsNeeded.Contains(pos) == false)
-                .ToList();
-    }
-
-    public static List<Vector3Int> GetUnnededChunks(World.WorldData worldData, List<Vector3Int> allChunkPositionsNeeded)
-    {
-        return worldData.chunkDictionary.Keys
-                .Where(pos => allChunkPositionsNeeded.Contains(pos) == false)
-                .ToList();
-    }
-
-    public static void RemoveChunk(World world, Vector3Int pos){
-
-        ChunkRenderer chunk = null;
-
-        if(world.worldData.chunkDictionary.TryGetValue(pos, out chunk)){
-            world.worldRenderer.RemoveChunk(chunk);
-            world.worldData.chunkDictionary.TryRemove(pos, out _);
-            return;
-        }
-
-        Debug.Log("Could not remove chunk");
-
-
-    }
-
-    public static void RemoveChunkData(World world, Vector3Int pos){
-        world.worldData.chunkDataDictionary.TryRemove(pos, out _);
     }
 
     public static bool SetVoxelFromWorldCoordinates(World world, Vector3Int worldPos, VoxelType voxelType){
@@ -136,24 +152,56 @@ public class WorldDataHelper
 
     public static ChunkData GetChunkDataFromWorldCoordinates(World world, Vector3Int worldPos){
 
-        Vector3Int chunkPosition = ChunkPositionFromVoxelCoords(world, worldPos);
+        Vector3Int chunkWorldPosition = ChunkPositionFromVoxelCoords(world, worldPos);
 
-        ChunkData containerChunk = null;
+        WorldSettings worldSettings = world.worldSettings;
+        Vector3Int chunkDrawingRange = world.worldSettings.chunkDrawingRange;
 
-        world.worldData.chunkDataDictionary.TryGetValue(chunkPosition, out containerChunk);
+        Vector3Int matrixPosition = GetMatrixPositionFromWorldPosition(world.worldSettings, chunkDrawingRange + Vector3Int.one, chunkWorldPosition);
 
-        return containerChunk;
+        int index = GetIndexFromPosition(worldSettings, matrixPosition);
 
-    }
-
-    public static ChunkRenderer GetChunk(World world, Vector3Int pos){
-
-        if(world.worldData.chunkDictionary.ContainsKey(pos)){
-            return world.worldData.chunkDictionary[pos];
-        }
-
-        return null;
+        return world.worldData.chunkDataMatrix[index];
 
     }
 
+    public static ChunkRenderer GetChunkRendererFromWorldPosition(World world, Vector3Int worldPos){
+
+        Vector3Int chunkWorldPosition = ChunkPositionFromVoxelCoords(world, worldPos);
+
+        WorldSettings worldSettings = world.worldSettings;
+        Vector3Int chunkDrawingRange = world.worldSettings.chunkDrawingRange;
+
+        Vector3Int matrixPosition = GetMatrixPositionFromWorldPosition(world.worldSettings, chunkDrawingRange, chunkWorldPosition);
+
+        int index = GetIndexFromPosition(worldSettings, matrixPosition);
+
+        return world.worldData.chunkRendererMatrix[index];
+
+    }
+
+    public static void AddChunkDataToChunkDataMatrix(World world, Vector3Int worldPosition, ChunkData chunkData)
+    {
+        WorldSettings worldSettings = world.worldSettings;
+        Vector3Int chunkDrawingRange = world.worldSettings.chunkDrawingRange;
+
+        Vector3Int matrixPosition = GetMatrixPositionFromWorldPosition(world.worldSettings, chunkDrawingRange + Vector3Int.one, worldPosition);
+
+        int index = GetIndexFromPosition(worldSettings, matrixPosition);
+
+        world.worldData.chunkDataMatrix[index] = chunkData;
+    }
+
+    public static void AddChunkRendererToChunkDataMatrix(World world, Vector3Int worldPosition, ChunkData chunkData)
+    {
+        WorldSettings worldSettings = world.worldSettings;
+        Vector3Int chunkDrawingRange = world.worldSettings.chunkDrawingRange;
+
+        Vector3Int matrixPosition = GetMatrixPositionFromWorldPosition(world.worldSettings, chunkDrawingRange + Vector3Int.one, worldPosition);
+
+        int index = GetIndexFromPosition(worldSettings, matrixPosition);
+
+        world.worldData.chunkDataMatrix[index] = chunkData;
+    }
+}
 }
