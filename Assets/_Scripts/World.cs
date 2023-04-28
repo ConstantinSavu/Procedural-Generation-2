@@ -70,6 +70,21 @@ public class World : MonoBehaviour
         await GenerateWorld(startingPosition);
         
     }
+
+    public void DeleteWorld(){
+
+        List<Vector3Int> worldChunkData = new List<Vector3Int>(worldData.chunkDataDictionary.Keys);
+        List<Vector3Int> worldChunk = new List<Vector3Int>(worldData.chunkDictionary.Keys);
+    
+        foreach(var pos in worldChunk){
+            WorldDataHelper.RemoveChunk(this, pos);
+        }
+
+        foreach(var pos in worldChunkData){
+            WorldDataHelper.RemoveChunkData(this, pos);
+        }
+    
+    }
     
 
     private async Task GenerateWorld(Vector3Int position){

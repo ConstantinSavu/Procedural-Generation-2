@@ -22,7 +22,7 @@ public class TreeGenerator : StructureGenerator
 
     }
 
-    public float[,] GenerateStructureNoise(ChunkData chunkData, NoiseSettings treeNoiseSettings)
+    private float[,] GenerateStructureNoise(ChunkData chunkData, NoiseSettings treeNoiseSettings)
     {
         float[,] noiseMax = new float[chunkData.chunkSize.x, chunkData.chunkSize.z];
 
