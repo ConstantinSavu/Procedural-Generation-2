@@ -89,7 +89,7 @@ public class World : MonoBehaviour
 
     private async Task GenerateWorld(Vector3Int position){
 
-        WorldGenerationData worldGenerationData = GetWorldGenerationDataAroundPlayer(position);
+        WorldGenerationData worldGenerationData = await Task.Run(() => GetWorldGenerationDataAroundPlayer(position),taskTokenSource.Token);
 
         foreach(var pos in worldGenerationData.chunkPositionsToRemove){
             WorldDataHelper.RemoveChunk(this, pos);
@@ -115,10 +115,6 @@ public class World : MonoBehaviour
 
         foreach (var calculatedData in dataDictionary)
         {
-            if(worldData.chunkDataDictionary.ContainsKey(calculatedData.Key)){
-                WorldDataHelper.RemoveChunkData(this, calculatedData.Key);
-            }
-            
             worldData.chunkDataDictionary.TryAdd(calculatedData.Key, calculatedData.Value);
         }
 
@@ -143,34 +139,8 @@ public class World : MonoBehaviour
         }
 
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
-        /*
-        foreach(var item in meshDataDictionary){
-
-            Vector3Int pos =  item.Key;
-            MeshData meshData = item.Value;
-
-            ChunkRenderer chunkRenderer = worldRenderer.RenderChunk(worldData.chunkDataDictionary[pos], pos, meshData);
-
-            if(worldData.chunkDictionary.ContainsKey(pos)){
-                WorldDataHelper.RemoveChunk(this, pos);
-            }
-            
-            worldData.chunkDictionary.Add(pos, chunkRenderer);
-            
-                
-
-        }
-
-        if(IsWorldCreated == false){
-            IsWorldCreated = true;
-            OnWorldCreated?.Invoke();
-        }
-
-        */
 
     }
-
-    
 
     IEnumerator ChunkCreationCoroutine(ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary) 
     {
@@ -184,10 +154,6 @@ public class World : MonoBehaviour
             }
 
             ChunkRenderer chunkRenderer = worldRenderer.RenderChunk(worldData.chunkDataDictionary[position], position, meshData);
-        
-            if(worldData.chunkDictionary.ContainsKey(position)){
-                WorldDataHelper.RemoveChunkData(this, position);
-            }
 
             worldData.chunkDictionary.TryAdd(position, chunkRenderer);
 

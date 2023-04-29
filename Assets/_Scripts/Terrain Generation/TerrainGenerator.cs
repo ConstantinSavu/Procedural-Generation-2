@@ -11,7 +11,7 @@ public class TerrainGenerator : MonoBehaviour
 
     public ChunkData GenerateChunkData(ChunkData data){
         
-        Parallel.For(0, data.chunkSize.x, x => {
+        for(int x = 0; x < data.chunkSize.z; x++){
             for(int z = 0; z < data.chunkSize.z; z++){
                 int groundPosition = biomeGenerator.Get2DTerrainY(x + data.worldPosition.x, z + data.worldPosition.z, data);
                 for(int y = 0; y < data.chunkSize.y; y++){
@@ -19,7 +19,7 @@ public class TerrainGenerator : MonoBehaviour
                 }
             }
 
-        });
+        }
 
         data = biomeGenerator.ProcessStructures(data);
         

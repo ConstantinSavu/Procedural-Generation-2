@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public Vector3Int currentPlayerChunkPosition;
     public Vector3Int currentChunkCenter = Vector3Int.zero;
 
+    public bool loadAdditionalChunks = false;
+
     public World world;
 
     public float detectionTime = 0.5f;
@@ -134,8 +136,11 @@ public class GameManager : MonoBehaviour
             Mathf.Abs(currentChunkCenter.y - player.transform.position.y) > world.worldData.worldSettings.chunkSize.y ||
             Mathf.Abs(currentChunkCenter.z - player.transform.position.z) > world.worldData.worldSettings.chunkSize.z
         ){
+
+            if(loadAdditionalChunks){
+                world.LoadAdditionalChunksRequest(player);
+            }
             
-            //world.LoadAdditionalChunksRequest(player);
             
         }
         else{
