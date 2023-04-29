@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WorldSettings
   m_EditorClassIdentifier: 
   chunkSize: {x: 16, y: 64, z: 16}
-  chunkDrawingRange: {x: 8, y: 0, z: 8}
+  chunkDrawingRange: {x: 2, y: 0, z: 2}
   mapSeedOffset: {x: 0, y: 0, z: 0}
   waterThreshold: 32
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
