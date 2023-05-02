@@ -9,7 +9,7 @@ public static class Chunk
 
     public static void LoopThroughVoxels(ChunkData chunkData, Action<Vector3Int> actionToPerform){
 
-        for(int index = 0; index < chunkData.voxels.Length; index++){
+        for(int index = 0; index < chunkData.voxels.Length; index++) {
             
             Vector3Int position = GetPositionFromIndex(chunkData, index);
             actionToPerform(new Vector3Int(position.x, position.y, position.z));

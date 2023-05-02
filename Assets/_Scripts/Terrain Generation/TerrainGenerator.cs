@@ -12,7 +12,6 @@ public class TerrainGenerator : MonoBehaviour
     public ChunkData GenerateChunkData(ChunkData data){
         
         int voxelCount = data.chunkSize.x * data.chunkSize.y * data.chunkSize.z;
-        Vector3Int position = new Vector3Int();
 
 
         Parallel.For(0, voxelCount, index => {

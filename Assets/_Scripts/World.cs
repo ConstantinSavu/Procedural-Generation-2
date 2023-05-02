@@ -129,14 +129,14 @@ public class World : MonoBehaviour
             .Select(keyvalpair => keyvalpair.Value)
             .ToList();
 
-        try{
+        //try{
             meshDataDictionary = await CreateMeshData(dataToRender);
-        }
-        catch(Exception ex){
-            Debug.Log("Task cancelled");
-            Debug.Log(ex.Message);
-            return;
-        }
+        // }
+        // catch(Exception ex){
+        //     Debug.Log("Task cancelled");
+        //     Debug.Log(ex.Message);
+        //     return;
+        // }
 
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
 

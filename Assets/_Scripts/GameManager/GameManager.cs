@@ -47,10 +47,6 @@ public class GameManager : MonoBehaviour
 
         CheckIfInWater();
 
-        if(Input.GetKeyDown(KeyCode.B)){
-            CreateNavMeshes();
-        }
-
     }
 
     void CheckIfInWater()
@@ -78,7 +74,7 @@ public class GameManager : MonoBehaviour
         raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
         RaycastHit hit;
 
-        //CreateNavMeshes();
+        CreateNavMeshes();
         
         if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
         {
@@ -95,10 +91,11 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Player not spawned");
-        Debug.Log(world.worldSettings.voxelMaxMapDimensions.y);
-        Debug.Log(world.worldSettings.voxelMinMapDimensions.y);
-        Debug.Log(world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30);
-        player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
+
+        Vector3Int airSpawn = Vector3Int.zero;
+        airSpawn.y = world.worldSettings.voxelMaxMapDimensions.y + 30;
+
+        player = Instantiate(playerPrefab, airSpawn , Quaternion.identity);
         camera_VM.Follow = player.transform.GetChild(0);
         StartCheckingTheMap();
         
