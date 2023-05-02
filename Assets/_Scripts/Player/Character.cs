@@ -110,7 +110,6 @@ public class Character : MonoBehaviour
 
     private void WaterMovement()
     {   
-        Debug.Log("In Water");
         
         animator.SetBool("isGrounded", playerMovement.IsGrounded);
 

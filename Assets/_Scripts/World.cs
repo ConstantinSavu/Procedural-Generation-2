@@ -287,7 +287,6 @@ public class World : MonoBehaviour
         }
         
         Vector3Int worldPos = GetBlockPosition(hit);
-        Debug.Log(worldPos);
         return WorldDataHelper.GetVoxelFromWorldCoorinates(chunk.ChunkData.worldReference, worldPos);
 
     }

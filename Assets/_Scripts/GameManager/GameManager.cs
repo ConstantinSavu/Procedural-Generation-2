@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cinemachine;
 using Unity.AI;
 using Unity.AI.Navigation;
@@ -11,6 +12,9 @@ public class GameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
     private GameObject player;
+
+    public GameObject enemyPrefab;
+    private GameObject enemy;
     
     public GameObject RenderedChunks;
     public Vector3Int currentPlayerChunkPosition;
@@ -25,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent inWater, onSolid;
 
-    private NavMeshSurface surface;
+    private NavMeshSurface[] surfaces;
 
     public void Awake(){
 
@@ -46,6 +50,14 @@ public class GameManager : MonoBehaviour
         }
 
         CheckIfInWater();
+
+        if(Input.GetKeyDown(KeyCode.X)){
+            enemy.GetComponent<EnemyMovement>().StartFollowing();
+        }
+
+        if(Input.GetKeyDown(KeyCode.B)){
+            CreateNavMeshes();
+        }
 
     }
 
@@ -78,7 +90,6 @@ public class GameManager : MonoBehaviour
         
         if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
         {
-
             player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
             camera_VM.Follow = player.transform.GetChild(0);
 
@@ -86,6 +97,9 @@ public class GameManager : MonoBehaviour
             onSolid.AddListener(player.GetComponent<Character>().OnSolid);
 
             StartCheckingTheMap();
+            SpawnEnemy(player);
+            
+
             
             return;
         }
@@ -102,12 +116,21 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void SpawnEnemy(GameObject player){
+
+        enemy = Instantiate(enemyPrefab, player.transform.position, Quaternion.identity);
+        enemy.GetComponent<EnemyMovement>().target = player.transform;
+        enemy.GetComponent<EnemyMovement>().StartFollowing();
+
+    }
+
     private void CreateNavMeshes()
     {
-        surface = RenderedChunks.GetComponent<NavMeshSurface>();
-        surface.BuildNavMesh();
-        
+        surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
 
+        foreach(var surface in surfaces ){
+            surface.BuildNavMesh();
+        }
     }
 
     public void StartCheckingTheMap(){
