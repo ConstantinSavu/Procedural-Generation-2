@@ -47,7 +47,7 @@ public class VoxelHelper
         };
     }
 
-    public static MeshData GetMeshData(ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType){
+    public static MeshData GetVoxelMeshData(ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType){
 
         if(voxelType == VoxelType.Air || voxelType == VoxelType.Nothing){
             return meshData;

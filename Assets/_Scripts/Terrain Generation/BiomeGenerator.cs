@@ -49,7 +49,7 @@ public class BiomeGenerator : MonoBehaviour
 
             foreach(var layer in structureGenerator.additionalStructureLayerHandlers){
                 foreach(Vector3Int localPos in structureData){
-                    structureGenerator.firstStructureLayerHandler.Handle(data, localPos, this);
+                    layer.Handle(data, localPos, this);
                 }
             }
         }
