@@ -11,13 +11,21 @@ public class TerrainGenerator : MonoBehaviour
 
     public ChunkData GenerateChunkData(ChunkData data){
         
-        Parallel.For(0, data.chunkSize.x, x => {
-            for(int z = 0; z < data.chunkSize.z; z++){
-                int groundPosition = biomeGenerator.Get2DTerrainY(x + data.worldPosition.x, z + data.worldPosition.z, data);
-                for(int y = 0; y < data.chunkSize.y; y++){
-                    data = biomeGenerator.ProcessChunk(data, new Vector3Int(x, y, z), groundPosition);
-                }
-            }
+        int voxelCount = data.chunkSize.x * data.chunkSize.y * data.chunkSize.z;
+
+
+        Parallel.For(0, voxelCount, index => {
+
+            int x = index % data.chunkSize.x;
+            int y = (index / data.chunkSize.x) % data.chunkSize.y;
+            int z = index / (data.chunkSize.x * data.chunkSize.y);
+            
+            int groundPosition = biomeGenerator.Get2DTerrainY(x + data.worldPosition.x, z + data.worldPosition.z, data);
+            
+            
+            data = biomeGenerator.ProcessVoxel(data, new Vector3Int(x, y, z), groundPosition);
+                
+            
 
         });
 

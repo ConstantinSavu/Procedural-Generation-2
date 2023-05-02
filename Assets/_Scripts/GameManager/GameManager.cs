@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Unity.AI;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,17 +12,28 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject player;
     
+    public GameObject RenderedChunks;
     public Vector3Int currentPlayerChunkPosition;
     public Vector3Int currentChunkCenter = Vector3Int.zero;
+
+    public bool loadAdditionalChunks = false;
 
     public World world;
 
     public float detectionTime = 0.5f;
     public CinemachineVirtualCamera camera_VM;
 
-    public UnityEvent inWater, onSolid; 
+    public UnityEvent inWater, onSolid;
+
+    private NavMeshSurface surface;
 
     public void Awake(){
+
+        if(RenderedChunks == null){
+
+            Debug.Log("Rendered Chunks is null or dosen't have Navmesh Component, pls fix");
+
+        }
         
         camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y * 4, 0);
         camera_VM.transform.rotation *= Quaternion.Euler(Vector3.right * 90);
@@ -60,6 +73,8 @@ public class GameManager : MonoBehaviour
         Vector3Int raycastStartposition = world.startingPosition;
         raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
         RaycastHit hit;
+
+        CreateNavMeshes();
         
         if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
         {
@@ -70,28 +85,35 @@ public class GameManager : MonoBehaviour
             inWater.AddListener(player.GetComponent<Character>().InWater);
             onSolid.AddListener(player.GetComponent<Character>().OnSolid);
 
-            //StartCheckingTheMap();
+            StartCheckingTheMap();
             
             return;
         }
 
         Debug.Log("Player not spawned");
-        Debug.Log(world.worldSettings.voxelMaxMapDimensions.y);
-        Debug.Log(world.worldSettings.voxelMinMapDimensions.y);
-        Debug.Log(world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30);
-        player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
+
+        Vector3Int airSpawn = Vector3Int.zero;
+        airSpawn.y = world.worldSettings.voxelMaxMapDimensions.y + 30;
+
+        player = Instantiate(playerPrefab, airSpawn , Quaternion.identity);
         camera_VM.Follow = player.transform.GetChild(0);
-        //StartCheckingTheMap();
+        StartCheckingTheMap();
         
         
     }
 
-    
+    private void CreateNavMeshes()
+    {
+        surface = RenderedChunks.GetComponent<NavMeshSurface>();
+        surface.BuildNavMesh();
+        
 
-    /*
+    }
+
     public void StartCheckingTheMap(){
+        SetCurrentChunkCoordinates();
         StopAllCoroutines();
-        StartCoroutine(CheckIfInWater());
+        StartCoroutine(CheckIfShouldLoadNextPosition());
     }
     
     private void SetCurrentChunkCoordinates(){
@@ -111,8 +133,11 @@ public class GameManager : MonoBehaviour
             Mathf.Abs(currentChunkCenter.y - player.transform.position.y) > world.worldData.worldSettings.chunkSize.y ||
             Mathf.Abs(currentChunkCenter.z - player.transform.position.z) > world.worldData.worldSettings.chunkSize.z
         ){
+
+            if(loadAdditionalChunks){
+                world.LoadAdditionalChunksRequest(player);
+            }
             
-            //world.LoadAdditionalChunksRequest(player);
             
         }
         else{
@@ -120,6 +145,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    */
+    
 
 }

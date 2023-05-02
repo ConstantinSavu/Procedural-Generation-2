@@ -70,11 +70,26 @@ public class World : MonoBehaviour
         await GenerateWorld(startingPosition);
         
     }
+
+    public void DeleteWorld(){
+
+        List<Vector3Int> worldChunkData = new List<Vector3Int>(worldData.chunkDataDictionary.Keys);
+        List<Vector3Int> worldChunk = new List<Vector3Int>(worldData.chunkDictionary.Keys);
+    
+        foreach(var pos in worldChunk){
+            WorldDataHelper.RemoveChunk(this, pos);
+        }
+
+        foreach(var pos in worldChunkData){
+            WorldDataHelper.RemoveChunkData(this, pos);
+        }
+    
+    }
     
 
     private async Task GenerateWorld(Vector3Int position){
 
-        WorldGenerationData worldGenerationData = GetWorldGenerationDataAroundPlayer(position);
+        WorldGenerationData worldGenerationData = await Task.Run(() => GetWorldGenerationDataAroundPlayer(position),taskTokenSource.Token);
 
         foreach(var pos in worldGenerationData.chunkPositionsToRemove){
             WorldDataHelper.RemoveChunk(this, pos);
@@ -100,16 +115,12 @@ public class World : MonoBehaviour
 
         foreach (var calculatedData in dataDictionary)
         {
-            if(worldData.chunkDataDictionary.ContainsKey(calculatedData.Key)){
-                WorldDataHelper.RemoveChunkData(this, calculatedData.Key);
-            }
-            
             worldData.chunkDataDictionary.TryAdd(calculatedData.Key, calculatedData.Value);
         }
 
-        foreach(ChunkData chunkData in worldData.chunkDataDictionary.Values){
+        Parallel.ForEach(worldData.chunkDataDictionary.Values,  chunkData  => {
             AddOutOfChunkBoundsVoxel(chunkData);
-        }
+        });
     
         ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary = new ConcurrentDictionary<Vector3Int, MeshData>();
 
@@ -118,44 +129,18 @@ public class World : MonoBehaviour
             .Select(keyvalpair => keyvalpair.Value)
             .ToList();
 
-        try{
+        //try{
             meshDataDictionary = await CreateMeshData(dataToRender);
-        }
-        catch(Exception ex){
-            Debug.Log("Task cancelled");
-            Debug.Log(ex.Message);
-            return;
-        }
+        // }
+        // catch(Exception ex){
+        //     Debug.Log("Task cancelled");
+        //     Debug.Log(ex.Message);
+        //     return;
+        // }
 
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
-        /*
-        foreach(var item in meshDataDictionary){
-
-            Vector3Int pos =  item.Key;
-            MeshData meshData = item.Value;
-
-            ChunkRenderer chunkRenderer = worldRenderer.RenderChunk(worldData.chunkDataDictionary[pos], pos, meshData);
-
-            if(worldData.chunkDictionary.ContainsKey(pos)){
-                WorldDataHelper.RemoveChunk(this, pos);
-            }
-            
-            worldData.chunkDictionary.Add(pos, chunkRenderer);
-            
-                
-
-        }
-
-        if(IsWorldCreated == false){
-            IsWorldCreated = true;
-            OnWorldCreated?.Invoke();
-        }
-
-        */
 
     }
-
-    
 
     IEnumerator ChunkCreationCoroutine(ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary) 
     {
@@ -169,14 +154,10 @@ public class World : MonoBehaviour
             }
 
             ChunkRenderer chunkRenderer = worldRenderer.RenderChunk(worldData.chunkDataDictionary[position], position, meshData);
-        
-            if(worldData.chunkDictionary.ContainsKey(position)){
-                WorldDataHelper.RemoveChunkData(this, position);
-            }
 
             worldData.chunkDictionary.TryAdd(position, chunkRenderer);
 
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         if (IsWorldCreated == false)
         {

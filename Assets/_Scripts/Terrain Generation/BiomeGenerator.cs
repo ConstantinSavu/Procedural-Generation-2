@@ -20,7 +20,7 @@ public class BiomeGenerator : MonoBehaviour
 
     public List<StructureGenerator> structureGenerators;
 
-    public ChunkData ProcessChunk(ChunkData data, Vector3Int pos, int groundPosition){
+    public virtual ChunkData ProcessVoxel(ChunkData data, Vector3Int pos, int groundPosition){
 
         biomeNoiseSettings.worldOffset = data.worldReference.worldData.worldSettings.mapSeedOffset;
         data.noiseSettings = biomeNoiseSettings;
@@ -35,7 +35,7 @@ public class BiomeGenerator : MonoBehaviour
 
     }
 
-    public ChunkData ProcessStructures(ChunkData data)
+    public virtual ChunkData ProcessStructures(ChunkData data)
     {
         
         foreach(StructureGenerator structureGenerator in structureGenerators){
@@ -49,7 +49,7 @@ public class BiomeGenerator : MonoBehaviour
 
             foreach(var layer in structureGenerator.additionalStructureLayerHandlers){
                 foreach(Vector3Int localPos in structureData){
-                    structureGenerator.firstStructureLayerHandler.Handle(data, localPos, this);
+                    layer.Handle(data, localPos, this);
                 }
             }
         }

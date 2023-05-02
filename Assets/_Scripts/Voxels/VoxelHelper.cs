@@ -14,7 +14,7 @@ public class VoxelHelper
         back
     }
 
-    private static Direction[] directions = {
+    public static Direction[] directions = {
 
         Direction.up,
         Direction.down,
@@ -47,7 +47,7 @@ public class VoxelHelper
         };
     }
 
-    public static MeshData GetMeshData(ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType){
+    public static MeshData GetVoxelMeshData(ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType){
 
         if(voxelType == VoxelType.Air || voxelType == VoxelType.Nothing){
             return meshData;
@@ -67,15 +67,13 @@ public class VoxelHelper
                 
                 continue;
             }
-
-
             
             if(voxelType != VoxelType.Water){
                 
-                meshData = GetFaceDataIn(direction, chunk, pos, meshData, voxelType);
+                meshData = GetFaceDataIn(direction, chunk, pos, meshData, voxelType, neighbourVoxelType);
             }
             else if(neighbourVoxelType != VoxelType.Water){
-                meshData.waterMesh = GetFaceDataIn(direction, chunk, pos, meshData.waterMesh, voxelType);
+                meshData.waterMesh = GetFaceDataIn(direction, chunk, pos, meshData.waterMesh, voxelType, neighbourVoxelType);
             }
 
 
@@ -84,12 +82,12 @@ public class VoxelHelper
         return meshData;
     }
 
-    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType){
+    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType){
 
         bool generatesCollider = VoxelDataManager.voxelTextureDataDictionary[voxelType].generatesCollider;
         bool isLiquid = VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid;
 
-        GetFaceVertices(direction, pos, meshData, voxelType);
+        GetFaceVertices(direction, chunk, pos, meshData, voxelType, neighbourVoxelType);
         meshData.AddQuadTriangles(generatesCollider, isLiquid);
         meshData.uv.AddRange(FaceUVs(direction, voxelType));
 
@@ -97,10 +95,27 @@ public class VoxelHelper
 
     }
 
-    public static void GetFaceVertices(Direction direction, Vector3Int pos, MeshData meshData, VoxelType voxelType)
+    public static void GetFaceVertices(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType)
     {
         bool generatesCollider = VoxelDataManager.voxelTextureDataDictionary[voxelType].generatesCollider;
         bool isLiquid = VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid;
+
+        bool drawLower = false;
+
+        if(isLiquid){
+            
+            drawLower = true;
+
+            VoxelType upVoxelType =  Chunk.GetVoxelFromChunkCoordinates(chunk, pos + Vector3Int.up);
+
+            if(upVoxelType == voxelType){
+                drawLower = false;
+            }
+            
+        }
+
+        
+        
 
         int x = pos.x;
         int y = pos.y;
@@ -110,7 +125,7 @@ public class VoxelHelper
         switch (direction)
         {
             case Direction.back:
-                if(isLiquid){
+                if(drawLower){
                     meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x - 0.5f, y + 0.35f, z - 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x + 0.5f, y + 0.35f, z - 0.5f), generatesCollider);
@@ -125,7 +140,7 @@ public class VoxelHelper
                     
                 break;
             case Direction.forward:
-                if(isLiquid){
+                if(drawLower){
                     meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x + 0.5f, y + 0.35f, z + 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x - 0.5f, y + 0.35f, z + 0.5f), generatesCollider);
@@ -139,7 +154,7 @@ public class VoxelHelper
                 }
                 break;
             case Direction.left:
-                if(isLiquid){
+                if(drawLower){
                     meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x - 0.5f, y + 0.35f, z + 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x - 0.5f, y + 0.35f, z - 0.5f), generatesCollider);
@@ -155,7 +170,7 @@ public class VoxelHelper
                 break;
 
             case Direction.right:
-                if(isLiquid){
+                if(drawLower){
                     meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x + 0.5f, y + 0.35f, z - 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x + 0.5f, y + 0.35f, z + 0.5f), generatesCollider);
@@ -175,7 +190,7 @@ public class VoxelHelper
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
             case Direction.up:
-                if(isLiquid){
+                if(drawLower){
                     meshData.AddVertex(new Vector3(x - 0.5f, y + 0.35f, z + 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x + 0.5f, y + 0.35f, z + 0.5f), generatesCollider);
                     meshData.AddVertex(new Vector3(x + 0.5f, y + 0.35f, z - 0.5f), generatesCollider);

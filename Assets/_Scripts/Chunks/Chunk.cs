@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public static class Chunk
@@ -8,11 +9,11 @@ public static class Chunk
 
     public static void LoopThroughVoxels(ChunkData chunkData, Action<Vector3Int> actionToPerform){
 
-        for(int index = 0; index < chunkData.voxels.Length; index++){
+        for(int index = 0; index < chunkData.voxels.Length; index++) {
             
             Vector3Int position = GetPositionFromIndex(chunkData, index);
             actionToPerform(new Vector3Int(position.x, position.y, position.z));
-        }
+        };
 
     }
 
@@ -202,7 +203,7 @@ public static class Chunk
         
         MeshData meshData = new MeshData(true);
 
-        LoopThroughVoxels(chunkData, pos => meshData = VoxelHelper.GetMeshData(chunkData, pos, meshData, chunkData.voxels[GetIndexFromPosition(chunkData, pos)]));
+        LoopThroughVoxels(chunkData, pos => meshData = VoxelHelper.GetVoxelMeshData(chunkData, pos, meshData, chunkData.voxels[GetIndexFromPosition(chunkData, pos)]));
 
         return meshData;
 
