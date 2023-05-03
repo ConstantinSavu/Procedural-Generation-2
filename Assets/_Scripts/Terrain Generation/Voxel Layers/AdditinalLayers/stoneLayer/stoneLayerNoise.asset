@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
-  m_Name: NoiseSettingsDomainX
+  m_Name: stoneLayerNoise
   m_EditorClassIdentifier: 
-  noiseZoom: {x: 1, y: 1, z: 1}
-  perlinOffset: {x: 600, y: 600, z: 600}
+  noiseZoom: {x: 2, y: 2, z: 2}
+  perlinOffset: {x: 5000, y: 7011, z: 5158}
   worldOffset: {x: 0, y: 0, z: 0}
-  amplitudeMultiplyer: 0.5
-  frequencyMultyplier: 2
+  amplitudeMultiplyer: 3.38
+  frequencyMultyplier: 1.2
   octaves: 5
-  exponent: 4
-  redistributionModifier: 1.2
+  exponent: 2.11
+  redistributionModifier: 0.55
   offset: {x: 0, y: 0, z: 0}
   minDimension: {x: 0, y: 0, z: 0}
   maxDimension: {x: 1, y: 1, z: 1}

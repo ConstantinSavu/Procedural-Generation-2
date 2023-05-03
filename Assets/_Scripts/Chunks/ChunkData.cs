@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class ChunkData
 {
 
     public VoxelType[] voxels;
+    public int[] heightMap;
  
     public Vector3Int chunkSize = new Vector3Int(Constants.chunkWidth, Constants.chunkHeight, Constants.chunkDepth);
     public World worldReference;
@@ -22,6 +24,7 @@ public class ChunkData
         this.worldReference = world;
         this.worldPosition = worldPosition;
         this.voxels = new VoxelType[chunkSize.x * chunkSize.y * chunkSize.z];
+        this.heightMap = new int[chunkSize.x * chunkSize.z];
 
 
     }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
-  m_Name: NoiseSettingsDomainX
+  m_Name: stoneLayerDomainY
   m_EditorClassIdentifier: 
   noiseZoom: {x: 1, y: 1, z: 1}
-  perlinOffset: {x: 600, y: 600, z: 600}
+  perlinOffset: {x: 900, y: -500, z: 1500}
   worldOffset: {x: 0, y: 0, z: 0}
   amplitudeMultiplyer: 0.5
   frequencyMultyplier: 2

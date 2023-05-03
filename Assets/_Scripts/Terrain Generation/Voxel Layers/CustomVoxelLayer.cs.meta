@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fd7dd164777aed04c94f760b6348e4fb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Next: {instanceID: 0}
+  - customVoxelSettings: {fileID: 11400000, guid: f3f9136c95c475e4a8ecca871910aeca,
+      type: 2}
+  - domainWarping: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

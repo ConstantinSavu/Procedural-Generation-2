@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class UnderGroundLayer : VoxelLayerHandler
 {
+    public VoxelType nearGroundVoxelType;
     public VoxelType underGroundVoxelType;
+    public int nearGroundOffset = 5;
 
     protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
 
@@ -15,7 +17,12 @@ public class UnderGroundLayer : VoxelLayerHandler
         }
 
         VoxelType voxelType;
-        voxelType = underGroundVoxelType;
+        if(worldPosY >= surfaceHeight - nearGroundOffset){
+            voxelType = nearGroundVoxelType;
+        }
+        else{
+            voxelType = underGroundVoxelType;
+        }
 
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
         return true;

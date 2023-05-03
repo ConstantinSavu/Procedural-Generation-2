@@ -22,7 +22,7 @@ public class CaveLayer : VoxelLayerHandler
         );
         
 
-        float noiseDensity = CustomNoise.OctavePerlin3D(worldPos, data.noiseSettings);
+        float noiseDensity = CustomNoise.OctaveNoise3D(worldPos, data.noiseSettings);
         float skewFactor = -Mathf.Pow(normalisedWorldHeight, data.noiseSettings.skewExponent) + 1;
         noiseDensity *= skewFactor;
         

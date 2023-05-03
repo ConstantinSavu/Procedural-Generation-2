@@ -129,7 +129,9 @@ public class GameManager : MonoBehaviour
         surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
 
         foreach(var surface in surfaces ){
+            
             surface.BuildNavMesh();
+            surface.AddData();
         }
     }
 

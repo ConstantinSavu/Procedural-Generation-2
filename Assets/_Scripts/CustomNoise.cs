@@ -4,19 +4,56 @@ using UnityEngine;
 
 public static class CustomNoise
 {
-    public static float PerlinNoise3D(Vector3 pos){
 
-        float xy = Mathf.PerlinNoise(pos.x, pos.y);
-        float xz = Mathf.PerlinNoise(pos.x, pos.z);
-        float yz = Mathf.PerlinNoise(pos.y, pos.z);
-        float yx = Mathf.PerlinNoise(pos.y, pos.x);
-        float zx = Mathf.PerlinNoise(pos.z, pos.x);
-        float zy = Mathf.PerlinNoise(pos.z, pos.y);
+    static bool useSimplex = true;
+    public static float Noise3D(float x, float y, float z){
+        
+        float noiseResult;
+        
+        if(useSimplex){
+            noiseResult = FastNoiseLiteStatic.GetNoise(x, y, z);
+            noiseResult = (noiseResult + 1.0f) / 2.0f;
+        }
+        else{
+            float xy = Mathf.PerlinNoise(x, y);
+            float xz = Mathf.PerlinNoise(x, z);
+            float yz = Mathf.PerlinNoise(y, z);
+            float yx = Mathf.PerlinNoise(y, x);
+            float zx = Mathf.PerlinNoise(z, x);
+            float zy = Mathf.PerlinNoise(z, y);
     
-        return (xy + xz + yz + yx + zx + zy) / 6.0f;
+            noiseResult = (xy + xz + yz + yx + zx + zy) / 6.0f;
+        }
+
+        if(noiseResult < 0f){
+            Debug.Log("Unexpected noise value " + noiseResult);
+        }
+        
+    
+        return noiseResult;
     }
 
-    public static float OctavePerlin3D(Vector3Int pos, NoiseSettings settings){
+    public static float Noise2D(float x, float z){
+
+        float noiseResult;
+        
+        if(useSimplex){
+            noiseResult = FastNoiseLiteStatic.GetNoise(x, z);
+            noiseResult = (noiseResult + 1.0f) / 2.0f;
+        }
+        else{
+            noiseResult = Mathf.PerlinNoise(x, z);
+        }
+        
+        if(noiseResult < 0f){
+            Debug.Log("Unexpected noise value " + noiseResult);
+        }
+        
+
+        return noiseResult;
+    }
+
+    public static float OctaveNoise3D(Vector3Int pos, NoiseSettings settings){
 
         float x = (float)pos.x * settings.noiseZoom.x;
         float y = (float)pos.y * settings.noiseZoom.y;
@@ -34,12 +71,11 @@ public static class CustomNoise
 
         for(int i = 0; i < settings.octaves; i++){
 
-            result += amplitude * PerlinNoise3D(new Vector3(
+            result += amplitude * Noise3D(
                 (x + settings.perlinOffset.x + settings.worldOffset.x) * frequency,
                 (y + settings.perlinOffset.y + settings.worldOffset.y) * frequency, 
                 (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency
-            
-            ));
+            );
 
             totalAmplitude += amplitude;
             
@@ -51,7 +87,7 @@ public static class CustomNoise
 
     }
 
-    public static float OctavePerlin2D(Vector2Int pos, NoiseSettings settings){
+    public static float OctaveNoise2D(Vector2Int pos, NoiseSettings settings){
 
         float x = (float)pos.x * settings.noiseZoom.x;
         float z = (float)pos.y * settings.noiseZoom.z;
@@ -65,10 +101,16 @@ public static class CustomNoise
         float amplitude = 1;
 
         float totalAmplitude = 0;
+        float noiseResult;
 
         for(int i = 0; i < settings.octaves; i++){
 
-            result += Mathf.PerlinNoise((x + settings.perlinOffset.x + settings.worldOffset.x) * frequency, (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency) * amplitude;
+            //result += Mathf.PerlinNoise((x + settings.perlinOffset.x + settings.worldOffset.x) * frequency, (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency) * amplitude;
+
+            noiseResult = Noise2D((x + settings.perlinOffset.x + settings.worldOffset.x) * frequency, (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency);
+
+            result +=  noiseResult * amplitude;
+           
 
             totalAmplitude += amplitude;
             
@@ -85,7 +127,7 @@ public static class CustomNoise
         noise = Redistribution(noise, settings);
 
         float minRedistribution = 0;
-        float maxRedistribution = CustomNoise.Redistribution(1, settings);
+        float maxRedistribution = Redistribution(1, settings);
 
         noise = MapFloatValue(noise, minRedistribution, maxRedistribution, 0, 1);
 

@@ -31,7 +31,7 @@ public class TreeGenerator : StructureGenerator
 
         Func<Vector2Int, NoiseSettings, float> noiseFunction = useDomainWarping ? 
             domainWarping.GenerateDomainNoise2D: 
-            CustomNoise.OctavePerlin2D;
+            CustomNoise.OctaveNoise2D;
 
         int xIndex = 0;
         int zIndex = 0;

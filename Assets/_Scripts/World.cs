@@ -99,9 +99,9 @@ public class World : MonoBehaviour
             WorldDataHelper.RemoveChunkData(this, pos);
         }
 
-    
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         ConcurrentDictionary<Vector3Int, ChunkData> dataDictionary = null;
-
+        
         try
         {
             dataDictionary = await CalculateWorldChunkData(worldGenerationData.chunkDataPositionsToCreate);
@@ -121,7 +121,12 @@ public class World : MonoBehaviour
         Parallel.ForEach(worldData.chunkDataDictionary.Values,  chunkData  => {
             AddOutOfChunkBoundsVoxel(chunkData);
         });
-    
+
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        Debug.Log("WorldData " + elapsedMs);
+
+        watch = System.Diagnostics.Stopwatch.StartNew();
         ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary = new ConcurrentDictionary<Vector3Int, MeshData>();
 
         List<ChunkData> dataToRender = worldData.chunkDataDictionary
@@ -129,16 +134,23 @@ public class World : MonoBehaviour
             .Select(keyvalpair => keyvalpair.Value)
             .ToList();
 
-        //try{
+        try{
             meshDataDictionary = await CreateMeshData(dataToRender);
-        // }
-        // catch(Exception ex){
-        //     Debug.Log("Task cancelled");
-        //     Debug.Log(ex.Message);
-        //     return;
-        // }
+        }
+        catch(Exception ex){
+            Debug.Log("Task cancelled");
+            Debug.Log(ex.Message);
+            return;
+        }
+        watch.Stop();
+        elapsedMs = watch.ElapsedMilliseconds;
+        Debug.Log("MeshData " + elapsedMs);
 
+        watch = System.Diagnostics.Stopwatch.StartNew();
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
+        watch.Stop();
+        elapsedMs = watch.ElapsedMilliseconds;
+        Debug.Log("ChunkRenderer " + elapsedMs);
 
     }
 
@@ -179,19 +191,14 @@ public class World : MonoBehaviour
             if(WorldDataHelper.SetVoxelFromWorldCoordinates(this, worldPosition, voxelType)){
                 placedVoxels.Add(worldPosition, voxelType);
             }
+
             
-            //Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
-            //Debug.Log(placedVoxels.ToString());
-
-            chunkData.outOfChunkBoundsVoxelDictionary = 
-                chunkData.outOfChunkBoundsVoxelDictionary.Where(x => placedVoxels.ContainsKey(x.Key) == false)
-                .ToDictionary(x => x.Key, x => x.Value);
-
-            //Debug.Log(chunkData.outOfChunkBoundsVoxelDictionary.ToString());
-            //Debug.Log("");
-            //Debug.Log("");
 
         }
+
+        chunkData.outOfChunkBoundsVoxelDictionary = 
+                chunkData.outOfChunkBoundsVoxelDictionary.Where(x => placedVoxels.ContainsKey(x.Key) == false)
+                .ToDictionary(x => x.Key, x => x.Value);
 
         
     }

@@ -64,7 +64,7 @@ public class BiomeGenerator : MonoBehaviour
         float terrainNoise;
         if(!useDomainWarping){
 
-            terrainNoise = CustomNoise.OctavePerlin2D(new Vector2Int(x,z), biomeNoiseSettings);
+            terrainNoise = CustomNoise.OctaveNoise2D(new Vector2Int(x,z), biomeNoiseSettings);
 
         }
         else{

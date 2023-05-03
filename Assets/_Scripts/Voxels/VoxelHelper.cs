@@ -114,9 +114,6 @@ public class VoxelHelper
             
         }
 
-        
-        
-
         int x = pos.x;
         int y = pos.y;
         int z = pos.z;

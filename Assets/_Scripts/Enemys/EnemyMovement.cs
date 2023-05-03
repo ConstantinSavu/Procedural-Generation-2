@@ -8,6 +8,8 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform target;
+    public Transform enemy;
+    public float targetMaxDistance = 40f;
 
     public float updateTargetSpeed = 0.1f;
     public NavMeshAgent agent;
@@ -15,6 +17,7 @@ public class EnemyMovement : MonoBehaviour
     public Coroutine followCoroutine;
 
     private void Awake(){
+        enemy = this.GetComponent<Transform>();
     }
 
     public void StartFollowing(){
@@ -32,8 +35,9 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(updateTargetSpeed);
 
         if(enabled){
-            Debug.Log("Enemy set destination after " + updateTargetSpeed);
-            agent.SetDestination(target.position);
+            if(Vector3.Distance(target.position, enemy.position) <= targetMaxDistance){
+                agent.SetDestination(target.position);
+            }
         }
         
         followCoroutine = StartCoroutine(FollowTarget());

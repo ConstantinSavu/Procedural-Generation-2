@@ -10,6 +10,7 @@ public class ChunkRenderer : MonoBehaviour
 
     public bool showGizmo = false;
 
+    [SerializeField]
     public ChunkData ChunkData {get; private set;}
 
     public bool modifiedByPlayer {

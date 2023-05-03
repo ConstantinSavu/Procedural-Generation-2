@@ -14,10 +14,22 @@ public class CustomVoxelLayer : VoxelLayerHandler
 
     public DomainWarping domainWarping;
 
+    public bool useDomainWarping = false;
+
     protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
 
-        if(Chunk.GetVoxelFromChunkCoordinates(data, pos) == VoxelType.Bedrock){
+        VoxelType currentVoxel = Chunk.GetVoxelFromChunkCoordinates(data, pos);
+
+        if(currentVoxel == VoxelType.Bedrock){
             return false;
+        }
+
+        if(currentVoxel == VoxelType.Water){
+            return false;
+        }
+
+        if(currentVoxel == VoxelType.Sand){
+           return false; 
         }
 
         VoxelType voxelType;
@@ -29,23 +41,30 @@ public class CustomVoxelLayer : VoxelLayerHandler
         }
 
         customVoxelSettings.worldOffset = data.worldReference.worldData.worldSettings.mapSeedOffset;
+        float customVoxelNoise;
+    
+        if(useDomainWarping){
+
         
-        // float customVoxelNoise = CustomNoise.OctavePerlin2D(
-        //     new Vector2Int(
-        //         data.worldPosition.x + pos.x,
-        //         data.worldPosition.z + pos.z
-        //     ),
-        //     customVoxelSettings
-        // );
-        
-        float customVoxelNoise = domainWarping.GenerateDomainNoise3D(
+            customVoxelNoise = domainWarping.GenerateDomainNoise3D(
+                new Vector3Int(
+                    data.worldPosition.x + pos.x,
+                    pos.y + data.worldPosition.y,
+                    data.worldPosition.z + pos.z
+                ),
+                customVoxelSettings
+            );
+        }
+        else{
+            customVoxelNoise = CustomNoise.OctaveNoise3D(
             new Vector3Int(
-                data.worldPosition.x + pos.x,
-                pos.y + data.worldPosition.y,
-                data.worldPosition.z + pos.z
+            data.worldPosition.x + pos.x,
+            data.worldPosition.y + pos.y,
+            data.worldPosition.z + pos.z
             ),
             customVoxelSettings
-        );
+            );
+        }
 
         if(customVoxelNoise < customVoxelThreshold){
             return false;

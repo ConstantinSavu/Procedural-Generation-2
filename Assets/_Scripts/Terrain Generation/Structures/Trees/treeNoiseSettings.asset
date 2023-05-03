@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
   m_Name: treeNoiseSettings
   m_EditorClassIdentifier: 
-  noiseZoom: {x: 0.1, y: 0.1, z: 0.1}
+  noiseZoom: {x: 2, y: 2, z: 2}
   perlinOffset: {x: -6000, y: 5000, z: 3194}
   worldOffset: {x: 0, y: 0, z: 0}
   amplitudeMultiplyer: 1.54
   frequencyMultyplier: 0.69
-  octaves: 4
+  octaves: 2
   exponent: 0.39
   redistributionModifier: 0.25
   offset: {x: 0, y: 0, z: 0}
-  minDimension: {x: 0, y: 0.3, z: 0}
+  minDimension: {x: 0, y: 0, z: 0}
   maxDimension: {x: 1, y: 1, z: 1}
   skewExponent: 4.13
   useSkew: 1

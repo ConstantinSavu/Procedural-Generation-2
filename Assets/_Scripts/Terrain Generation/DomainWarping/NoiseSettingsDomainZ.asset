@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
   m_Name: NoiseSettingsDomainZ
   m_EditorClassIdentifier: 
-  noiseZoom: {x: 0.02, y: 0.02, z: 0.02}
+  noiseZoom: {x: 1, y: 1, z: 1}
   perlinOffset: {x: 900, y: -500, z: 1500}
   worldOffset: {x: 0, y: 0, z: 0}
   amplitudeMultiplyer: 0.5
@@ -23,3 +23,6 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   minDimension: {x: 0, y: 0, z: 0}
   maxDimension: {x: 1, y: 1, z: 1}
+  skewExponent: 4
+  useSkew: 1
+  threshold: 0.5

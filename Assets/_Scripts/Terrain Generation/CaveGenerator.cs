@@ -17,46 +17,42 @@ public class CaveGenerator : MonoBehaviour
 
         biomeNoiseSettings.worldOffset = data.worldReference.worldData.worldSettings.mapSeedOffset;
 
-        for(int y = 0; y < data.chunkSize.y; y++){
-            pos.y = y;
-            Vector3Int worldPos = new Vector3Int(pos.x + data.worldPosition.x, pos.y + data.worldPosition.y, pos.z + data.worldPosition.z);
-            float noiseDensity;
-            
-            if(!useDomainWarping){
+        
+        Vector3Int worldPos = new Vector3Int(pos.x + data.worldPosition.x, pos.y + data.worldPosition.y, pos.z + data.worldPosition.z);
+        float noiseDensity;
+        
+        if(!useDomainWarping){
 
-                noiseDensity = CustomNoise.OctavePerlin3D(worldPos, biomeNoiseSettings);
+            noiseDensity = CustomNoise.OctaveNoise3D(worldPos, biomeNoiseSettings);
 
-            }
-            else{
+        }
+        else{
 
-                noiseDensity = domainWarping.GenerateDomainNoise3D(worldPos, biomeNoiseSettings);
-
-            }
-
-            if(biomeNoiseSettings.useSkew){
-
-                float normalisedWorldHeight = CustomNoise.MapFloatValue(worldPos.y,
-                    data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y,
-                    data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y,
-                    0f,
-                    1f
-                );
-
-                float skewFactor = -Mathf.Pow(normalisedWorldHeight, biomeNoiseSettings.skewExponent) + 1;
-
-                noiseDensity *= skewFactor;
-            }
-
-
-            if(noiseDensity > biomeNoiseSettings.threshold){
-                Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Stone);
-            }
-            else{
-                Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Air);
-            }
+            noiseDensity = domainWarping.GenerateDomainNoise3D(worldPos, biomeNoiseSettings);
 
         }
 
+        if(biomeNoiseSettings.useSkew){
+
+            float normalisedWorldHeight = CustomNoise.MapFloatValue(worldPos.y,
+                data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y,
+                data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y,
+                0f,
+                1f
+            );
+
+            float skewFactor = -Mathf.Pow(normalisedWorldHeight, biomeNoiseSettings.skewExponent) + 1;
+
+            noiseDensity *= skewFactor;
+        }
+
+
+        if(noiseDensity > biomeNoiseSettings.threshold){
+            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Stone);
+        }
+        else{
+            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Air);
+        }
 
         return data;
 
@@ -79,7 +75,7 @@ public class CaveGenerator : MonoBehaviour
         float terrainNoise;
         if(!useDomainWarping){
 
-            terrainNoise = CustomNoise.OctavePerlin2D(new Vector2Int(x,z), biomeNoiseSettings);
+            terrainNoise = CustomNoise.OctaveNoise2D(new Vector2Int(x,z), biomeNoiseSettings);
 
         }
         else{

@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a338043c94a6044b54b0e14ad08cfa, type: 3}
-  m_Name: Structure Positions SO
+  m_Script: {fileID: 11500000, guid: 966189cf4a31b954e850df40a75b54bd, type: 3}
+  m_Name: CurrentStructure
   m_EditorClassIdentifier: 
-  localStructurePositions:
-  - {x: 0, y: 0, z: 0}
-  worldStructurePositions:
-  - {x: 0, y: 0, z: 0}
-  groundPosition: 16
+  strucutreList:
+  - voxelType: 2
+    voxelPosition: {x: 0, y: 0, z: 0}
