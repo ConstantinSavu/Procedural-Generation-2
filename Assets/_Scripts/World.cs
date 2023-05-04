@@ -146,16 +146,16 @@ public class World : MonoBehaviour
         elapsedMs = watch.ElapsedMilliseconds;
         Debug.Log("MeshData " + elapsedMs);
 
-        watch = System.Diagnostics.Stopwatch.StartNew();
+        
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
         watch.Stop();
-        elapsedMs = watch.ElapsedMilliseconds;
-        Debug.Log("ChunkRenderer " + elapsedMs);
+        
 
     }
 
     IEnumerator ChunkCreationCoroutine(ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary) 
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         foreach (var item in meshDataDictionary)
         {
             Vector3Int position = item.Key;
@@ -171,6 +171,9 @@ public class World : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        Debug.Log("ChunkRenderer " + elapsedMs);
         if (IsWorldCreated == false)
         {
             IsWorldCreated = true;

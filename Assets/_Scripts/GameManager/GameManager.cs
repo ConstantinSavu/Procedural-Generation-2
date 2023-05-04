@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
 
     private void CreateNavMeshes()
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
 
         foreach(var surface in surfaces ){
@@ -133,6 +134,10 @@ public class GameManager : MonoBehaviour
             surface.BuildNavMesh();
             surface.AddData();
         }
+
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        Debug.Log("NavMesh " + elapsedMs);
     }
 
     public void StartCheckingTheMap(){
