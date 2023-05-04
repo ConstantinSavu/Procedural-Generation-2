@@ -1475,7 +1475,8 @@ MonoBehaviour:
   additionalLayerHandlres:
   - {fileID: 922873186}
   - {fileID: 548013548}
-  structureGenerators: []
+  structureGenerators:
+  - {fileID: 1070553035}
 --- !u!4 &1481222500
 Transform:
   m_ObjectHideFlags: 0
