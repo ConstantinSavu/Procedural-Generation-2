@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WaterLayerHandler : VoxelLayerHandler
 {
@@ -39,6 +40,7 @@ public class WaterLayerHandler : VoxelLayerHandler
         }
 
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
+        
         return true;
 
         

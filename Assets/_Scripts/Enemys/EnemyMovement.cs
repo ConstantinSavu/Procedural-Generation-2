@@ -7,7 +7,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement : MonoBehaviour
 {
-    public Transform target;
+    public GameObject target;
+    public Character character = null;
     public Transform enemy;
     public float targetMaxDistance = 40f;
 
@@ -34,10 +35,15 @@ public class EnemyMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(updateTargetSpeed);
 
+        if(character == null){
+            character = target.transform.GetComponent<Character>();
+        }
+
         if(enabled){
-            if(Vector3.Distance(target.position, enemy.position) <= targetMaxDistance){
-                agent.SetDestination(target.position);
-            }
+        if(Vector3.Distance(target.transform.position, enemy.position) <= targetMaxDistance){
+        if(!character.inWater)
+            agent.SetDestination(target.transform.position);
+        }
         }
         
         followCoroutine = StartCoroutine(FollowTarget());

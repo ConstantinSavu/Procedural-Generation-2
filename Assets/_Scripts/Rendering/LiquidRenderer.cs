@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -10,6 +12,8 @@ public class LiquidRenderer : CustomRenderer
     MeshFilter meshFilter;
     MeshCollider meshCollider;
     Mesh mesh;
+
+    public GameObject waterObstacles;
 
     private void Awake(){
 
@@ -37,6 +41,17 @@ public class LiquidRenderer : CustomRenderer
         collisionMesh.RecalculateNormals();
 
         meshCollider.sharedMesh = collisionMesh;
+
+        foreach(Vector3 pos in meshData.waterMesh.navMeshObstaclesPositions){
+            
+            GameObject waterObstacle = new GameObject(pos.ToString());
+            NavMeshModifierVolume addedVolume = waterObstacle.AddComponent<NavMeshModifierVolume>();
+
+            
+
+            waterObstacle.transform.SetParent(waterObstacles.transform);
+            waterObstacle.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
+        }
 
     }
 }
