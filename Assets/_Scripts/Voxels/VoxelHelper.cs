@@ -58,7 +58,7 @@ public class VoxelHelper
             Vector3Int neighbourVoxelCoordinates = pos + GetDirectionVector(direction);
             VoxelType neighbourVoxelType =  Chunk.GetVoxelFromChunkCoordinates(chunk, neighbourVoxelCoordinates);
 
-            if(!VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid && VoxelDataManager.voxelTextureDataDictionary[neighbourVoxelType].isSolid){
+            if(VoxelDataManager.voxelTextureDataDictionary[neighbourVoxelType].isSolid){
                 
                 continue;
             }

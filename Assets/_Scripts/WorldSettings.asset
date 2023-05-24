@@ -15,6 +15,6 @@ MonoBehaviour:
   chunkSize: {x: 16, y: 16, z: 16}
   chunkDrawingRange: {x: 4, y: 4, z: 4}
   mapSeedOffset: {x: 0, y: 0, z: 0}
-  waterThreshold: 32
+  waterThreshold: 20
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
   voxelMaxMapDimensions: {x: 0, y: 64, z: 0}

@@ -123,13 +123,13 @@ public class GameManager : MonoBehaviour
     private void CreateNavMeshes()
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
+        NavMeshSurface surface = RenderedChunks.GetComponent<NavMeshSurface>();
 
-        foreach(var surface in surfaces ){
-            
-            surface.BuildNavMesh();
-            surface.AddData();
-        }
+        
+        surface.RemoveData();
+        surface.BuildNavMesh();
+        surface.AddData();
+        
 
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;

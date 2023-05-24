@@ -45,12 +45,14 @@ public class LiquidRenderer : CustomRenderer
         foreach(Vector3 pos in meshData.waterMesh.navMeshObstaclesPositions){
             
             GameObject waterObstacle = new GameObject(pos.ToString());
-            NavMeshModifierVolume addedVolume = waterObstacle.AddComponent<NavMeshModifierVolume>();
+            NavMeshObstacle addedVolume = waterObstacle.AddComponent<NavMeshObstacle>();
 
-            
-
+            //Set to not walkable
+            addedVolume.shape = NavMeshObstacleShape.Box;
+            addedVolume.size = 1.1f * Vector3.one;
             waterObstacle.transform.SetParent(waterObstacles.transform);
             waterObstacle.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
+            
         }
 
     }
