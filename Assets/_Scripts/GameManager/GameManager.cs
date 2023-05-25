@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
             return;
-        Vector3Int raycastStartposition = world.startingPosition;
+        Vector3Int raycastStartposition = world.worldSettings.startingPosition;
         raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
         RaycastHit hit;
 
@@ -114,9 +114,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy(GameObject player){
 
-        enemy = Instantiate(enemyPrefab, player.transform.position, Quaternion.identity);
-        enemy.GetComponent<EnemyMovement>().target = player;
-        enemy.GetComponent<EnemyMovement>().StartFollowing();
+        enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player;
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().StartFollowing();
+        
 
     }
 

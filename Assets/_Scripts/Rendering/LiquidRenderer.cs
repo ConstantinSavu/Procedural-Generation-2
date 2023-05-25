@@ -13,7 +13,7 @@ public class LiquidRenderer : CustomRenderer
     MeshCollider meshCollider;
     Mesh mesh;
 
-    public GameObject waterObstacles;
+    
 
     private void Awake(){
 
@@ -42,18 +42,6 @@ public class LiquidRenderer : CustomRenderer
 
         meshCollider.sharedMesh = collisionMesh;
 
-        foreach(Vector3 pos in meshData.waterMesh.navMeshObstaclesPositions){
-            
-            GameObject waterObstacle = new GameObject(pos.ToString());
-            NavMeshObstacle addedVolume = waterObstacle.AddComponent<NavMeshObstacle>();
-
-            //Set to not walkable
-            addedVolume.shape = NavMeshObstacleShape.Box;
-            addedVolume.size = 1.1f * Vector3.one;
-            waterObstacle.transform.SetParent(waterObstacles.transform);
-            waterObstacle.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
-            
-        }
-
+        
     }
 }

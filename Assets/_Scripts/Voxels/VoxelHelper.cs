@@ -106,7 +106,7 @@ public class VoxelHelper
         float yNegativeOffset = - 0.5f;
         float zNegativeOffset = - 0.5f;
 
-        float zFightingOffset = 0.1f;
+        float zFightingOffset = 0.001f;
         
         bool generatesCollider = VoxelDataManager.voxelTextureDataDictionary[voxelType].generatesCollider;
         bool isLiquid = VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid;

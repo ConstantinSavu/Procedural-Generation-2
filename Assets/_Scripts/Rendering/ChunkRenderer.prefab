@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d047d59d04254e54288d2172b4a166c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterObstacles: {fileID: 4099296671751896756}
 --- !u!1 &6667395024469844216
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,4 +272,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25196242497ca214588eb9ec32418bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterObstacles: {fileID: 6667395024469844216}

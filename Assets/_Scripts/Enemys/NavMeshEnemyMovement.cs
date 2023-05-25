@@ -5,20 +5,25 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyMovement : MonoBehaviour
+public class NavMeshEnemyMovement : MonoBehaviour
 {
     public GameObject target;
     public Character character = null;
-    public Transform enemy;
+    public Transform navMeshEnemy;
+    public Transform rigidBodyEnemy;
     public float targetMaxDistance = 40f;
+    public float maxDistanceBtwnAgentAndBody = 1f;
 
     public float updateTargetSpeed = 0.1f;
     public NavMeshAgent agent;
+    [SerializeField]
+    public NavMeshPath path;
 
     public Coroutine followCoroutine;
 
     private void Awake(){
-        enemy = this.GetComponent<Transform>();
+        navMeshEnemy = this.GetComponent<Transform>();
+        path = new NavMeshPath();
     }
 
     public void StartFollowing(){
@@ -40,9 +45,19 @@ public class EnemyMovement : MonoBehaviour
         }
 
         if(enabled){
-        if(Vector3.Distance(target.transform.position, enemy.position) <= targetMaxDistance){
-        if(!character.inWater)
-            agent.SetDestination(target.transform.position);
+        
+        if(Vector3.Distance(rigidBodyEnemy.position, navMeshEnemy.position) > maxDistanceBtwnAgentAndBody){
+            agent.Warp(rigidBodyEnemy.position);
+        }
+
+        if(Vector3.Distance(target.transform.position, navMeshEnemy.position) <= targetMaxDistance){
+            
+            agent.CalculatePath(target.transform.position, path);
+            agent.SetPath(path);
+            foreach(var corner in path.corners){
+                Debug.Log(corner);
+            }
+            
         }
         }
         

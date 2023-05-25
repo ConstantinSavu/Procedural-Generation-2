@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -11,6 +13,7 @@ public class SolidRenderer : CustomRenderer
     MeshCollider meshCollider;
     Mesh mesh;
 
+    public GameObject waterObstacles;
     private void Awake(){
 
         meshFilter = GetComponent<MeshFilter>();
@@ -37,6 +40,19 @@ public class SolidRenderer : CustomRenderer
         collisionMesh.RecalculateNormals();
 
         meshCollider.sharedMesh = collisionMesh;
+
+        foreach(Vector3 pos in meshData.waterMesh.navMeshObstaclesPositions){
+            
+            NavMeshModifierVolume addedVolume = waterObstacles.AddComponent<NavMeshModifierVolume>();
+
+            //Set to not walkable
+            addedVolume.area = 1;
+            addedVolume.center = pos;
+            
+            addedVolume.size = 1.1f * Vector3.one;
+            
+        }
+
 
     }
 }
