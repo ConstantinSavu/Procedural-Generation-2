@@ -41,6 +41,7 @@ public class SolidRenderer : CustomRenderer
 
         meshCollider.sharedMesh = collisionMesh;
 
+        /*
         foreach(Vector3 pos in meshData.waterMesh.navMeshObstaclesPositions){
             
             NavMeshModifierVolume addedVolume = waterObstacles.AddComponent<NavMeshModifierVolume>();
@@ -52,7 +53,7 @@ public class SolidRenderer : CustomRenderer
             addedVolume.size = 1.1f * Vector3.one;
             
         }
-
+        */
 
     }
 }

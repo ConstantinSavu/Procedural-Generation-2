@@ -8,9 +8,10 @@ using UnityEngine.AI;
 public class NavMeshEnemyMovement : MonoBehaviour
 {
     public GameObject target;
+    
     public Character character = null;
     public Transform navMeshEnemy;
-    public Transform rigidBodyEnemy;
+    public GameObject rigidBodyEnemy;
     public float targetMaxDistance = 40f;
     public float maxDistanceBtwnAgentAndBody = 1f;
 
@@ -28,12 +29,18 @@ public class NavMeshEnemyMovement : MonoBehaviour
 
     public void StartFollowing(){
         if(followCoroutine == null){
+            rigidBodyEnemy.GetComponent<RigidBodyEnemyMovement>().rotationTarget = target.transform;
             followCoroutine = StartCoroutine(FollowTarget());
             return;
         }
 
         Debug.Log("Enemy already following");
         
+    }
+
+    public void FixedUpdate()
+    {
+        Debug.Log(path.status);
     }
 
     private IEnumerator FollowTarget()
@@ -46,18 +53,15 @@ public class NavMeshEnemyMovement : MonoBehaviour
 
         if(enabled){
         
-        if(Vector3.Distance(rigidBodyEnemy.position, navMeshEnemy.position) > maxDistanceBtwnAgentAndBody){
-            agent.Warp(rigidBodyEnemy.position);
+        if(Vector3.Distance(rigidBodyEnemy.transform.position, navMeshEnemy.position) > maxDistanceBtwnAgentAndBody){
+            agent.Warp(rigidBodyEnemy.transform.position);
         }
 
         if(Vector3.Distance(target.transform.position, navMeshEnemy.position) <= targetMaxDistance){
-            
+        if(!character.inWater){
             agent.CalculatePath(target.transform.position, path);
             agent.SetPath(path);
-            foreach(var corner in path.corners){
-                Debug.Log(corner);
-            }
-            
+        }
         }
         }
         

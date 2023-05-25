@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RigidBodyEnemyMovement : MonoBehaviour
 {
-    public Transform target;
+    public Transform positionTarget;
+    public Transform rotationTarget;
     public float stoppingDistance = 0.1f;
-    public float movementSpeed = 5f;
+    public Vector3 movementSpeed = new Vector3(5f, 5f, 5f);
     public float rotationSpeed = 5f;
 
     private Rigidbody rb;
 
-    public float angle;
+    public bool narutoRun = false;
 
     void Awake(){
         rb = GetComponent<Rigidbody>();
@@ -27,10 +29,26 @@ public class RigidBodyEnemyMovement : MonoBehaviour
     void FixedUpdate()
     {
 
-        Vector3 targetDirection = target.position - transform.position;
-        rb.MoveRotation(target.rotation);
+        Vector3 targetDirection = positionTarget.position - transform.position;
+        
 
-        float distance = Vector3.Distance(transform.position, target.position);
+        float distance = Vector3.Distance(transform.position, positionTarget.position);
+
+        if(rotationTarget.rotation != null){
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (rotationTarget.position - transform.position), rotationSpeed * Time.fixedDeltaTime);
+            
+            if(!narutoRun){
+                targetRotation.x = 0;
+                targetRotation.z = 0;
+            }
+            
+            
+            targetRotation.Normalize();
+            rb.MoveRotation(targetRotation);
+        }
+        else{
+            rb.MoveRotation(positionTarget.rotation);
+        }
 
         if(distance < stoppingDistance){
             return;
@@ -38,7 +56,8 @@ public class RigidBodyEnemyMovement : MonoBehaviour
 
         targetDirection.Normalize();
 
-        rb.MovePosition(transform.position + (targetDirection * movementSpeed * Time.deltaTime));
+        rb.MovePosition(transform.position + (Vector3.Scale(targetDirection, movementSpeed) * Time.fixedDeltaTime));
+        
         
         
         

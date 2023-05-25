@@ -158,8 +158,10 @@ public class VoxelHelper
 
         if(drawLower){
             yPositiveOffset = 0.35f;
+
+            Vector3 auxPos = (Vector3)pos;
             
-            meshData.navMeshObstaclesPositions.Add((Vector3)pos);
+            meshData.navMeshObstaclesPositions.Add(auxPos);
         }
 
         int x = pos.x;
