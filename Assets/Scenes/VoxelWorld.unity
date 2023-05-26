@@ -377,7 +377,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  startingPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &327497405
 Transform:
   m_ObjectHideFlags: 0
