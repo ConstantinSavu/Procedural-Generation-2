@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d047d59d04254e54288d2172b4a166c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterObstacles: {fileID: 4099296671751896756}
 --- !u!1 &6667395024469844216
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +178,7 @@ GameObject:
   m_Name: LiquidRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8067847425675758421

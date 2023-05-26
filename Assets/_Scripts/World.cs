@@ -19,7 +19,7 @@ public class World : MonoBehaviour
 
     public UnityEvent OnWorldCreated, OnNewChunksGenerated;
 
-    public Vector3Int startingPosition = new Vector3Int(0, 0, 0);
+    
 
     public struct WorldGenerationData{
         public List<Vector3Int> chunkPositionsToCreate;
@@ -67,7 +67,7 @@ public class World : MonoBehaviour
     public async void GenerateWorld(){
 
         IsWorldCreated = false;
-        await GenerateWorld(startingPosition);
+        await GenerateWorld(worldSettings.startingPosition);
         
     }
 

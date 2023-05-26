@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -10,6 +12,8 @@ public class LiquidRenderer : CustomRenderer
     MeshFilter meshFilter;
     MeshCollider meshCollider;
     Mesh mesh;
+
+    
 
     private void Awake(){
 
@@ -38,5 +42,6 @@ public class LiquidRenderer : CustomRenderer
 
         meshCollider.sharedMesh = collisionMesh;
 
+        
     }
 }

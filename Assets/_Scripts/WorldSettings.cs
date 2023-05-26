@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class WorldSettings : ScriptableObject
 {
+    public Vector3Int startingPosition = new Vector3Int(0, 0, 0);
     public Vector3Int chunkSize = new Vector3Int(Constants.chunkWidth, Constants.chunkHeight, Constants.chunkDepth);
     public Vector3Int chunkDrawingRange = new Vector3Int(8, 8, 8);
 

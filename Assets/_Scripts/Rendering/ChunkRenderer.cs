@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChunkRenderer : MonoBehaviour
 {
     public CustomRenderer solidRenderer;
-    public CustomRenderer liquidRenderer; 
+    public CustomRenderer liquidRenderer;
 
     public bool showGizmo = false;
 

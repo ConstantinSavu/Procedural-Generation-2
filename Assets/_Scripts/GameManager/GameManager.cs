@@ -51,10 +51,6 @@ public class GameManager : MonoBehaviour
 
         CheckIfInWater();
 
-        if(Input.GetKeyDown(KeyCode.X)){
-            enemy.GetComponent<EnemyMovement>().StartFollowing();
-        }
-
         if(Input.GetKeyDown(KeyCode.B)){
             CreateNavMeshes();
         }
@@ -82,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
             return;
-        Vector3Int raycastStartposition = world.startingPosition;
+        Vector3Int raycastStartposition = world.worldSettings.startingPosition;
         raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
         RaycastHit hit;
 
@@ -118,22 +114,23 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy(GameObject player){
 
-        enemy = Instantiate(enemyPrefab, player.transform.position, Quaternion.identity);
-        enemy.GetComponent<EnemyMovement>().target = player.transform;
-        enemy.GetComponent<EnemyMovement>().StartFollowing();
+        enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player;
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().StartFollowing();
+        
 
     }
 
     private void CreateNavMeshes()
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
+        NavMeshSurface surface = RenderedChunks.GetComponent<NavMeshSurface>();
 
-        foreach(var surface in surfaces ){
-            
-            surface.BuildNavMesh();
-            surface.AddData();
-        }
+        
+        surface.RemoveData();
+        surface.BuildNavMesh();
+        surface.AddData();
+        
 
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
