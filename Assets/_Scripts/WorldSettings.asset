@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingPosition: {x: 13, y: 0, z: -9}
   chunkSize: {x: 16, y: 64, z: 16}
-  chunkDrawingRange: {x: 8, y: 0, z: 8}
+  chunkDrawingRange: {x: 4, y: 0, z: 4}
   mapSeedOffset: {x: 0, y: 0, z: 0}
   waterThreshold: 40
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}

@@ -16,13 +16,22 @@ public class Character : MonoBehaviour
 
     public float interactionRayLength = 5;
 
+    public LayerMask hitMask;
+
     public LayerMask groundMask;
 
+    public LayerMask enemyMask;
     public bool fly = false;
     public bool inWater = false;
 
     public Animator animator;
-    bool isWaiting = false;
+    bool isJumpWaiting = false;
+
+    public bool isAttacking = false;
+    private float animationFinnishTime = 0.9f;
+
+    private float runningModifier = 0.5f;
+    
 
     public void Awake(){
         
@@ -57,6 +66,7 @@ public class Character : MonoBehaviour
 
     void Update(){
 
+
         if(fly){
 
             animator.SetFloat("speed", 0);
@@ -64,6 +74,10 @@ public class Character : MonoBehaviour
             animator.ResetTrigger("jump");
             playerMovement.Fly(playerInput.MovementInput, playerInput.CrouchingingPressed, playerInput.IsJumping, playerInput.RunningPressed);
             return;
+        }
+
+        if(isAttacking && animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinnishTime){
+            isAttacking = false;
         }
 
         if(inWater){
@@ -91,19 +105,22 @@ public class Character : MonoBehaviour
             setJump = false;
         }
 
-        if(isWaiting){
+        if(isJumpWaiting){
             setJump = false;
         }
 
         if(setJump){
             animator.SetTrigger("jump");
-            isWaiting = true;
-            StopAllCoroutines();
-            StartCoroutine(ResetWaiting());
+            isJumpWaiting = true;
+            StopCoroutine(ResetJumpWaiting());
+            StartCoroutine(ResetJumpWaiting());
         }
 
+        int runningPressed = playerInput.RunningPressed ? 1 : 0;
 
-        animator.SetFloat("speed", playerInput.MovementInput.magnitude);
+        float animationSpeed = Math.Clamp(playerInput.MovementInput.magnitude, 0, 1) +
+                                runningPressed * runningModifier;
+        animator.SetFloat("speed", animationSpeed);
         playerMovement.HandleGravity(playerInput.IsJumping);
         playerMovement.Walk(playerInput.MovementInput, playerInput.RunningPressed);
     }
@@ -123,44 +140,98 @@ public class Character : MonoBehaviour
             setJump = false;
         }
 
-        if(isWaiting){
+        if(isJumpWaiting){
             setJump = false;
         }
 
         if(setJump){
             animator.SetTrigger("jump");
-            isWaiting = true;
-            StopAllCoroutines();
-            StartCoroutine(ResetWaiting());
+            isJumpWaiting = true;
+            StopCoroutine(ResetJumpWaiting());
+            StartCoroutine(ResetJumpWaiting());
         }
 
 
-        animator.SetFloat("speed", playerInput.MovementInput.magnitude);
+        int runningPressed = playerInput.RunningPressed ? 1 : 0;
+
+        float animationSpeed = Math.Clamp(playerInput.MovementInput.magnitude, 0, 1) +
+                                runningPressed * runningModifier;
+        animator.SetFloat("speed", animationSpeed);
         playerMovement.HandleWaterGravity(playerInput.IsJumping);
         playerMovement.WaterWalk(playerInput.MovementInput, playerInput.RunningPressed);
 
     }
 
-    IEnumerator ResetWaiting(){
+    IEnumerator ResetJumpWaiting(){
 
         yield return new WaitForSeconds(0.1f);
         animator.ResetTrigger("jump");
-        isWaiting = false;
+        isJumpWaiting = false;
+
+    }
+
+    IEnumerator ResetAttackWaiting(){
+
+        yield return new WaitForSeconds(0.1f);
+        isAttacking = true;
 
     }
 
     private void HandleMouseClick(){
 
+
+        if(!isAttacking){
+            Attack();
+        }
+        else{   
+            Debug.Log("Can't attack");
+        }
+        
+
+    }
+
+    private void Attack(){
+        
+        animator.SetTrigger("isAttacking");
+        StopCoroutine(ResetAttackWaiting());
+        StartCoroutine(ResetAttackWaiting());
+        
         Ray playerRay = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
 
         RaycastHit hit;
 
-        if(Physics.Raycast(playerRay, out hit, interactionRayLength, groundMask)){
 
-            VoxelType hitBlock = CheckTerrain(hit);
+        if(Physics.Raycast(playerRay, out hit, interactionRayLength, hitMask)){
 
-            if(!VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
-                return;
+            LayerMask hitLayer = (1 << hit.transform.gameObject.layer);
+
+            if(hitLayer == groundMask.value){
+                TerrainHit(hit);
+            }
+            else if(hitLayer == enemyMask.value){
+                EnemyHit(hit);
+            }
+                  
+
+        }
+        
+    }
+    private void EnemyHit(RaycastHit hit){
+        Debug.Log("Hit Enemy");
+        Destroy(hit.transform.parent.gameObject);
+    }
+
+    private void TerrainHit(RaycastHit hit){
+
+        VoxelType hitBlock = CheckTerrain(hit);
+            try{
+
+                if(!VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
+                    return;
+                }
+            }
+            catch(Exception e){
+                Debug.Log(e.Message);
             }
             
             bool modifiedTerrain = ModifyTerrain(hit);
@@ -168,8 +239,6 @@ public class Character : MonoBehaviour
             if(!modifiedTerrain){
                 Debug.Log(hitBlock);
             }
-
-        }
 
     }
 

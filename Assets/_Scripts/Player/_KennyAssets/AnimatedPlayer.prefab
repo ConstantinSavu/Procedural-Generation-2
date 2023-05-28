@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 4775126311332359082}
   - component: {fileID: 4890336649464530813}
   m_Layer: 6
-  m_Name: AnimatedPlayerRaw
+  m_Name: AnimatedPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,12 +175,19 @@ MonoBehaviour:
   playerMovement: {fileID: 4775126311332359082}
   world: {fileID: 0}
   interactionRayLength: 5
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 136
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
   fly: 0
   inWater: 0
   animator: {fileID: 116692707738079568}
+  isAttacking: 0
 --- !u!1001 &116692707728663600
 PrefabInstance:
   m_ObjectHideFlags: 0

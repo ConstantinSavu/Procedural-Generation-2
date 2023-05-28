@@ -27,6 +27,10 @@ public class NavMeshEnemyMovement : MonoBehaviour
         path = new NavMeshPath();
     }
 
+    public void Start(){
+        StartFollowing();
+    }
+
     public void StartFollowing(){
         if(followCoroutine == null){
             rigidBodyEnemy.GetComponent<RigidBodyEnemyMovement>().rotationTarget = target.transform;

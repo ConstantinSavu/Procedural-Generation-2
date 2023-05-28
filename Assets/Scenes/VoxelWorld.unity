@@ -1938,7 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10cfd84676f27014ea3f9f10a4b22552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 116692708104115924, guid: d43e9bef6cf8dc74dbbc13269406cc57,
+  playerPrefab: {fileID: 7042956741830793130, guid: 21d07fa14771f18439ba29a1ce7b64f3,
     type: 3}
   enemyPrefab: {fileID: 4000047366560542202, guid: 0118e9e38cabd084dbc2790b0300860f,
     type: 3}

@@ -116,9 +116,7 @@ public class GameManager : MonoBehaviour
 
         enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
         enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player;
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().StartFollowing();
         
-
     }
 
     private void CreateNavMeshes()
