@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     private PlayerMovement playerMovement;
 
+    
+
     public World world;
 
     public float interactionRayLength = 5;
@@ -218,7 +220,7 @@ public class Character : MonoBehaviour
     }
     private void EnemyHit(RaycastHit hit){
         Debug.Log("Hit Enemy");
-        Destroy(hit.transform.parent.gameObject);
+        hit.transform.GetComponent<NavMeshEnemyMovement>().TakeDamage(1f);
     }
 
     private void TerrainHit(RaycastHit hit){
@@ -261,5 +263,7 @@ public class Character : MonoBehaviour
 
         return world.CheckVoxel(hit);
     }
+
+    
 
 }

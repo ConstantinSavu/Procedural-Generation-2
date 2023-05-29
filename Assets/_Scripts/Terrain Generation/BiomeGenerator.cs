@@ -59,17 +59,24 @@ public class BiomeGenerator : MonoBehaviour
 
     public int Get2DTerrainY(int x, int z, ChunkData data){
 
-        
-        //Get the noise for index noise_1, noise_2, returns normalized value
+        int heightMapIndex = x * data.chunkSize.x + z;
+
+        if(data.heightMap[heightMapIndex] != 0){
+            return data.heightMap[heightMapIndex];
+        }
+
+        int worldPosX = x + data.worldPosition.x;
+        int worldPosZ = z + data.worldPosition.z;
+
         float terrainNoise;
         if(!useDomainWarping){
 
-            terrainNoise = CustomNoise.OctaveNoise2D(new Vector2Int(x,z), biomeNoiseSettings);
+            terrainNoise = CustomNoise.OctaveNoise2D(new Vector2Int(worldPosX,worldPosZ), biomeNoiseSettings);
 
         }
         else{
 
-            terrainNoise = domainWarping.GenerateDomainNoise2D(new Vector2Int(x,z), biomeNoiseSettings);
+            terrainNoise = domainWarping.GenerateDomainNoise2D(new Vector2Int(worldPosX,worldPosZ), biomeNoiseSettings);
 
         }
 

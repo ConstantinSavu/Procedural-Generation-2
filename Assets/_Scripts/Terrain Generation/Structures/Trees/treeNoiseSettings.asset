@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
   m_Name: treeNoiseSettings
   m_EditorClassIdentifier: 
-  noiseZoom: {x: 2, y: 2, z: 2}
+  noiseZoom: {x: 10, y: 10, z: 10}
   perlinOffset: {x: -6000, y: 5000, z: 3194}
   worldOffset: {x: 0, y: 0, z: 0}
   amplitudeMultiplyer: 1.54

@@ -309,7 +309,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  startingPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &327497405
 Transform:
   m_ObjectHideFlags: 0
@@ -1648,7 +1647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
-  currentStructure: {fileID: 11400000, guid: c41396b8b283bff42a53ae2a90d8529c, type: 2}
+  currentStructure: {fileID: 11400000, guid: 3bd48ab0d73b82344b27d93727f028dc, type: 2}
 --- !u!1001 &77705598311181288
 PrefabInstance:
   m_ObjectHideFlags: 0

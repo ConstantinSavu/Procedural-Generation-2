@@ -7,12 +7,9 @@ public class StructureViewer : BiomeGenerator
     public override ChunkData ProcessVoxel(ChunkData data, Vector3Int pos, int groundPosition){
     
 
-        if(data.worldPosition == Vector3Int.zero){
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Grass_Dirt);
-        }
-        else{
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Air);
-        }
+        
+        Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Air);
+        
         
 
         return data;

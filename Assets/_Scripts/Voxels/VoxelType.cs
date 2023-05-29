@@ -15,7 +15,8 @@ public enum VoxelType{
     TreeLeavesSolid,
     Water,
     Sand,
-    Bedrock
+    Bedrock,
+    Cactus
 
 
 }

@@ -1940,7 +1940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7042956741830793130, guid: 21d07fa14771f18439ba29a1ce7b64f3,
     type: 3}
-  enemyPrefab: {fileID: 4000047366560542202, guid: 0118e9e38cabd084dbc2790b0300860f,
+  enemyPrefab: {fileID: 3809740221833649423, guid: d0c68c9e88b3b644daf641a4703ea532,
     type: 3}
   RenderedChunks: {fileID: 1526382758}
   currentPlayerChunkPosition: {x: 0, y: 0, z: 0}

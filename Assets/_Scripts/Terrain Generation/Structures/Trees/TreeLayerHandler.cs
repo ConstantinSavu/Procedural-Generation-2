@@ -11,7 +11,7 @@ public class TreeLayerHandler : StructreLayerHandler
     protected override bool TryHandling(ChunkData data, Vector3Int treePos, BiomeGenerator biomeGenerator)
     {
 
-        int wolrdGroundPosition = biomeGenerator.Get2DTerrainY(treePos.x + data.worldPosition.x, treePos.z + data.worldPosition.z, data);
+        int wolrdGroundPosition = biomeGenerator.Get2DTerrainY(treePos.x, treePos.z, data);
         int localGroundPosition = wolrdGroundPosition - data.worldPosition.y;
         
         treePos.y = localGroundPosition;
