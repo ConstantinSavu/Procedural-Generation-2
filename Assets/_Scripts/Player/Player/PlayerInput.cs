@@ -22,6 +22,15 @@ public class PlayerInput : MonoBehaviour
         GetRunInput();
         GetCrouchInput();
         GetFlyInput();
+
+        if(Input.GetKeyDown(KeyCode.P)){
+            if(Time.timeScale == 1){
+               Time.timeScale = 0; 
+            }
+            else{
+                Time.timeScale = 1;
+            }
+        }
     }
 
     private void GetFlyInput(){

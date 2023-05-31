@@ -31,6 +31,7 @@ public class EnemyDamageDealer : MonoBehaviour
                 if(hit.transform.TryGetComponent<HealthSystem>(out healthSystem)){
                     healthSystem.TakeDamage(weaponDamage);
                 }
+                
             }
         }
     }

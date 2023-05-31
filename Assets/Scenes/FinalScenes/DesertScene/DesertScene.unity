@@ -1355,7 +1355,7 @@ MonoBehaviour:
   biomeNoiseSettings: {fileID: 11400000, guid: d1611f4a389db6c40a72d6fef0716f7e, type: 2}
   domainWarping: {fileID: 1481222501}
   useDomainWarping: 0
-  firstLayer: {fileID: 1573538488}
+  firstLayer: {fileID: 1921592050}
   additionalLayerHandlres:
   - {fileID: 548013548}
   structureGenerators:

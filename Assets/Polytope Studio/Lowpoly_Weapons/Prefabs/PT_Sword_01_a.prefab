@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4489677676252762129}
   - component: {fileID: 4489677676255662129}
   - component: {fileID: 4489677676254663409}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PT_Sword_01_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8158424582554950155}
   - component: {fileID: 6761288516572108379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyDamageDealerMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
