@@ -81,13 +81,35 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 236398305, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
+      propertyPath: eyes
+      value: 
+      objectReference: {fileID: 7042956741934734679}
+    - target: {fileID: 236398305, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
+      propertyPath: solidFogEnd
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 236398305, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
+      propertyPath: waterFogEnd
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 236398305, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
+      propertyPath: solidProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c296aa10e936a74eb3b6f2c73a48568,
+        type: 2}
+    - target: {fileID: 236398305, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
+      propertyPath: waterProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: a30ae2058fdcb394eba9f32a012c18cf,
+        type: 2}
+    - target: {fileID: 236398305, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
       propertyPath: invertedMouse
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 116692708104115924, guid: d43e9bef6cf8dc74dbbc13269406cc57,
         type: 3}
       propertyPath: m_Name
-      value: AnimatedPlayerRaw
+      value: AnimatedPlayerWithSword
       objectReference: {fileID: 0}
     - target: {fileID: 116692708104115930, guid: d43e9bef6cf8dc74dbbc13269406cc57,
         type: 3}
@@ -144,6 +166,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4775126311332359082, guid: d43e9bef6cf8dc74dbbc13269406cc57,
+        type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 1544
+      objectReference: {fileID: 0}
     - target: {fileID: 4890336649464530813, guid: d43e9bef6cf8dc74dbbc13269406cc57,
         type: 3}
       propertyPath: mainCamera
@@ -151,8 +178,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4890336649464530813, guid: d43e9bef6cf8dc74dbbc13269406cc57,
         type: 3}
+      propertyPath: digMask.m_Bits
+      value: 1544
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890336649464530813, guid: d43e9bef6cf8dc74dbbc13269406cc57,
+        type: 3}
       propertyPath: hitMask.m_Bits
-      value: 136
+      value: 1672
       objectReference: {fileID: 0}
     - target: {fileID: 4890336649464530813, guid: d43e9bef6cf8dc74dbbc13269406cc57,
         type: 3}
@@ -166,6 +198,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d43e9bef6cf8dc74dbbc13269406cc57, type: 3}
+--- !u!4 &7042956741934734679 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 116692707868318761, guid: d43e9bef6cf8dc74dbbc13269406cc57,
+    type: 3}
+  m_PrefabInstance: {fileID: 6927390209120715134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7042956742063652764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 116692707728801506, guid: d43e9bef6cf8dc74dbbc13269406cc57,

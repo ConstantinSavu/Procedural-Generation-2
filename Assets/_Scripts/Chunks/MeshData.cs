@@ -5,31 +5,33 @@ using UnityEngine;
 public class MeshData
 {
     public List<Vector3> vertices = new List<Vector3>();
-    public HashSet<Vector3> navMeshObstaclesPositions = new HashSet<Vector3>();
     public List<int> triangles = new List<int>();
     public List<Vector2> uv = new List<Vector2>();
 
-    public MeshData waterMesh;
+    public MeshData solidMesh;
+    public MeshData liquidMesh;
+    public MeshData underLiquidMesh;
+    public MeshData transparentMesh;
     private bool isMainMesh = true;
 
     public MeshData(bool isMainMesh){
 
         if(isMainMesh){
 
-            waterMesh = new MeshData(false);
+            solidMesh = new MeshData(false);
+            liquidMesh = new MeshData(false);
+            underLiquidMesh = new MeshData(false);
+            transparentMesh = new MeshData(false);
 
         }
 
     }
 
-    public void AddVertex(Vector3 vertex, bool vertexAddCollider){
-        
+    public void AddVertex(Vector3 vertex){
         vertices.Add(vertex);
-
-
     }
 
-    public void AddQuadTriangles(bool triangleAddCollider, bool isLiquid){
+    public void AddQuadTriangles(bool triangleAddCollider){
 
         int verticesCount = vertices.Count;
 

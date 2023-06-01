@@ -107,6 +107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1610851860286670867, guid: cdc54ba7cadbac449bc618e7d0657b45,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610851860286670867, guid: cdc54ba7cadbac449bc618e7d0657b45,
+        type: 3}
       propertyPath: m_StoppingDistance
       value: 2.5
       objectReference: {fileID: 0}
@@ -125,6 +130,11 @@ PrefabInstance:
       propertyPath: movementSpeed.y
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3921131946135214221, guid: cdc54ba7cadbac449bc618e7d0657b45,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4167149143628265060, guid: cdc54ba7cadbac449bc618e7d0657b45,
         type: 3}
       propertyPath: m_Radius
@@ -139,6 +149,26 @@ PrefabInstance:
         type: 3}
       propertyPath: attackRange
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447855433125941782, guid: cdc54ba7cadbac449bc618e7d0657b45,
+        type: 3}
+      propertyPath: skinMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c79855c6f54ed954293d041acc3120a8, type: 2}
+    - target: {fileID: 7447855433125941782, guid: cdc54ba7cadbac449bc618e7d0657b45,
+        type: 3}
+      propertyPath: damageColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447855433125941782, guid: cdc54ba7cadbac449bc618e7d0657b45,
+        type: 3}
+      propertyPath: damageColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447855433125941782, guid: cdc54ba7cadbac449bc618e7d0657b45,
+        type: 3}
+      propertyPath: damageColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7842229014296490939, guid: cdc54ba7cadbac449bc618e7d0657b45,
         type: 3}

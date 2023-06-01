@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     public float detectionTime = 0.5f;
     public CinemachineVirtualCamera camera_VM;
 
-    public UnityEvent inWater, onSolid;
-
     private NavMeshSurface[] surfaces;
 
     public void Awake(){
@@ -39,8 +37,10 @@ public class GameManager : MonoBehaviour
 
         }
         
-        camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y * 4, 0);
+        camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y, 0);
         camera_VM.transform.rotation *= Quaternion.Euler(Vector3.right * 90);
+        camera_VM.m_Lens.ModeOverride = Cinemachine.LensSettings.OverrideModes.Orthographic;
+    
     }
 
     public void Update(){
@@ -49,27 +49,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        CheckIfInWater();
-
         if(Input.GetKeyDown(KeyCode.B)){
             CreateNavMeshes();
-        }
-
-    }
-
-    void CheckIfInWater()
-    {
-
-        VoxelType voxelType = WorldDataHelper.GetVoxelFromWorldCoorinates(world, Vector3Int.RoundToInt(player.transform.position));
-
-        if(voxelType == VoxelType.Water){
-            
-            inWater?.Invoke();
-            
-        }
-        else{
-            
-            onSolid?.Invoke();
         }
 
     }
@@ -87,10 +68,8 @@ public class GameManager : MonoBehaviour
         if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
         {
             player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
-            camera_VM.Follow = player.transform.GetChild(0);
-
-            inWater.AddListener(player.GetComponent<Character>().InWater);
-            onSolid.AddListener(player.GetComponent<Character>().OnSolid);
+            PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
+            playerCamera.SetCamera(camera_VM);
 
             StartCheckingTheMap();
             SpawnEnemy(player);
@@ -115,6 +94,9 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy(GameObject player){
 
         enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.transform;
+
+        enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.forward , Quaternion.identity);
         enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.transform;
         
     }

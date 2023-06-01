@@ -83,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(IsGrounded && playerVelocity.y < 0){
             playerVelocity.y = 0f;
+            
         }
 
         if(IsJumping && IsGrounded){
@@ -96,8 +97,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleWaterGravity(bool IsJumping){
 
-        if(IsGrounded && playerVelocity.y < 0){
-            playerVelocity.y = 0f;
+        if(IsGrounded){
+            playerVelocity.y = 0.1f;
         }
 
         if(IsJumping){

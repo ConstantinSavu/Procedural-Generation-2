@@ -17,6 +17,7 @@ public class TextureData{
     public VoxelType voxelType;
     public Vector2Int up, down, side;
     public bool isSolid = true;
+    public bool isTransparent = false;
     public bool generatesCollider = true;
     public bool isLiquid = false;
     public bool isDestructable = false;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class VoxelDataManager : MonoBehaviour
 {
     public static float textureOffset = 0.001f;
-    public static float tileSizeX, tileSizeY;
+    public static Vector2 tileSize;
     public static Dictionary<VoxelType, TextureData> voxelTextureDataDictionary = new Dictionary<VoxelType, TextureData>();
     public VoxelDataSO textureData;
 
@@ -21,8 +21,8 @@ public class VoxelDataManager : MonoBehaviour
 
         }
 
-        tileSizeX = textureData.textureSizeX;
-        tileSizeY = textureData.textureSizeY;
+        tileSize.x = textureData.textureSizeX;
+        tileSize.y = textureData.textureSizeY;
 
     }
 

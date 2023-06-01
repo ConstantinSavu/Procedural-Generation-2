@@ -8,32 +8,63 @@ using UnityEngine.AI;
 public class NavMeshEnemyMovement : MonoBehaviour
 {
     public Transform target;
-    public Character character = null;
     public float targetMaxDistance = 40f;
     public float updateTargetSpeed = 0.1f;
-    public NavMeshAgent agent;
-    Animator animator;
 
-    EnemyDamageDealer enemyDamageDealer = null;
+    public Material skinMaterial;
+
+    public Color damageColor;
+    public float changeColorTime = 0.5f;
 
     public float damping = 1f;
     public float health = 3;
     public float attackRange = 1.5f;
-    
+    private NavMeshAgent agent;
+    Animator animator;
+    EnemyDamageDealer enemyDamageDealer = null;
     public float animationFinnishTime = 0.9f;
-
     private Coroutine followCoroutine;
     private bool isAttacking = false;
     private bool dealtDamage = false;
 
+    class ColorChangeRenderer{
+        public Renderer renderer;
+        public Color originalColor;
+
+        public ColorChangeRenderer(Renderer renderer, Color originalColor){
+
+            this.renderer = renderer;
+            this.originalColor = originalColor;
+            
+        }
+
+    }
+    List<ColorChangeRenderer> colorChangeRenderers = new List<ColorChangeRenderer>();
+    
+    
+
     private void Awake(){
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+
+        foreach(Renderer renderer in renderers)
+        {
+            try{
+                Color originalColor = renderer.material.GetColor("_OTHERCOLOR");
+
+                ColorChangeRenderer colorChangeRenderer = new ColorChangeRenderer(renderer, originalColor);
+                colorChangeRenderers.Add(colorChangeRenderer);
+            }
+            catch(Exception e){
+                Debug.Log(e.Message);
+            }
+        }
+ 
     }
 
     public void Start(){
-        if(character == null && target != null){
-            target.gameObject.TryGetComponent<Character>(out character);
-        }
         StartFollowing();
     }
 
@@ -66,7 +97,7 @@ public class NavMeshEnemyMovement : MonoBehaviour
     public void TakeDamage(float damageAmount){
         health -= damageAmount;
         animator.SetTrigger("damage");
-
+        StartCoroutine(ChangeColor(damageColor));
         if(health <= 0){
             Die();
         }
@@ -119,20 +150,48 @@ public class NavMeshEnemyMovement : MonoBehaviour
 
     }
 
+    IEnumerator ChangeColor(Color color){
+
+        foreach(ColorChangeRenderer colorChangeRenderer in colorChangeRenderers)
+        {
+            colorChangeRenderer.renderer.material.SetColor("_OTHERCOLOR", color);
+        }
+
+        yield return new WaitForSeconds(changeColorTime);
+
+        foreach(ColorChangeRenderer colorChangeRenderer in colorChangeRenderers)
+        {
+            colorChangeRenderer.renderer.material.SetColor("_OTHERCOLOR", colorChangeRenderer.originalColor);
+        }
+
+    }
+
     private IEnumerator FollowTarget()
     {
         yield return new WaitForSeconds(updateTargetSpeed);
         
-        if(enabled && target != null){
-        if(Vector3.Distance(target.position, transform.position) <= targetMaxDistance){
-        if(character != null && !character.inWater){
-            
-            agent.SetDestination(target.position);
-            
+        bool setDestination = true;
+
+        if(!enabled){
+            setDestination = false;
         }
+
+        if(target == null){
+            Debug.Log("Awaiting target");
+            setDestination = false;
         }
+
+        if(Vector3.Distance(target.position, transform.position) > targetMaxDistance){
+            setDestination = false;
         }
         
+        if(setDestination){
+            agent.SetDestination(target.position);
+
+        }
+
         followCoroutine = StartCoroutine(FollowTarget());
+        
+        
     }
 }

@@ -178,10 +178,10 @@ MonoBehaviour:
   interactionRayLength: 5
   hitMask:
     serializedVersion: 2
-    m_Bits: 136
-  groundMask:
+    m_Bits: 1672
+  digMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1544
   enemyMask:
     serializedVersion: 2
     m_Bits: 128

@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField]
-    private Camera mainCamera;
+    
     [SerializeField]
     private PlayerInput playerInput;
     [SerializeField]
     private PlayerMovement playerMovement;
+
+    [SerializeField]
+    private PlayerCamera playerCamera;
+
 
     
 
@@ -20,7 +22,7 @@ public class Character : MonoBehaviour
 
     public LayerMask hitMask;
 
-    public LayerMask groundMask;
+    public LayerMask digMask;
 
     public LayerMask enemyMask;
     public bool fly = false;
@@ -36,14 +38,10 @@ public class Character : MonoBehaviour
     
 
     public void Awake(){
-        
-        if(mainCamera == null){
-            mainCamera = Camera.main;
-        }
 
         playerInput = GetComponent<PlayerInput>();
         playerMovement = GetComponent<PlayerMovement>();
-
+        playerCamera = GetComponentInChildren<PlayerCamera>();
         world = FindObjectOfType<World>();
        
 
@@ -58,16 +56,13 @@ public class Character : MonoBehaviour
         fly = !fly;
     }
 
-    public void InWater(){
-        inWater = true;
-    }
-
-    public void OnSolid(){
-        inWater = false;
-    }
-
     void Update(){
 
+        
+
+        if(isAttacking && animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinnishTime){
+            isAttacking = false;
+        }
 
         if(fly){
 
@@ -78,9 +73,7 @@ public class Character : MonoBehaviour
             return;
         }
 
-        if(isAttacking && animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinnishTime){
-            isAttacking = false;
-        }
+        CheckIfInWater();
 
         if(inWater){
             WaterMovement();
@@ -91,6 +84,23 @@ public class Character : MonoBehaviour
         SolidMovement();
         
             
+    }
+
+    void CheckIfInWater()
+    {
+
+        VoxelType voxelType = WorldDataHelper.GetVoxelFromWorldCoorinates(world, Vector3Int.RoundToInt(transform.position));
+
+        if(voxelType == VoxelType.Water){
+            
+            inWater = true;
+            
+        }
+        else{
+            
+            inWater = false;
+        }
+
     }
 
     private void SolidMovement()
@@ -198,23 +208,25 @@ public class Character : MonoBehaviour
         StopCoroutine(ResetAttackWaiting());
         StartCoroutine(ResetAttackWaiting());
         
-        Ray playerRay = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+        Ray playerRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
         RaycastHit hit;
 
 
         if(Physics.Raycast(playerRay, out hit, interactionRayLength, hitMask)){
-
-            LayerMask hitLayer = (1 << hit.transform.gameObject.layer);
-
-            if(hitLayer == groundMask.value){
+            
+            int hitLayer = (1 << hit.transform.gameObject.layer);
+            Debug.Log("Hit something");
+            if((hitLayer | digMask.value) == digMask.value){
                 TerrainHit(hit);
             }
-            else if(hitLayer == enemyMask.value){
+            else if((hitLayer | enemyMask.value) == enemyMask.value){
                 EnemyHit(hit);
             }
-                  
-
+        
+        }
+        else{
+           Debug.Log("No hit something"); 
         }
         
     }

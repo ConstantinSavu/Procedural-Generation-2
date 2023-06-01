@@ -14,9 +14,9 @@ TagManager:
   - Player
   - Enemy
   - Sword
-  - 
-  - 
-  - 
+  - UnderWater
+  - Transparent
+  - PostProcessing
   - 
   - 
   - 
