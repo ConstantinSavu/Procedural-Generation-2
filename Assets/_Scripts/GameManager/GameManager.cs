@@ -59,18 +59,19 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
             return;
-        Vector3Int raycastStartposition = world.worldSettings.startingPosition;
-        raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
+        Vector3 raycastStartposition = world.worldSettings.startingPosition;
+        raycastStartposition.y = world.worldSettings.maxMapDimensions.y;
+
+        float rayCastLength = world.worldSettings.maxMapDimensions.y - world.worldSettings.minMapDimensions.y + 30;
+
         RaycastHit hit;
 
         CreateNavMeshes();
         
-        if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
+        if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, rayCastLength))
         {
-            player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
-            PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
-            playerCamera.SetCamera(camera_VM);
-
+            
+            SpawnPlayer(hit);
             StartCheckingTheMap();
             SpawnEnemy(player);
             
@@ -81,14 +82,22 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Player not spawned");
 
-        Vector3Int airSpawn = Vector3Int.zero;
-        airSpawn.y = world.worldSettings.voxelMaxMapDimensions.y + 30;
-
-        player = Instantiate(playerPrefab, airSpawn , Quaternion.identity);
-        camera_VM.Follow = player.transform.GetChild(0);
+        SpawnPlayer(world.worldSettings.maxMapDimensions);
         StartCheckingTheMap();
         
         
+    }
+
+    private void SpawnPlayer(RaycastHit hit){
+        player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
+        PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
+        playerCamera.SetCamera(camera_VM);
+    }
+
+    private void SpawnPlayer(Vector3 spawnPosition){
+        player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
+        playerCamera.SetCamera(camera_VM);
     }
 
     private void SpawnEnemy(GameObject player){

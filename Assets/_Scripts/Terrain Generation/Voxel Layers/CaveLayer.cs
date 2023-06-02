@@ -15,8 +15,8 @@ public class CaveLayer : VoxelLayerHandler
         }
 
         float normalisedWorldHeight = CustomNoise.MapFloatValue(worldPos.y,
-            data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y,
-            data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y,
+            data.worldReference.worldData.worldSettings.voxelMinMapDimensions.y,
+            data.worldReference.worldData.worldSettings.voxelMaxMapDimensions.y,
             0f,
             1f
         );

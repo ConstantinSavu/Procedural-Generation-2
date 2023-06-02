@@ -89,7 +89,7 @@ public class PlayerCamera : MonoBehaviour
     void CheckIfInWater()
     {
 
-        VoxelType voxelType = WorldDataHelper.GetVoxelFromWorldCoorinates(character.world, Vector3Int.RoundToInt(transform.position));
+        VoxelType voxelType = character.world.CheckVoxel(transform.position);
 
         if(voxelType == VoxelType.Water){
             

@@ -89,7 +89,7 @@ public class Character : MonoBehaviour
     void CheckIfInWater()
     {
 
-        VoxelType voxelType = WorldDataHelper.GetVoxelFromWorldCoorinates(world, Vector3Int.RoundToInt(transform.position));
+        VoxelType voxelType = world.CheckVoxel(transform.position);
 
         if(voxelType == VoxelType.Water){
             
@@ -237,22 +237,23 @@ public class Character : MonoBehaviour
 
     private void TerrainHit(RaycastHit hit){
 
-        VoxelType hitBlock = CheckTerrain(hit);
-            try{
+        Vector3Int pos;
 
-                if(!VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
-                    return;
-                }
-            }
-            catch(Exception e){
-                Debug.Log(e.Message);
-            }
-            
-            bool modifiedTerrain = ModifyTerrain(hit);
-            
-            if(!modifiedTerrain){
-                Debug.Log(hitBlock);
-            }
+        VoxelType hitBlock = CheckTerrain(hit);
+        
+
+        if(!VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
+            Debug.Log("Hit Indesctructable " + hitBlock);
+            pos = new Vector3Int(-1, -1, -1);
+            return;
+        }
+        
+        
+        bool modifiedTerrain = ModifyTerrain(hit);
+        
+        if(!modifiedTerrain){
+            Debug.Log(hitBlock);
+        }
 
     }
 
@@ -270,6 +271,7 @@ public class Character : MonoBehaviour
     private VoxelType CheckTerrain(RaycastHit hit){
         
         if(world == null){
+            
             return VoxelType.Nothing;
         }
 

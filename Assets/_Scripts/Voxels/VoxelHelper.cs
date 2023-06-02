@@ -86,13 +86,17 @@ public class VoxelHelper
         return meshData;
     }
 
-    public static MeshData MeshGenerationLogic(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType){
+    public static MeshData MeshGenerationLogic(Direction direction, ChunkData chunk, Vector3Int normalPos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType){
         
-        Vector3 defaultPositiveOffset = new Vector3(0.5f, 0.5f, 0.5f);
-        Vector3 defaultNegativeOffset = new Vector3(-0.5f, -0.5f, -0.5f);
+        Vector3 voxelSize = chunk.worldReference.worldSettings.voxelSize;
 
-        Vector3 positiveDrawLowerOffset = new Vector3(0.5f, 0.35f, 0.5f);
-        Vector3 negativeDrawLowerOffset = new Vector3(-0.5f, 0.35f, -0.5f);
+        Vector3 pos = Vector3.Scale(normalPos, voxelSize);
+
+        Vector3 defaultPositiveOffset = Vector3.Scale(new Vector3(0.5f, 0.5f, 0.5f), voxelSize);
+        Vector3 defaultNegativeOffset = Vector3.Scale(new Vector3(-0.5f, -0.5f, -0.5f), voxelSize);
+
+        Vector3 positiveDrawLowerOffset = Vector3.Scale(new Vector3(0.5f, 0.35f, 0.5f), voxelSize);
+        Vector3 negativeDrawLowerOffset = Vector3.Scale(new Vector3(-0.5f, 0.35f, -0.5f), voxelSize);
 
         Vector3 positiveOffset = defaultPositiveOffset;
         Vector3 negativeOffset = defaultNegativeOffset;
@@ -112,7 +116,7 @@ public class VoxelHelper
 
         if(VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid){
 
-            upNeighbourVoxelCoordinates = pos + Vector3Int.up;
+            upNeighbourVoxelCoordinates = normalPos + Vector3Int.up;
             upNeighbour = Chunk.GetVoxelFromChunkCoordinates(chunk, upNeighbourVoxelCoordinates);
 
             if(!VoxelDataManager.voxelTextureDataDictionary[upNeighbour].isLiquid){
@@ -134,7 +138,7 @@ public class VoxelHelper
             return meshData;
         }
 
-        neighbourVoxelCoordinates = pos + GetDirectionVector(direction);
+        neighbourVoxelCoordinates = normalPos + GetDirectionVector(direction);
         upNeighbourVoxelCoordinates = neighbourVoxelCoordinates + Vector3Int.up;
         upNeighbour = Chunk.GetVoxelFromChunkCoordinates(chunk, upNeighbourVoxelCoordinates);
 
@@ -170,7 +174,7 @@ public class VoxelHelper
 
         return meshData;
     }
-    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset, Vector2 texturePositiveOffset, Vector2 textureNegativeOffset){
+    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, Vector3 pos, MeshData meshData, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset, Vector2 texturePositiveOffset, Vector2 textureNegativeOffset){
 
         bool generatesCollider = VoxelDataManager.voxelTextureDataDictionary[voxelType].generatesCollider;
         bool isLiquid = VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid;
@@ -182,11 +186,11 @@ public class VoxelHelper
         return meshData;
     }
 
-    public static void GetFaceVertices(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset)
+    public static void GetFaceVertices(Direction direction, ChunkData chunk, Vector3 pos, MeshData meshData, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset)
     {
-        int x = pos.x;
-        int y = pos.y;
-        int z = pos.z;
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
 
     
         //order of vertices matters for the normals and how we render the mesh

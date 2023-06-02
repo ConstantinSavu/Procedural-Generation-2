@@ -107,8 +107,6 @@ public class NavMeshEnemyMovement : MonoBehaviour
     public void Die(){
         Destroy(this.transform.parent.gameObject);
     }
-
-    int counter = 0;
     private void Attack()
     {
         dealtDamage = true;

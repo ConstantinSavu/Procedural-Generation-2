@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950e92e6ef076d94198954ed117d9b55, type: 3}
   m_Name: IslandWorldSettings
   m_EditorClassIdentifier: 
-  startingPosition: {x: 0, y: 0, z: 0}
+  startingPosition: {x: 10, y: 27, z: -41}
   chunkSize: {x: 16, y: 64, z: 16}
+  voxelSize: {x: 3.4074647, y: 3.4074647, z: 3.4074647}
+  inverseVoxelSize: {x: 0.29347333, y: 0.29347333, z: 0.29347333}
   chunkDrawingRange: {x: 10, y: 0, z: 10}
   mapSeedOffset: {x: 0, y: 0, z: 0}
   waterThreshold: 25
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
   voxelMaxMapDimensions: {x: 0, y: 40, z: 0}
+  minMapDimensions: {x: 0, y: 0, z: 0}
+  maxMapDimensions: {x: 0, y: 134.76678, z: 0}

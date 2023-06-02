@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float flySpeed = 5.0f, fastFlySpeed = 20.0f;
 
+    private FeetColider[] feetColiders;
+
     private Vector3 playerVelocity;
 
     [Header("Check parameters")]
@@ -37,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake(){
         controller = GetComponent<CharacterController>();
+        feetColiders = GetComponentsInChildren<FeetColider>();
     }
 
     private Vector3 GetMovemetDirection(Vector3 movementInput) {
@@ -81,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleGravity(bool IsJumping){
 
-        if(IsGrounded && playerVelocity.y < 0){
+        if(IsGrounded){
             playerVelocity.y = 0f;
             
         }
@@ -98,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     public void HandleWaterGravity(bool IsJumping){
 
         if(IsGrounded){
-            playerVelocity.y = 0.1f;
+            playerVelocity.y = 0.0f;
         }
 
         if(IsJumping){
@@ -135,12 +138,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Update(){
-        IsGrounded = Physics.Raycast(transform.position, Vector3.down, rayDistance, groundMask);
+
+        IsGrounded = false;
+
+        foreach(FeetColider feet in feetColiders){
+            IsGrounded |= Physics.Raycast(feet.transform.position, Vector3.down, rayDistance, groundMask);
+        }
+        
     }
 
-    private void OnDrawGizmos(){
-        Gizmos.DrawRay(transform.position, Vector3.down * rayDistance);
-    }
+    
 
     
 }
