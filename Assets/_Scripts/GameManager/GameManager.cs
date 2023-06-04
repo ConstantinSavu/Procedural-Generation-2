@@ -103,22 +103,28 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy(GameObject player){
 
         enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.transform;
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.GetComponent<Character>().playerCamera.transform;
 
         enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.forward , Quaternion.identity);
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.transform;
+        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.GetComponent<Character>().playerCamera.transform;
         
     }
 
     private void CreateNavMeshes()
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        NavMeshSurface surface = RenderedChunks.GetComponent<NavMeshSurface>();
-
         
-        surface.RemoveData();
-        surface.BuildNavMesh();
-        surface.AddData();
+        surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
+
+        foreach(NavMeshSurface surface in surfaces){
+            surface.RemoveData();
+            surface.BuildNavMesh();
+            
+            surface.AddData();
+        }
+        
+        
+        
         
 
         watch.Stop();

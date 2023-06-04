@@ -343,11 +343,12 @@ public class World : MonoBehaviour
     private Vector3Int GetBlockPosition(RaycastHit hit){
 
         Vector3 hitPos = Vector3.Scale(hit.point, this.worldSettings.inverseVoxelSize);
+        Vector3 hitNormal = Vector3.Scale(hit.normal, this.worldSettings.inverseVoxelSize);
 
         Vector3 pos = new Vector3(
-            GetRealPosition(hitPos.x, hit.normal.x),
-            GetRealPosition(hitPos.y, hit.normal.y),
-            GetRealPosition(hitPos.z, hit.normal.z)
+            GetRealPosition(hitPos.x, hitNormal.x),
+            GetRealPosition(hitPos.y, hitNormal.y),
+            GetRealPosition(hitPos.z, hitNormal.z)
         );
 
         return Vector3Int.RoundToInt(pos);

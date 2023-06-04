@@ -10,9 +10,6 @@ public class NavMeshEnemyMovement : MonoBehaviour
     public Transform target;
     public float targetMaxDistance = 40f;
     public float updateTargetSpeed = 0.1f;
-
-    public Material skinMaterial;
-
     public Color damageColor;
     public float changeColorTime = 0.5f;
 

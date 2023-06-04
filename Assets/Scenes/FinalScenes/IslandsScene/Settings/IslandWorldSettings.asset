@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingPosition: {x: 10, y: 27, z: -41}
   chunkSize: {x: 16, y: 64, z: 16}
-  voxelSize: {x: 3.4074647, y: 3.4074647, z: 3.4074647}
+  voxelSize: {x: 1, y: 1, z: 1}
   inverseVoxelSize: {x: 0.29347333, y: 0.29347333, z: 0.29347333}
   chunkDrawingRange: {x: 10, y: 0, z: 10}
   mapSeedOffset: {x: 0, y: 0, z: 0}
@@ -22,4 +22,4 @@ MonoBehaviour:
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
   voxelMaxMapDimensions: {x: 0, y: 40, z: 0}
   minMapDimensions: {x: 0, y: 0, z: 0}
-  maxMapDimensions: {x: 0, y: 134.76678, z: 0}
+  maxMapDimensions: {x: 0, y: 136.29858, z: 0}

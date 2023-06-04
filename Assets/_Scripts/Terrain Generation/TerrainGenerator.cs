@@ -6,8 +6,7 @@ using UnityEngine;
 public class TerrainGenerator : MonoBehaviour
 {
     
-    public BiomeGenerator biomeGenerator;
-    public CaveGenerator caveGenerator;
+    public BiomeGenerator biomeGenerator;   
 
     public ChunkData GenerateChunkData(ChunkData data){
         

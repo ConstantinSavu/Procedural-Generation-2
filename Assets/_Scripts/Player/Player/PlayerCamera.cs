@@ -23,7 +23,6 @@ public class PlayerCamera : MonoBehaviour
 
     [SerializeField]
     public CinemachineVirtualCamera camera_VM;
-
     [SerializeField]
     private CinemachineVolumeSettings volumeSettings;
 
@@ -58,6 +57,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update(){
 
+        
         CheckIfInWater();
 
         if(camera_VM != null && inWater){
@@ -88,6 +88,10 @@ public class PlayerCamera : MonoBehaviour
 
     void CheckIfInWater()
     {
+
+        if(character.world == null){
+            return;
+        }
 
         VoxelType voxelType = character.world.CheckVoxel(transform.position);
 

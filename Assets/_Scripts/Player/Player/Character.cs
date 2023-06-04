@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
     private PlayerMovement playerMovement;
 
     [SerializeField]
-    private PlayerCamera playerCamera;
+    public PlayerCamera playerCamera;
 
 
     
@@ -88,6 +88,10 @@ public class Character : MonoBehaviour
 
     void CheckIfInWater()
     {
+
+        if(world == null){
+            return;
+        }
 
         VoxelType voxelType = world.CheckVoxel(transform.position);
 
