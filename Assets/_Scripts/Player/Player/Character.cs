@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     public PlayerCamera playerCamera;
 
+    [SerializeField] float attackDamage = 1f;
+
 
     
 
@@ -234,9 +236,10 @@ public class Character : MonoBehaviour
         }
         
     }
+
     private void EnemyHit(RaycastHit hit){
         Debug.Log("Hit Enemy");
-        hit.transform.GetComponent<NavMeshEnemyMovement>().TakeDamage(1f);
+        hit.transform.GetComponent<EnemyHealthSystem>().TakeDamage(attackDamage);
     }
 
     private void TerrainHit(RaycastHit hit){

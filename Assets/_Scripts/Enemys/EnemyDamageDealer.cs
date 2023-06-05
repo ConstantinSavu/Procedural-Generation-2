@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyDamageDealer : MonoBehaviour
 {
-    bool canDealDamage;
-    bool hasDealtDamage;
+    [SerializeField] bool canDealDamage;
+    [SerializeField] bool hasDealtDamage;
 
     [SerializeField] float weaponLength;
     [SerializeField] float weaponDamage;
