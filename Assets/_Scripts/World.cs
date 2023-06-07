@@ -14,9 +14,7 @@ public class World : MonoBehaviour
 
     public WorldSettings worldSettings;
     public WorldRenderer worldRenderer;
-
     public TerrainGenerator terrainGenerator;
-
     public UnityEvent OnWorldCreated, OnNewChunksGenerated;
 
     
@@ -96,6 +94,10 @@ public class World : MonoBehaviour
 
         WorldGenerationData worldGenerationData = await Task.Run(() => GetWorldGenerationDataAroundPlayer(position),taskTokenSource.Token);
 
+        if(!IsWorldCreated){
+            ChunkInstantiation(worldGenerationData);
+        }
+
         foreach(var pos in worldGenerationData.chunkPositionsToRemove){
             WorldDataHelper.RemoveChunk(this, pos);
         }
@@ -155,6 +157,16 @@ public class World : MonoBehaviour
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
         watch.Stop();
         
+
+    }
+    void ChunkInstantiation(WorldGenerationData worldGenerationData){
+        
+        foreach(Vector3Int position in worldGenerationData.chunkPositionsToCreate){
+            
+            ChunkRenderer chunkRenderer = worldRenderer.InstantiateChunk(position);
+            worldData.chunkDictionary.TryAdd(position, chunkRenderer);
+
+        }
 
     }
 

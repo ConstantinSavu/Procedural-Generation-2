@@ -79,7 +79,7 @@ public class PlayerInput : MonoBehaviour
     private void GetMouseRightClick(){
 
         if(Input.GetMouseButtonDown(1)){
-            OnMouseLeftClick?.Invoke();
+            OnMouseRightClick?.Invoke();
         }
 
     }

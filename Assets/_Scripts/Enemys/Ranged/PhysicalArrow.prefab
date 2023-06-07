@@ -180,24 +180,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894179aa91526834d87126c92975fd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToLiveInSeconds: 60
-  timeToLiveAfterPlayerHitInSeconds: 1
-  damageValue: 1
-  arrowScale: {x: 0.5, y: 0.5, z: 0.5}
+  timeToLive: 100
+  scale: {x: 0.5, y: 0.5, z: 0.5}
+  speed: {x: 0, y: 0, z: 20}
+  maxSpeed: {x: 20, y: 20, z: 20}
   minRandomAngle: -4.1
   maxRandomAngle: 4.1
-  globalArrowSpeed: {x: 0, y: 5, z: 20}
-  maxArrowSpeed: {x: 0, y: 5, z: 20}
-  inWater: 0
-  waterBuoyancy: {x: -0, y: 8.175, z: -0}
-  waterEnterDampen: 10
+  waterDrag: 20
+  normalDrag: 0
+  solverIterations: 100
   waterMask:
     serializedVersion: 2
     m_Bits: 16
-  playerMask:
+  damageMask:
     serializedVersion: 2
-    m_Bits: 64
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
+  timeToLiveAfterPlayerHit: 1
+  damageValue: 1
   target: {fileID: 0}

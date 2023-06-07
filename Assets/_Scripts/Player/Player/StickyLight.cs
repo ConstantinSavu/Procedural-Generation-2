@@ -3,48 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(Light))]
 [RequireComponent(typeof(MeshRenderer))]
 
 public class StickyLight : Projectile
 {
-
-    
-    Rigidbody rigidBody;
-    SphereCollider sphereCollider;
     Light pointLight;
-
     MeshRenderer meshRenderer;
-
-    [SerializeField] float timeToLive = 100f;
     Coroutine destroyCoroutine;
     [SerializeField] bool canDie = false;
     [SerializeField] Color currentColor;
     [SerializeField] Color nextColor;
     [SerializeField] float timeToNextColor = 1f;
+    [SerializeField] private float damping = 1f;
     Coroutine pickNextColorCoroutine;
+    
 
-    private int hitpoints = 1;
-    
-    
     void Awake()
     {
-        
-    }
-    
-    void Start()
-    {
+        if(collider == null){
+            collider = transform.GetComponent<SphereCollider>();
+            collider.isTrigger = true;
+        }
+
         if(rigidBody == null){
             rigidBody = transform.GetComponent<Rigidbody>();
         }
-
-        if(sphereCollider == null){
-            sphereCollider = transform.GetComponent<SphereCollider>();
-        }
-
-        sphereCollider.isTrigger = true;
 
         if(pointLight == null){
             pointLight = transform.GetComponent<Light>();
@@ -54,7 +39,11 @@ public class StickyLight : Projectile
             meshRenderer = transform.GetComponent<MeshRenderer>();
         }
 
-        StartDestroy(timeToLive);
+    }
+    
+    void Start()
+    {
+        StartTimer(timeToLive, SetCanDieTrue, ref destroyCoroutine);
 
         currentColor = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         nextColor = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
@@ -69,7 +58,7 @@ public class StickyLight : Projectile
     void Update()
     {
 
-        currentColor = Color.Lerp(currentColor, nextColor, Mathf.PingPong(Time.time, 1));
+        currentColor = Color.Lerp(currentColor, nextColor, Time.deltaTime * damping);
 
         pointLight.color = currentColor;
         meshRenderer.material.color = currentColor;
@@ -84,66 +73,13 @@ public class StickyLight : Projectile
 
     }
 
-     void OnCollisionEnter(Collision other)
-    {
-        
-        HandleCollider(other.collider);
-        
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        HandleCollider(other);
-    }
-
-    private void HandleCollider(Collider other){
-
-        if(hitpoints < 1){
-            return;
-        }
-
-        hitpoints--;
-
-        Debug.Log("StickyLight hit: " + other.gameObject.name);
-        transform.parent = other.gameObject.transform;
-        
-        
-        rigidBody.AddForce(Vector3.zero, ForceMode.VelocityChange);
-        rigidBody.useGravity = false;
-        rigidBody.isKinematic = true;
-        rigidBody.detectCollisions = false;
-
-        
-        if(sphereCollider != null && sphereCollider.enabled == true){
-            sphereCollider.enabled = false;
-        }
-        
-    }
-
-    void Shoot(Vector3 speed){
-       
-        Vector3 resultatSpeed = speed.x * transform.right +   
-                                speed.y * transform.up +      
-                                speed.z * transform.forward;
-
-        rigidBody.AddForce(resultatSpeed, ForceMode.VelocityChange);
-    }
-
-    private void StartDestroy(float timeToLive){
-        
-        if(destroyCoroutine != null){
-            StopCoroutine(destroyCoroutine);
-        }
-
-        destroyCoroutine = StartCoroutine(Timer(timeToLive, SetCanDieTrue));
-            
-    }
-
     private void StartPickNextColor(float timeToNextColor){
+        
         if(pickNextColorCoroutine != null){
             StopCoroutine(pickNextColorCoroutine);
 
         }
+
         pickNextColorCoroutine = StartCoroutine(Timer(timeToNextColor, PickNextColor));
             
     }
@@ -157,10 +93,6 @@ public class StickyLight : Projectile
         StartPickNextColor(timeToNextColor);
     }
 
-    private IEnumerator Timer(float seconds, Action callback){
-        yield return new WaitForSeconds(seconds);
-
-        callback();
-    }
+    
 
 }

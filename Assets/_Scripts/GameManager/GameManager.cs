@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject player;
 
-    public GameObject[] enemyPrefabs;
+    public List<GameObject> enemyPrefabs;
     private GameObject enemy;
     
     public GameObject RenderedChunks;

@@ -6,7 +6,6 @@ public class FireRangedAttack : BaseState
 {
     EnemyRangedAttackSM _sm;
     private float animationFinnishTime = 0.9f;
-    private float transitionFinnishTime = 0.9f;
 
     public FireRangedAttack(EnemyRangedAttackSM stateMachine) : base(stateMachine){
         _sm = (EnemyRangedAttackSM)stateMachine;

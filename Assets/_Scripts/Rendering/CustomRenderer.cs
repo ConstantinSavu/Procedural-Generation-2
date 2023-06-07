@@ -41,4 +41,10 @@ public class CustomRenderer : MonoBehaviour {
 
         
     }
+
+    private void OnEnable()
+    {
+        Physics.BakeMesh(mesh.GetInstanceID(), false);
+    }
+
 }

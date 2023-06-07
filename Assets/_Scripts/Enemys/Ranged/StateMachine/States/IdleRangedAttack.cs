@@ -5,9 +5,6 @@ using UnityEngine;
 public class IdleRangedAttack : BaseState
 {
     EnemyRangedAttackSM _sm;
-    private float animationFinnishTime = 0.9f;
-    private float transitionFinnishTime = 0.9f;
-
     public IdleRangedAttack(EnemyRangedAttackSM stateMachine) : base(stateMachine){
         _sm = (EnemyRangedAttackSM)stateMachine;
     }

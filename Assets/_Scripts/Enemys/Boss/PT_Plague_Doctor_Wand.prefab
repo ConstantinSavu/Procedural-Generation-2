@@ -447,7 +447,7 @@ MonoBehaviour:
   isAttacking: 0
   isRangeAttacking: 0
   canRangeAttack: 1
-  projectile: {fileID: 2599239795827488996, guid: 5d9a65077be3d0e42b27cacf7d6ee43c,
+  projectile: {fileID: 4093188366272597232, guid: 117b7ac5c50aace44a713d54b0f20cb0,
     type: 3}
   projectileSpawnPoint: {fileID: 3721810205482498183}
   minRotationRelativeToSpawnPoint: {x: 30, y: 30, z: 30}

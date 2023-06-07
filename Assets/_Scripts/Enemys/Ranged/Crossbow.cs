@@ -8,7 +8,7 @@ public class Crossbow : MonoBehaviour
 {
     [SerializeField] public Transform target;
     [SerializeField] Transform arrow;
-    [SerializeField] GameObject physicalArrow;
+    [SerializeField] GameObject physicalProjectile;
     [SerializeField] Transform holder;
     [SerializeField] public float damping = 1f;
 
@@ -122,10 +122,10 @@ public class Crossbow : MonoBehaviour
 
     public void ShootArrow(){
 
-        PhysicalArrow physicalArrow;
-        GameObject spawnedArrow = Instantiate(this.physicalArrow, arrow.position, arrow.rotation);
-        physicalArrow = spawnedArrow.transform.GetComponent<PhysicalArrow>();
-        physicalArrow.target = target;
+        Projectile projectile;
+        GameObject spawnedArrow = Instantiate(physicalProjectile, arrow.position, arrow.rotation);
+        projectile = spawnedArrow.transform.GetComponent<Projectile>();
+        projectile.Shoot();
 
     }
 

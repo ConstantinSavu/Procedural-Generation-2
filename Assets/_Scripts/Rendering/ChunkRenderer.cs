@@ -42,6 +42,13 @@ public class ChunkRenderer : MonoBehaviour
         liquidRenderer.RenderMesh(meshData.liquidMesh);
         transparentRenderer.RenderMesh(meshData.transparentMesh);
 
+
+        Projectile[] projectiles = GetComponentsInChildren<Projectile>();
+
+        foreach(Projectile projectile in projectiles){
+            Debug.Log(projectile.transform.name);
+            projectile.EnableRigidBody();
+        }
     }
 
     public void UpdateChunk(){

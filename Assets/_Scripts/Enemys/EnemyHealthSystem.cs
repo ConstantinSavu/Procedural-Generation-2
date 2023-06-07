@@ -3,32 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealthSystem : MonoBehaviour
+public class EnemyHealthSystem : HealthSystem
 {
-    class ColorChangeRenderer{
-        public Renderer renderer;
-        public Color originalColor;
-        public ColorChangeRenderer(Renderer renderer, Color originalColor){
-
-            this.renderer = renderer;
-            this.originalColor = originalColor;
-            
-        }
-
-    }
     List<ColorChangeRenderer> colorChangeRenderers = new List<ColorChangeRenderer>();
-    
-    public float health = 3;
-    [SerializeField] String originalColorName = "_OTHERCOLOR";
-
-    public Color damageColor;
+    [SerializeField] String originalColorName = "_BaseColor";
+    public Color damageColor = Color.red;
     public float changeColorTime = 0.5f;
-
-    public Animator animator;
 
     void Awake()
     {
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        animator = transform.GetComponentInChildren<Animator>();
 
         foreach(Renderer renderer in renderers)
         {
@@ -44,7 +29,7 @@ public class EnemyHealthSystem : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damageAmount){
+    public new void TakeDamage(float damageAmount){
         health -= damageAmount;
         animator.SetTrigger("damage");
         StartCoroutine(ChangeColor(damageColor));
@@ -54,7 +39,7 @@ public class EnemyHealthSystem : MonoBehaviour
 
     }
 
-    public void Die(){
+    public new void Die(){
         if(transform.parent != null){
             Destroy(transform.parent.gameObject);
             return;
@@ -77,4 +62,20 @@ public class EnemyHealthSystem : MonoBehaviour
         }
 
     }
+
+    private void OnValidate() {
+        
+    }
+}
+
+class ColorChangeRenderer{
+    public Renderer renderer;
+    public Color originalColor;
+    public ColorChangeRenderer(Renderer renderer, Color originalColor){
+
+        this.renderer = renderer;
+        this.originalColor = originalColor;
+        
+    }
+
 }

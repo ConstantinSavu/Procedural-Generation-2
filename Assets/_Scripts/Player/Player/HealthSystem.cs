@@ -7,15 +7,13 @@ public class HealthSystem : MonoBehaviour
     public Animator animator;
     public float health = 3f;
     // Start is called before the first frame update
-    public void Awake()
+    void Awake()
     {
         animator = transform.GetComponentInChildren<Animator>();
     }
-    public void TakeDamage(float damageAmount){
+    public virtual void TakeDamage(float damageAmount){
         health -= damageAmount;
         animator.SetTrigger("damage");
-
-        Debug.Log("Took Damage");
 
         if(health <= 0){
             Die();
