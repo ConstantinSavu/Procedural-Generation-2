@@ -27,11 +27,5 @@ public class EnemyRangedAttackSM : EnemyAttack
     protected override BaseState GetInitialState(){
         return idleRangedAttack;
     }
-
-    private void OnGUI(){
-        string content = CurrentState != null ? CurrentState.ToString() : "(No current state)";
-        GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
-    }
-
     
 }

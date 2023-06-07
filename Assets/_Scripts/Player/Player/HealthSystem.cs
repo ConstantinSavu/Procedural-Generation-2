@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    public Animator animator;
+    protected Animator animator;
     public float health = 3f;
     // Start is called before the first frame update
     void Awake()
@@ -19,6 +19,10 @@ public class HealthSystem : MonoBehaviour
             Die();
         }
 
+    }
+
+    public void Setup(Animator animator){
+        this.animator = animator;
     }
 
     public void Die(){

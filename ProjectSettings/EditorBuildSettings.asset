@@ -8,9 +8,24 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VoxelWorld.unity
     guid: ad8154ef5fa95274380bc1209f361fd2
+  - enabled: 1
+    path: Assets/Scenes/FinalScenes/MainMenu/Main Menu.unity
+    guid: a5a1618d8af78ca4192fe8e936a3cc45
+  - enabled: 1
+    path: Assets/Scenes/FinalScenes/PlainsScene/PlainsScene.unity
+    guid: d00b24b71709e5543b8ac8dc2948bda7
+  - enabled: 1
+    path: Assets/Scenes/FinalScenes/DesertScene/DesertScene.unity
+    guid: 18dd25c354cc5924081ab2221492210a
+  - enabled: 1
+    path: Assets/Scenes/FinalScenes/IslandsScene/IslandScene.unity
+    guid: b0cc50a833a5e07418d76c3ccc29fbd9
+  - enabled: 1
+    path: Assets/Scenes/FinalScenes/CaveScene/CaveScene.unity
+    guid: cde8fb4286cf98d408d3d9b1ce32a1d8
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 8e3ffd71a2972ff4a9e2a351d9c832c3,
       type: 2}

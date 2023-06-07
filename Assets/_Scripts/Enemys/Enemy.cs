@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshEnemyMovement))]
 
 [RequireComponent(typeof(EnemyHealthSystem))]
 
-public class Enemy : MonoBehaviour
+public class Enemy : PoolableObject
 {
     public Transform target;
 
@@ -25,21 +26,35 @@ public class Enemy : MonoBehaviour
         enemyTakeDamage = GetComponent<EnemyHealthSystem>();
 
         if(target != null){
-            InstantiateEnemy(target);
+            StartupEnemy(target);
         }
     }
 
-    public void InstantiateEnemy(Transform target){
+    public void StartupEnemy(Transform target){
         this.target = target;
-        navMeshEnemyMovement.target = target;
-        navMeshEnemyMovement.animator = animator;
-        navMeshEnemyMovement.StartFollowing();
+        
+        navMeshEnemyMovement.Setup(target, animator);
+        enemyAttack.Setup(target, animator);
 
-        enemyAttack.target = target;
-        enemyAttack.animator = animator;
+        enemyTakeDamage.Setup(animator);
+    }
 
-        enemyTakeDamage.animator = animator;
+    public void StartupEnemy(Transform target, NavMeshHit hit){
+        
+        this.target = target;
 
+        navMeshEnemyMovement.Setup(target, animator, hit);
+        enemyAttack.Setup(target, animator);
+
+        enemyTakeDamage.Setup(animator);
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        navMeshEnemyMovement.DiableAgent();
 
     }
+
+
 }

@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHealthSystem : HealthSystem
 {
     List<ColorChangeRenderer> colorChangeRenderers = new List<ColorChangeRenderer>();
     [SerializeField] String originalColorName = "_BaseColor";
+    public UnityEvent onDie; 
     public Color damageColor = Color.red;
     public float changeColorTime = 0.5f;
 
@@ -40,11 +42,8 @@ public class EnemyHealthSystem : HealthSystem
     }
 
     public new void Die(){
-        if(transform.parent != null){
-            Destroy(transform.parent.gameObject);
-            return;
-        }
-        Destroy(transform.gameObject);
+        onDie?.Invoke();
+        transform.gameObject.SetActive(false);
     }
 
     IEnumerator ChangeColor(Color color){

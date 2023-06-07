@@ -12,7 +12,7 @@ public class NavMeshEnemyMovement : MonoBehaviour
     public float updateTargetSpeed = 0.1f;
     public float damping = 1f;    
     private NavMeshAgent agent;
-    public Animator animator;
+    private Animator animator;
     private Coroutine followCoroutine;
 
     [SerializeField] bool setDestination;
@@ -23,8 +23,23 @@ public class NavMeshEnemyMovement : MonoBehaviour
         
     }
 
-    public void Start(){
-        
+    public void Setup(Transform target, Animator animator){
+
+        this.target = target;
+        this.animator = animator;
+        agent.enabled = true;
+        this.StartFollowing();
+
+    }
+
+    public void Setup(Transform target, Animator animator, NavMeshHit hit){
+
+        this.target = target;
+        this.animator = animator;
+        agent.Warp(hit.position);
+        agent.enabled = true;
+        this.StartFollowing();
+
     }
 
     public void Update(){
@@ -98,5 +113,15 @@ public class NavMeshEnemyMovement : MonoBehaviour
         followCoroutine = StartCoroutine(FollowTarget());
         
         
+    }
+
+    internal void DiableAgent()
+    {
+        agent.enabled = false;
+    }
+
+    internal void EnableAgent()
+    {
+        agent.enabled = true;
     }
 }

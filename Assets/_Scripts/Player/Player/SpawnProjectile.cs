@@ -25,6 +25,10 @@ public class SpawnProjectile : MonoBehaviour
     int counter = 0;
     private void HandleRightMouseClick(){
         
+        if(PauseManager.gameIsPaused){
+            return;
+        }
+
         Projectile projectile;
 
         GameObject instantiatedProjectile = Instantiate(spawnProjectile, transform.position, transform.rotation);

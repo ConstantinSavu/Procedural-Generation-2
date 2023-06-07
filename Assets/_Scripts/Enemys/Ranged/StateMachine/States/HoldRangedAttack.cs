@@ -20,13 +20,12 @@ public class HoldRangedAttack : BaseState
         _sm.crossBow.UpdateRotationToTarget = true;
         _sm.crossBow.CheckCollisionToTarget = false;
         _sm.crossBow.StartHoldCountDown(1f);
-        _sm.navMeshEnemyMovement.StopMovement();
+        
     }
 
     public override void Exit()
     {
         base.Exit();
-        _sm.navMeshEnemyMovement.StopMovement();
         
     }
 

@@ -94,10 +94,6 @@ public class World : MonoBehaviour
 
         WorldGenerationData worldGenerationData = await Task.Run(() => GetWorldGenerationDataAroundPlayer(position),taskTokenSource.Token);
 
-        if(!IsWorldCreated){
-            ChunkInstantiation(worldGenerationData);
-        }
-
         foreach(var pos in worldGenerationData.chunkPositionsToRemove){
             WorldDataHelper.RemoveChunk(this, pos);
         }
@@ -157,16 +153,6 @@ public class World : MonoBehaviour
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
         watch.Stop();
         
-
-    }
-    void ChunkInstantiation(WorldGenerationData worldGenerationData){
-        
-        foreach(Vector3Int position in worldGenerationData.chunkPositionsToCreate){
-            
-            ChunkRenderer chunkRenderer = worldRenderer.InstantiateChunk(position);
-            worldData.chunkDictionary.TryAdd(position, chunkRenderer);
-
-        }
 
     }
 
@@ -276,9 +262,9 @@ public class World : MonoBehaviour
 
     }
 
-    public async void LoadAdditionalChunksRequest(GameObject player){
+    public async void LoadAdditionalChunksRequest(Vector3 position){
         Debug.Log("Requesting more chunks");
-        await GenerateWorld(Vector3Int.RoundToInt(player.transform.position));
+        await GenerateWorld(Vector3Int.RoundToInt(position));
         OnNewChunksGenerated?.Invoke();
     }
 

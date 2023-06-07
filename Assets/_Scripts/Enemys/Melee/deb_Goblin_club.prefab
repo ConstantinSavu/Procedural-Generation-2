@@ -344,7 +344,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8272943599224061573}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -1372625422
   m_Radius: 0.8
   m_Speed: 3.5
@@ -375,7 +375,6 @@ MonoBehaviour:
   targetMaxDistance: 40
   updateTargetSpeed: 0.1
   damping: 1
-  animator: {fileID: 0}
   setDestination: 0
 --- !u!114 &4532303055065267354
 MonoBehaviour:
@@ -391,9 +390,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   originalColorName: _BaseColor
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
   damageColor: {r: 1, g: 0, b: 0, a: 0}
   changeColorTime: 0.5
-  animator: {fileID: 0}
 --- !u!114 &3903256040973739323
 MonoBehaviour:
   m_ObjectHideFlags: 0

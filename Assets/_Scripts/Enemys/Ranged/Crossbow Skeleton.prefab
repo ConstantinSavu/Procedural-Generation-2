@@ -291,7 +291,7 @@ PrefabInstance:
     - target: {fileID: 4427376173531245595, guid: b91f2cacb0bef7f4bac8f61b0f00b4c6,
         type: 3}
       propertyPath: m_Name
-      value: PT_Skeleton_Male_Modular Variant
+      value: Crossbow Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 4427376173531245595, guid: b91f2cacb0bef7f4bac8f61b0f00b4c6,
         type: 3}
@@ -623,7 +623,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2887202768664684356}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -1372625422
   m_Radius: 0.2
   m_Speed: 3.5
@@ -654,7 +654,6 @@ MonoBehaviour:
   targetMaxDistance: 40
   updateTargetSpeed: 0.1
   damping: 1
-  animator: {fileID: 0}
   setDestination: 0
 --- !u!114 &4779064406712543608
 MonoBehaviour:
@@ -670,9 +669,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   originalColorName: _OTHERCOLOR
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
   damageColor: {r: 0, g: 0, b: 0, a: 0}
   changeColorTime: 0.5
-  animator: {fileID: 0}
 --- !u!1001 &6575058287856447962
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,7 +61,9 @@ public class Character : MonoBehaviour
 
     void Update(){
 
-        
+        if(PauseManager.gameIsPaused){
+            return;
+        }
 
         if(isAttacking && animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinnishTime){
             isAttacking = false;
@@ -197,7 +199,9 @@ public class Character : MonoBehaviour
     }
 
     private void HandleLeftMouseClick(){
-
+        if(PauseManager.gameIsPaused){
+            return;
+        }
 
         if(!isAttacking){
             Attack();

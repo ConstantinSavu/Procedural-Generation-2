@@ -57,6 +57,9 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update(){
 
+        if(PauseManager.gameIsPaused){
+            return;
+        }
         
         CheckIfInWater();
 
@@ -82,7 +85,7 @@ public class PlayerCamera : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -90, 90);
 
         transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-
+        
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
