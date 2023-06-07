@@ -14,6 +14,11 @@ public class VoxelHelper
         back
     }
 
+    public enum DrawDirection {
+        positive,
+        negative
+    }
+
     public static Direction[] directions = {
 
         Direction.up,
@@ -63,110 +68,129 @@ public class VoxelHelper
                 continue;
             }
 
+            if(VoxelDataManager.voxelTextureDataDictionary[neighbourVoxelType] == 
+                VoxelDataManager.voxelTextureDataDictionary[voxelType]){
+                
+                continue;
+            }
+
             if(neighbourVoxelType == VoxelType.Nothing){
                 
                 continue;
             }
-            
-            if(voxelType != VoxelType.Water){
-                
-                meshData = GetFaceDataIn(direction, chunk, pos, meshData, voxelType, neighbourVoxelType);
-            }
-            else if(neighbourVoxelType != VoxelType.Water){
-                meshData.waterMesh = GetFaceDataIn(direction, chunk, pos, meshData.waterMesh, voxelType, neighbourVoxelType);
-            }
 
+            meshData = MeshGenerationLogic(direction, chunk, pos, meshData, voxelType, neighbourVoxelType);
 
         }
 
         return meshData;
     }
 
-    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType){
-
-        bool generatesCollider = VoxelDataManager.voxelTextureDataDictionary[voxelType].generatesCollider;
-        bool isLiquid = VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid;
-
-        GetFaceVertices(direction, chunk, pos, meshData, voxelType, neighbourVoxelType);
-        meshData.AddQuadTriangles(generatesCollider, isLiquid);
-        meshData.uv.AddRange(FaceUVs(direction, voxelType));
-
-        return meshData;
-
-    }
-
-    public static void GetFaceVertices(Direction direction, ChunkData chunk, Vector3Int pos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType)
-    {
-
-        float xPositiveOffset = 0.5f;
-        float yPositiveOffset = 0.5f;
-        float zPositiveOffset = 0.5f;
-
-        float xNegativeOffset = - 0.5f;
-        float yNegativeOffset = - 0.5f;
-        float zNegativeOffset = - 0.5f;
-
-        float zFightingOffset = 0.001f;
+    public static MeshData MeshGenerationLogic(Direction direction, ChunkData chunk, Vector3Int normalPos, MeshData meshData, VoxelType voxelType, VoxelType neighbourVoxelType){
         
+        Vector3 voxelSize = chunk.worldReference.worldSettings.voxelSize;
+
+        Vector3 pos = Vector3.Scale(normalPos, voxelSize);
+
+        Vector3 defaultPositiveOffset = Vector3.Scale(new Vector3(0.5f, 0.5f, 0.5f), voxelSize);
+        Vector3 defaultNegativeOffset = Vector3.Scale(new Vector3(-0.5f, -0.5f, -0.5f), voxelSize);
+
+        Vector3 positiveDrawLowerOffset = Vector3.Scale(new Vector3(0.5f, 0.35f, 0.5f), voxelSize);
+        Vector3 negativeDrawLowerOffset = Vector3.Scale(new Vector3(-0.5f, 0.35f, -0.5f), voxelSize);
+
+        Vector3 positiveOffset = defaultPositiveOffset;
+        Vector3 negativeOffset = defaultNegativeOffset;
+
+        Vector2 defaultPositiveTextureOffset = new Vector2(0.5f, 0.5f);
+        Vector2 defaultNegativeTextureOffset = new Vector2(-0.5f, -0.5f);
+
+        Vector2 defaultPositiveDrawLowerTextureOffset = new Vector2(0.5f, 0.35f);
+        Vector2 defaultNegativeDrawLowerTextureOffset = new Vector2(-0.5f, 0.35f);
+
+        Vector2 positiveTextureOffset = defaultPositiveTextureOffset;
+        Vector2 negativeTextureOffset = defaultNegativeTextureOffset;
+        
+        Vector3Int neighbourVoxelCoordinates;
+        Vector3Int upNeighbourVoxelCoordinates;
+        VoxelType upNeighbour;
+
+        if(VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid){
+
+            upNeighbourVoxelCoordinates = normalPos + Vector3Int.up;
+            upNeighbour = Chunk.GetVoxelFromChunkCoordinates(chunk, upNeighbourVoxelCoordinates);
+
+            if(!VoxelDataManager.voxelTextureDataDictionary[upNeighbour].isLiquid){
+               positiveOffset = positiveDrawLowerOffset; 
+            }
+
+            meshData.liquidMesh = GetFaceDataIn(direction, chunk, pos, meshData.liquidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+            return meshData;
+
+        }
+
+        if(VoxelDataManager.voxelTextureDataDictionary[voxelType].isTransparent){
+            meshData.transparentMesh = GetFaceDataIn(direction, chunk, pos, meshData.transparentMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+            return meshData;
+        }
+
+        if(!VoxelDataManager.voxelTextureDataDictionary[neighbourVoxelType].isLiquid){
+            meshData.solidMesh = GetFaceDataIn(direction, chunk, pos, meshData.solidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+            return meshData;
+        }
+
+        neighbourVoxelCoordinates = normalPos + GetDirectionVector(direction);
+        upNeighbourVoxelCoordinates = neighbourVoxelCoordinates + Vector3Int.up;
+        upNeighbour = Chunk.GetVoxelFromChunkCoordinates(chunk, upNeighbourVoxelCoordinates);
+
+        if(VoxelDataManager.voxelTextureDataDictionary[upNeighbour].isLiquid){
+            
+            meshData.underLiquidMesh = GetFaceDataIn(direction, chunk, pos, meshData.underLiquidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+            return meshData;
+        }
+        
+
+        if(direction == Direction.up || direction == Direction.down){
+            meshData.underLiquidMesh = GetFaceDataIn(direction, chunk, pos, meshData.underLiquidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+            return meshData; 
+        }
+
+        positiveOffset = defaultPositiveOffset;
+        negativeOffset = negativeDrawLowerOffset;
+
+        positiveTextureOffset = defaultPositiveTextureOffset;
+        negativeTextureOffset = defaultNegativeDrawLowerTextureOffset;
+        
+
+        meshData.solidMesh = GetFaceDataIn(direction, chunk, pos, meshData.solidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+
+
+        positiveOffset = positiveDrawLowerOffset;
+        negativeOffset = defaultNegativeOffset;
+
+        positiveTextureOffset = defaultPositiveDrawLowerTextureOffset;
+        negativeTextureOffset = defaultNegativeTextureOffset;
+
+        meshData.underLiquidMesh = GetFaceDataIn(direction, chunk, pos, meshData.underLiquidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+
+        return meshData;
+    }
+    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, Vector3 pos, MeshData meshData, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset, Vector2 texturePositiveOffset, Vector2 textureNegativeOffset){
+
         bool generatesCollider = VoxelDataManager.voxelTextureDataDictionary[voxelType].generatesCollider;
         bool isLiquid = VoxelDataManager.voxelTextureDataDictionary[voxelType].isLiquid;
 
-        bool drawLower = false;
+        GetFaceVertices(direction, chunk, pos, meshData, voxelType, positiveOffset, negativeOffset);
+        meshData.AddQuadTriangles(generatesCollider);
+        meshData.uv.AddRange(FaceUVs(direction, voxelType, texturePositiveOffset, textureNegativeOffset));
 
-        if(isLiquid){
-            
-            drawLower = true;
+        return meshData;
+    }
 
-            VoxelType upVoxelType =  Chunk.GetVoxelFromChunkCoordinates(chunk, pos + Vector3Int.up);
-
-            if(upVoxelType == voxelType){
-                drawLower = false;
-            }
-
-            switch (direction){
-                case Direction.back:
-                    zNegativeOffset += zFightingOffset;
-                break;
-
-                case Direction.forward:
-                    zPositiveOffset -= zFightingOffset;
-                break;
-
-                case Direction.left:
-                    xNegativeOffset += zFightingOffset;
-                break;
-
-                case Direction.right:
-                    xPositiveOffset -= zFightingOffset;
-                break;
-
-                case Direction.down:
-                    yNegativeOffset += zFightingOffset;
-                break;
-
-                case Direction.up:
-                    yPositiveOffset -= zFightingOffset;
-                break;
-
-                default:
-                break;
-            }
-            
-
-            
-        }
-
-        if(drawLower){
-            yPositiveOffset = 0.35f;
-
-            Vector3 auxPos = (Vector3)pos;
-            
-            meshData.navMeshObstaclesPositions.Add(auxPos);
-        }
-
-        int x = pos.x;
-        int y = pos.y;
-        int z = pos.z;
+    public static void GetFaceVertices(Direction direction, ChunkData chunk, Vector3 pos, MeshData meshData, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset)
+    {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
 
     
         //order of vertices matters for the normals and how we render the mesh
@@ -174,51 +198,51 @@ public class VoxelHelper
         {
             case Direction.back:
                 
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yNegativeOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yPositiveOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yPositiveOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yNegativeOffset, z + zNegativeOffset), generatesCollider);
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + negativeOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + positiveOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + positiveOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + negativeOffset.y, z + negativeOffset.z));
                 
                     
                 break;
             case Direction.forward:
                 
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yNegativeOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yPositiveOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yPositiveOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yNegativeOffset, z + zPositiveOffset), generatesCollider);
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + negativeOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + positiveOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + positiveOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + negativeOffset.y, z + positiveOffset.z));
                 
                 break;
             case Direction.left:
 
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yNegativeOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yPositiveOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yPositiveOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yNegativeOffset, z + zNegativeOffset), generatesCollider);
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + negativeOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + positiveOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + positiveOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + negativeOffset.y, z + negativeOffset.z));
                 
                 break;
 
             case Direction.right:
     
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yNegativeOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yPositiveOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yPositiveOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yNegativeOffset, z + zPositiveOffset), generatesCollider);
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + negativeOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + positiveOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + positiveOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + negativeOffset.y, z + positiveOffset.z));
                 
                 break;
             case Direction.down:
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yNegativeOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yNegativeOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yNegativeOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yNegativeOffset, z + zPositiveOffset), generatesCollider);
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + negativeOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + negativeOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + negativeOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + negativeOffset.y, z + positiveOffset.z));
 
                 break;
             case Direction.up:
         
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yPositiveOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yPositiveOffset, z + zPositiveOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xPositiveOffset, y + yPositiveOffset, z + zNegativeOffset), generatesCollider);
-                meshData.AddVertex(new Vector3(x + xNegativeOffset, y + yPositiveOffset, z + zNegativeOffset), generatesCollider);
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + positiveOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + positiveOffset.y, z + positiveOffset.z));
+                meshData.AddVertex(new Vector3(x + positiveOffset.x, y + positiveOffset.y, z + negativeOffset.z));
+                meshData.AddVertex(new Vector3(x + negativeOffset.x, y + positiveOffset.y, z + negativeOffset.z));
             
                 break;
             default:
@@ -226,29 +250,27 @@ public class VoxelHelper
         }
     }
 
-    public static Vector2[] FaceUVs(Direction direction, VoxelType voxelType){
+    public static Vector2[] FaceUVs(Direction direction, VoxelType voxelType, Vector3 positiveOffset, Vector3 negativeOffset){
 
         Vector2[] UVs = new Vector2[4];
-        Vector2Int tilePos = TexturePosition(direction, voxelType);
+        Vector2 tilePos = TexturePosition(direction, voxelType) + Vector2.one * 0.5f;
 
-        UVs[0] = new Vector2(
-            VoxelDataManager.tileSizeX * tilePos.x + VoxelDataManager.tileSizeX - VoxelDataManager.textureOffset,
-            VoxelDataManager.tileSizeY * tilePos.y + VoxelDataManager.textureOffset
-        );
+        Vector2 southEastPos = new Vector2(tilePos.x + positiveOffset.x, tilePos.y + negativeOffset.y);
+        Vector2 southEastOffset = Vector2.left + Vector2.up;
 
-        UVs[1] = new Vector2(
-            VoxelDataManager.tileSizeX * tilePos.x + VoxelDataManager.tileSizeX - VoxelDataManager.textureOffset,
-            VoxelDataManager.tileSizeY * tilePos.y + VoxelDataManager.tileSizeX - VoxelDataManager.textureOffset
-        );
+        Vector2 northEastPos =  new Vector2(tilePos.x + positiveOffset.x, tilePos.y + positiveOffset.y);
+        Vector2 northEastOffset = Vector2.left + Vector2.down;
 
-        UVs[2] = new Vector2(
-            VoxelDataManager.tileSizeX * tilePos.x + VoxelDataManager.textureOffset,
-            VoxelDataManager.tileSizeY * tilePos.y + VoxelDataManager.tileSizeX - VoxelDataManager.textureOffset
-        );
-        UVs[3] = new Vector2(
-            VoxelDataManager.tileSizeX * tilePos.x + VoxelDataManager.textureOffset,
-            VoxelDataManager.tileSizeY * tilePos.y + VoxelDataManager.textureOffset
-        );
+        Vector2 northWest =  new Vector2(tilePos.x + negativeOffset.x, tilePos.y + positiveOffset.y);
+        Vector2 northWestOffset = Vector2.right + Vector2.down;
+
+        Vector2 southWest =  new Vector2(tilePos.x + negativeOffset.x, tilePos.y + negativeOffset.y);
+        Vector2 southWestOffset = Vector2.right + Vector2.up;
+
+        UVs[0] = Vector2.Scale(southEastPos, VoxelDataManager.tileSize) + VoxelDataManager.textureOffset * southEastOffset;
+        UVs[1] = Vector2.Scale(northEastPos, VoxelDataManager.tileSize) + VoxelDataManager.textureOffset * northEastOffset;
+        UVs[2] = Vector2.Scale(northWest, VoxelDataManager.tileSize) + VoxelDataManager.textureOffset * northWestOffset;
+        UVs[3] = Vector2.Scale(southWest, VoxelDataManager.tileSize) + VoxelDataManager.textureOffset * southWestOffset;
 
         return UVs;
 

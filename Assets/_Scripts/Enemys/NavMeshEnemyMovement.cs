@@ -7,29 +7,44 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class NavMeshEnemyMovement : MonoBehaviour
 {
-    public GameObject target;
-    
-    public Character character = null;
-    public Transform navMeshEnemy;
-    public GameObject rigidBodyEnemy;
+    public Transform target;
     public float targetMaxDistance = 40f;
-    public float maxDistanceBtwnAgentAndBody = 1f;
-
     public float updateTargetSpeed = 0.1f;
-    public NavMeshAgent agent;
-    [SerializeField]
-    public NavMeshPath path;
+    public float damping = 1f;    
+    private NavMeshAgent agent;
+    public Animator animator;
+    private Coroutine followCoroutine;
 
-    public Coroutine followCoroutine;
+    [SerializeField] bool setDestination;
 
     private void Awake(){
-        navMeshEnemy = this.GetComponent<Transform>();
-        path = new NavMeshPath();
+        
+        agent = GetComponent<NavMeshAgent>();
+        
+    }
+
+    public void Start(){
+        
+    }
+
+    public void Update(){
+        if(animator != null){
+            animator.SetFloat("speed", agent.velocity.magnitude / agent.speed);
+        }
+
+        if(target != null && Vector3.Distance(target.position, transform.position) <= targetMaxDistance){
+            Vector3 lookPos = target.position - transform.position;
+            lookPos.y = 0;
+            if(lookPos != Vector3.zero){
+                Quaternion rotation = Quaternion.LookRotation(lookPos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
+            }
+            
+        }
     }
 
     public void StartFollowing(){
         if(followCoroutine == null){
-            rigidBodyEnemy.GetComponent<RigidBodyEnemyMovement>().rotationTarget = target.transform;
             followCoroutine = StartCoroutine(FollowTarget());
             return;
         }
@@ -38,33 +53,48 @@ public class NavMeshEnemyMovement : MonoBehaviour
         
     }
 
-    public void FixedUpdate()
-    {
-        Debug.Log(path.status);
+    public void StopMovement(){
+        agent.isStopped = true;
+    }
+
+    public void StartMovement(){
+        agent.isStopped = false;
     }
 
     private IEnumerator FollowTarget()
     {
         yield return new WaitForSeconds(updateTargetSpeed);
-
-        if(character == null){
-            character = target.transform.GetComponent<Character>();
-        }
-
-        if(enabled){
         
-        if(Vector3.Distance(rigidBodyEnemy.transform.position, navMeshEnemy.position) > maxDistanceBtwnAgentAndBody){
-            agent.Warp(rigidBodyEnemy.transform.position);
+        setDestination = true;
+
+        if(!enabled){
+            setDestination = false;
         }
 
-        if(Vector3.Distance(target.transform.position, navMeshEnemy.position) <= targetMaxDistance){
-        if(!character.inWater){
-            agent.CalculatePath(target.transform.position, path);
-            agent.SetPath(path);
+        if(target == null){
+            Debug.Log("Awaiting target");
+            setDestination = false;
         }
+
+        if(Vector3.Distance(target.position, transform.position) > targetMaxDistance){
+            setDestination = false;
         }
+
+        if(agent.isStopped){
+            setDestination = false;
         }
         
+        if(setDestination){
+            try{
+                agent.SetDestination(target.position);
+            }
+            catch(Exception e){
+                Debug.Log(e.Message);
+                Debug.Log(transform.name);
+            }
+
+        }
+
         followCoroutine = StartCoroutine(FollowTarget());
         
         

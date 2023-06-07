@@ -35,8 +35,8 @@ public class CaveGenerator : MonoBehaviour
         if(biomeNoiseSettings.useSkew){
 
             float normalisedWorldHeight = CustomNoise.MapFloatValue(worldPos.y,
-                data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y,
-                data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y,
+                data.worldReference.worldData.worldSettings.voxelMinMapDimensions.y,
+                data.worldReference.worldData.worldSettings.voxelMaxMapDimensions.y,
                 0f,
                 1f
             );
@@ -104,14 +104,14 @@ public class CaveGenerator : MonoBehaviour
 
         float minDimension = CustomNoise.MapNormalizedValue(
             biomeNoiseSettings.minDimension.y,
-            (float)data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y, 
-            (float)data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y
+            (float)data.worldReference.worldData.worldSettings.voxelMinMapDimensions.y, 
+            (float)data.worldReference.worldData.worldSettings.voxelMaxMapDimensions.y
         );
 
         float maxDimension = CustomNoise.MapNormalizedValue(
             biomeNoiseSettings.maxDimension.y,
-            (float)data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y, 
-            (float)data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y
+            (float)data.worldReference.worldData.worldSettings.voxelMinMapDimensions.y, 
+            (float)data.worldReference.worldData.worldSettings.voxelMaxMapDimensions.y
         );
 
         int intMinDimensions = Mathf.CeilToInt(minDimension);

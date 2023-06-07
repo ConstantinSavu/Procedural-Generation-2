@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingPosition: {x: 13, y: 0, z: -9}
   chunkSize: {x: 16, y: 64, z: 16}
-  chunkDrawingRange: {x: 8, y: 0, z: 8}
+  voxelSize: {x: 0.7, y: 0.7, z: 0.7}
+  inverseVoxelSize: {x: 1.4285715, y: 1.4285715, z: 1.4285715}
+  chunkDrawingRange: {x: 4, y: 0, z: 4}
   mapSeedOffset: {x: 0, y: 0, z: 0}
   waterThreshold: 40
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
   voxelMaxMapDimensions: {x: 0, y: 64, z: 0}
+  minMapDimensions: {x: 0, y: 0, z: 0}
+  maxMapDimensions: {x: 0, y: 44.8, z: 0}

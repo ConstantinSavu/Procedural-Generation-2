@@ -203,7 +203,8 @@ public static class Chunk
         
         MeshData meshData = new MeshData(true);
 
-        LoopThroughVoxels(chunkData, pos => meshData = VoxelHelper.GetVoxelMeshData(chunkData, pos, meshData, chunkData.voxels[GetIndexFromPosition(chunkData, pos)]));
+        LoopThroughVoxels(chunkData, 
+        pos => meshData = VoxelHelper.GetVoxelMeshData(chunkData, pos, meshData, chunkData.voxels[GetIndexFromPosition(chunkData, pos)]));
 
         return meshData;
 

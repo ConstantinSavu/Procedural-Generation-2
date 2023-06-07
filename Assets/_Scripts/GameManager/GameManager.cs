@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject player;
 
-    public GameObject enemyPrefab;
+    public List<GameObject> enemyPrefabs;
     private GameObject enemy;
     
     public GameObject RenderedChunks;
@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     public float detectionTime = 0.5f;
     public CinemachineVirtualCamera camera_VM;
 
-    public UnityEvent inWater, onSolid;
-
     private NavMeshSurface[] surfaces;
 
     public void Awake(){
@@ -39,8 +37,10 @@ public class GameManager : MonoBehaviour
 
         }
         
-        camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y * 4, 0);
+        camera_VM.transform.position = new Vector3(0, world.worldSettings.voxelMaxMapDimensions.y, 0);
         camera_VM.transform.rotation *= Quaternion.Euler(Vector3.right * 90);
+        camera_VM.m_Lens.ModeOverride = Cinemachine.LensSettings.OverrideModes.Orthographic;
+    
     }
 
     public void Update(){
@@ -49,27 +49,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        CheckIfInWater();
-
         if(Input.GetKeyDown(KeyCode.B)){
             CreateNavMeshes();
-        }
-
-    }
-
-    void CheckIfInWater()
-    {
-
-        VoxelType voxelType = WorldDataHelper.GetVoxelFromWorldCoorinates(world, Vector3Int.RoundToInt(player.transform.position));
-
-        if(voxelType == VoxelType.Water){
-            
-            inWater?.Invoke();
-            
-        }
-        else{
-            
-            onSolid?.Invoke();
         }
 
     }
@@ -78,20 +59,19 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
             return;
-        Vector3Int raycastStartposition = world.worldSettings.startingPosition;
-        raycastStartposition.y = world.worldSettings.voxelMaxMapDimensions.y;
+        Vector3 raycastStartposition = world.worldSettings.startingPosition;
+        raycastStartposition.y = world.worldSettings.maxMapDimensions.y;
+
+        float rayCastLength = world.worldSettings.maxMapDimensions.y - world.worldSettings.minMapDimensions.y + 30;
+
         RaycastHit hit;
 
         CreateNavMeshes();
         
-        if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, world.worldSettings.voxelMaxMapDimensions.y - world.worldSettings.voxelMinMapDimensions.y + 30))
+        if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, rayCastLength))
         {
-            player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
-            camera_VM.Follow = player.transform.GetChild(0);
-
-            inWater.AddListener(player.GetComponent<Character>().InWater);
-            onSolid.AddListener(player.GetComponent<Character>().OnSolid);
-
+            
+            SpawnPlayer(hit);
             StartCheckingTheMap();
             SpawnEnemy(player);
             
@@ -102,34 +82,51 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Player not spawned");
 
-        Vector3Int airSpawn = Vector3Int.zero;
-        airSpawn.y = world.worldSettings.voxelMaxMapDimensions.y + 30;
-
-        player = Instantiate(playerPrefab, airSpawn , Quaternion.identity);
-        camera_VM.Follow = player.transform.GetChild(0);
+        SpawnPlayer(world.worldSettings.maxMapDimensions);
         StartCheckingTheMap();
         
         
     }
 
+    private void SpawnPlayer(RaycastHit hit){
+        player = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
+        PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
+        playerCamera.SetCamera(camera_VM);
+    }
+
+    private void SpawnPlayer(Vector3 spawnPosition){
+        player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
+        playerCamera.SetCamera(camera_VM);
+    }
+
     private void SpawnEnemy(GameObject player){
 
-        enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player;
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().StartFollowing();
-        
+        Transform target = player.transform.Find("TargetForEnemies");
 
+        enemy = Instantiate(enemyPrefabs[0], player.transform.position + Vector3.back , Quaternion.identity);
+        enemy.GetComponentInChildren<Enemy>().InstantiateEnemy(target);
+
+        enemy = Instantiate(enemyPrefabs[1], player.transform.position + Vector3.forward , Quaternion.identity);
+        enemy.GetComponentInChildren<Enemy>().InstantiateEnemy(target);
+        
     }
 
     private void CreateNavMeshes()
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        NavMeshSurface surface = RenderedChunks.GetComponent<NavMeshSurface>();
-
         
-        surface.RemoveData();
-        surface.BuildNavMesh();
-        surface.AddData();
+        surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
+
+        foreach(NavMeshSurface surface in surfaces){
+            surface.RemoveData();
+            surface.BuildNavMesh();
+            
+            surface.AddData();
+        }
+        
+        
+        
         
 
         watch.Stop();

@@ -14,9 +14,7 @@ public class World : MonoBehaviour
 
     public WorldSettings worldSettings;
     public WorldRenderer worldRenderer;
-
     public TerrainGenerator terrainGenerator;
-
     public UnityEvent OnWorldCreated, OnNewChunksGenerated;
 
     
@@ -62,6 +60,11 @@ public class World : MonoBehaviour
             chunkDictionary = new ConcurrentDictionary<Vector3Int, ChunkRenderer>()
         };
         IsWorldCreated = false;
+
+        CalculateVoxelSizeInverse();
+
+        worldSettings.minMapDimensions = Vector3.Scale(worldSettings.voxelMinMapDimensions, worldSettings.voxelSize);
+        worldSettings.maxMapDimensions = Vector3.Scale(worldSettings.voxelMaxMapDimensions, worldSettings.voxelSize);
     }
 
     public async void GenerateWorld(){
@@ -90,6 +93,10 @@ public class World : MonoBehaviour
     private async Task GenerateWorld(Vector3Int position){
 
         WorldGenerationData worldGenerationData = await Task.Run(() => GetWorldGenerationDataAroundPlayer(position),taskTokenSource.Token);
+
+        if(!IsWorldCreated){
+            ChunkInstantiation(worldGenerationData);
+        }
 
         foreach(var pos in worldGenerationData.chunkPositionsToRemove){
             WorldDataHelper.RemoveChunk(this, pos);
@@ -150,6 +157,16 @@ public class World : MonoBehaviour
         StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
         watch.Stop();
         
+
+    }
+    void ChunkInstantiation(WorldGenerationData worldGenerationData){
+        
+        foreach(Vector3Int position in worldGenerationData.chunkPositionsToCreate){
+            
+            ChunkRenderer chunkRenderer = worldRenderer.InstantiateChunk(position);
+            worldData.chunkDictionary.TryAdd(position, chunkRenderer);
+
+        }
 
     }
 
@@ -273,6 +290,8 @@ public class World : MonoBehaviour
             return false;
         }
 
+
+
         Vector3Int worldPos = GetBlockPosition(hit);
 
         WorldDataHelper.SetVoxelFromWorldCoordinates(chunk.ChunkData.worldReference, worldPos, voxelType);
@@ -298,6 +317,14 @@ public class World : MonoBehaviour
         
         Vector3Int worldPos = GetBlockPosition(hit);
         return WorldDataHelper.GetVoxelFromWorldCoorinates(chunk.ChunkData.worldReference, worldPos);
+
+    }
+    internal VoxelType CheckVoxel(Vector3 pos)
+    {
+        
+        Vector3Int worldPos = GetBlockPosition(pos);
+
+        return WorldDataHelper.GetVoxelFromWorldCoorinates(this, worldPos);
 
     }
 
@@ -327,11 +354,22 @@ public class World : MonoBehaviour
 
     private Vector3Int GetBlockPosition(RaycastHit hit){
 
+        Vector3 hitPos = Vector3.Scale(hit.point, this.worldSettings.inverseVoxelSize);
+        Vector3 hitNormal = Vector3.Scale(hit.normal, this.worldSettings.inverseVoxelSize);
+
         Vector3 pos = new Vector3(
-            GetRealPosition(hit.point.x, hit.normal.x),
-            GetRealPosition(hit.point.y, hit.normal.y),
-            GetRealPosition(hit.point.z, hit.normal.z)
+            GetRealPosition(hitPos.x, hitNormal.x),
+            GetRealPosition(hitPos.y, hitNormal.y),
+            GetRealPosition(hitPos.z, hitNormal.z)
         );
+
+        return Vector3Int.RoundToInt(pos);
+
+    }
+
+    private Vector3Int GetBlockPosition(Vector3 pos){
+
+        pos = Vector3.Scale(pos, this.worldSettings.inverseVoxelSize);
 
         return Vector3Int.RoundToInt(pos);
 
@@ -341,6 +379,14 @@ public class World : MonoBehaviour
 
         return (float)((Mathf.Abs(pos % 1) == 0.5f) ? pos - normal/2 : pos);
 
+    }
+
+    public void CalculateVoxelSizeInverse(){
+        worldSettings.inverseVoxelSize = new Vector3(
+            1f / worldSettings.voxelSize.x,
+            1f / worldSettings.voxelSize.y,
+            1f / worldSettings.voxelSize.z
+        );
     }
 
     public void OnDisable(){

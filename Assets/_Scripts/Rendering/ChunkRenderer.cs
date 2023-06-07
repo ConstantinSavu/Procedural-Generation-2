@@ -6,7 +6,10 @@ using UnityEngine;
 public class ChunkRenderer : MonoBehaviour
 {
     public CustomRenderer solidRenderer;
+    public CustomRenderer underWaterRenderer;
     public CustomRenderer liquidRenderer;
+
+    public CustomRenderer transparentRenderer;
 
     public bool showGizmo = false;
 
@@ -34,9 +37,18 @@ public class ChunkRenderer : MonoBehaviour
 
     private void RenderMesh(MeshData meshData){
 
-        solidRenderer.RenderMesh(meshData);
-        liquidRenderer.RenderMesh(meshData);
+        solidRenderer.RenderMesh(meshData.solidMesh);
+        underWaterRenderer.RenderMesh(meshData.underLiquidMesh);
+        liquidRenderer.RenderMesh(meshData.liquidMesh);
+        transparentRenderer.RenderMesh(meshData.transparentMesh);
 
+
+        Projectile[] projectiles = GetComponentsInChildren<Projectile>();
+
+        foreach(Projectile projectile in projectiles){
+            Debug.Log(projectile.transform.name);
+            projectile.EnableRigidBody();
+        }
     }
 
     public void UpdateChunk(){

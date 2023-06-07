@@ -7,6 +7,7 @@ public class WorldRenderer : MonoBehaviour
     public GameObject chunkPrefab;
     public Queue<ChunkRenderer> chunkPool = new Queue<ChunkRenderer>();
     public GameObject RenderedChunks;
+    public World worldReference;
 
     public void Clear(World.WorldData worldData){
 
@@ -18,17 +19,27 @@ public class WorldRenderer : MonoBehaviour
 
     }
 
+    public ChunkRenderer InstantiateChunk(Vector3 pos){
+        
+        ChunkRenderer newChunk;
+        Vector3 actualPos = Vector3.Scale(pos, worldReference.worldSettings.voxelSize);
+        GameObject chunkObject = Instantiate(chunkPrefab, actualPos, Quaternion.identity, RenderedChunks.transform);
+        newChunk = chunkObject.GetComponent<ChunkRenderer>();
+        chunkPool.Enqueue(newChunk);
+        
+        return newChunk;
+    }
+
     public ChunkRenderer RenderChunk(ChunkData chunkData, Vector3Int pos, MeshData meshData){
 
         ChunkRenderer newChunk = null;
 
         if(chunkPool.Count > 0){
             newChunk = chunkPool.Dequeue();
-            newChunk.transform.position = pos;
+            newChunk.transform.position = Vector3.Scale(pos, chunkData.worldReference.worldSettings.voxelSize);
         }
         else{
-            GameObject chunkObject = Instantiate(chunkPrefab, pos, Quaternion.identity, RenderedChunks.transform);
-            newChunk = chunkObject.GetComponent<ChunkRenderer>();
+            Debug.Log("We no so smort");
         }
         
         newChunk.InitialiseChunk(chunkData);

@@ -121,6 +121,20 @@ public class WorldDataHelper
 
     }
 
+    public static bool SetVoxelFromWorldCoordinates(World world, Vector3Int worldPos, VoxelType voxelType, out ChunkData chunkData){
+
+        chunkData = GetChunkDataFromWorldCoordinates(world, worldPos);
+
+        if(chunkData == null){
+            return false;
+        }
+
+        Vector3Int localPosition = Chunk.GetVoxelInChunkCoordinates(chunkData, worldPos);
+        
+        return Chunk.SetVoxelFromChunkCoordinates(chunkData, localPosition, voxelType);
+
+    }
+
     public static VoxelType GetVoxelFromWorldCoorinates(World world, Vector3Int worldPos){
 
         ChunkData chunkData = GetChunkDataFromWorldCoordinates(world, worldPos);

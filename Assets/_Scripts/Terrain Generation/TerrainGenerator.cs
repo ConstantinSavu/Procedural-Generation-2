@@ -6,8 +6,7 @@ using UnityEngine;
 public class TerrainGenerator : MonoBehaviour
 {
     
-    public BiomeGenerator biomeGenerator;
-    public CaveGenerator caveGenerator;
+    public BiomeGenerator biomeGenerator;   
 
     public ChunkData GenerateChunkData(ChunkData data){
         
@@ -20,16 +19,9 @@ public class TerrainGenerator : MonoBehaviour
             int y = (index / data.chunkSize.x) % data.chunkSize.y;
             int z = index / (data.chunkSize.x * data.chunkSize.y);
             
-            //int groundPosition = biomeGenerator.Get2DTerrainY(x + data.worldPosition.x, z + data.worldPosition.z, data);
             int groundPosition;
 
-            int heightMapIndex = x * data.chunkSize.x + z;
-
-            if(data.heightMap[heightMapIndex] == 0){
-                data.heightMap[heightMapIndex] = biomeGenerator.Get2DTerrainY(x + data.worldPosition.x, z + data.worldPosition.z, data);
-            }
-
-            groundPosition = data.heightMap[heightMapIndex];
+            groundPosition = biomeGenerator.Get2DTerrainY(x, z, data);
             
             data = biomeGenerator.ProcessVoxel(data, new Vector3Int(x, y, z), groundPosition);
                 
