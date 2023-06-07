@@ -6,8 +6,8 @@ public class FireRangedAttack : BaseState
 {
     EnemyRangedAttackSM _sm;
     private float animationFinnishTime = 0.9f;
+    private float transitionFinnishTime = 0.9f;
 
-    private float shootArrowTime = 0.1f;
     public FireRangedAttack(EnemyRangedAttackSM stateMachine) : base(stateMachine){
         _sm = (EnemyRangedAttackSM)stateMachine;
     }
@@ -15,13 +15,12 @@ public class FireRangedAttack : BaseState
     public override void Enter()
     {
         base.Enter();
-        _sm.crossBow.ReadyToFire = true;
-        _sm.crossBow.ShowArrow = true;
-        _sm.crossBow.UpdateRotationToTarget = true;
-        _sm.crossBow.ShootArrow();
         _sm.animator.SetTrigger("fire");
-        
-        
+       
+        _sm.crossBow.ReadyToFire = false;
+        _sm.crossBow.ShowArrow = false;
+        _sm.crossBow.UpdateRotationToTarget = false;
+        _sm.crossBow.CheckCollisionToTarget = false;
         
     }
 
@@ -29,8 +28,10 @@ public class FireRangedAttack : BaseState
     {
         base.Exit();
         _sm.animator.ResetTrigger("fire");
+        _sm.crossBow.ReadyToFire = false;
+        _sm.crossBow.ShowArrow = true;
         _sm.crossBow.UpdateRotationToTarget = false;
-        
+        _sm.crossBow.CheckCollisionToTarget = false;
     }
 
     public override void Update()
@@ -38,15 +39,9 @@ public class FireRangedAttack : BaseState
         base.Update();
 
         if(_sm.animator.GetCurrentAnimatorStateInfo(1).IsName("Crosbow_Fire") &&
-            _sm.animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= shootArrowTime){
-            if(_sm.crossBow.ReadyToFire){
-                
-            }
-        }
-
-        if(_sm.animator.GetCurrentAnimatorStateInfo(1).IsName("Crosbow_Fire") &&
             _sm.animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinnishTime){
             stateMachine.ChangeState(_sm.idleRangedAttack);
         }
+
     }
 }

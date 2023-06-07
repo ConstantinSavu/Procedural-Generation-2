@@ -32,7 +32,7 @@ Transform:
   - {fileID: 8705646173547469821}
   - {fileID: 5685835863025814521}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8288206312037565041
 MonoBehaviour:
@@ -48,14 +48,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   arrow: {fileID: 8705646173547469821}
-  physicalArrow: {fileID: 0}
+  physicalArrow: {fileID: 2599239795827488996, guid: 5d9a65077be3d0e42b27cacf7d6ee43c,
+    type: 3}
+  globalArrowSpeed: {x: 10, y: 10, z: 10}
+  physicalArrowScale: {x: 0.5, y: 0.5, z: 0.5}
   holder: {fileID: 0}
   animator: {fileID: 0}
-  reloadTime: 1
   damping: 1
+  maxRotationRelativeToHolder: {x: 90, y: 90, z: 90}
   UpdateRotationToTarget: 0
   ReadyToFire: 0
   ShowArrow: 0
+  rotationBeforeClamp: {x: 0, y: 0, z: 0}
+  rotationAfterClamp: {x: 0, y: 0, z: 0}
+  holderRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &7569257833058544501
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using UnityEngine;
 public class IdleRangedAttack : BaseState
 {
     EnemyRangedAttackSM _sm;
+    private float animationFinnishTime = 0.9f;
+    private float transitionFinnishTime = 0.9f;
 
     public IdleRangedAttack(EnemyRangedAttackSM stateMachine) : base(stateMachine){
         _sm = (EnemyRangedAttackSM)stateMachine;
@@ -18,6 +20,7 @@ public class IdleRangedAttack : BaseState
         _sm.crossBow.ReadyToFire = false;
         _sm.crossBow.ShowArrow = true;
         _sm.crossBow.UpdateRotationToTarget = false;
+        _sm.crossBow.CheckCollisionToTarget = false;
 
     }
 
@@ -29,5 +32,6 @@ public class IdleRangedAttack : BaseState
         if(distance < _sm.attackRange){
             stateMachine.ChangeState(_sm.drawRangedAttack);    
         }
+
     }
 }

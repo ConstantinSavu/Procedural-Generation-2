@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject player;
 
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
     private GameObject enemy;
     
     public GameObject RenderedChunks;
@@ -102,11 +102,13 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy(GameObject player){
 
-        enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.back , Quaternion.identity);
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.GetComponent<Character>().playerCamera.transform;
+        Transform target = player.transform.Find("TargetForEnemies");
 
-        enemy = Instantiate(enemyPrefab, player.transform.position + Vector3.forward , Quaternion.identity);
-        enemy.GetComponentInChildren<NavMeshEnemyMovement>().target = player.GetComponent<Character>().playerCamera.transform;
+        enemy = Instantiate(enemyPrefabs[0], player.transform.position + Vector3.back , Quaternion.identity);
+        enemy.GetComponentInChildren<Enemy>().InstantiateEnemy(target);
+
+        enemy = Instantiate(enemyPrefabs[1], player.transform.position + Vector3.forward , Quaternion.identity);
+        enemy.GetComponentInChildren<Enemy>().InstantiateEnemy(target);
         
     }
 

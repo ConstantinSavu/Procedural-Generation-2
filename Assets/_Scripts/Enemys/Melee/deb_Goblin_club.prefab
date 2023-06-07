@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6189356195656954523}
   m_LocalRotation: {x: -0.7071068, y: -0.00000053439715, z: -0.0000014867907, w: 0.7071067}
-  m_LocalPosition: {x: 0.021204688, y: -0.012999328, z: 0}
+  m_LocalPosition: {x: 0.021, y: -0.013, z: -0.159}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDealDamage: 0
   hasDealtDamage: 0
-  weaponLength: 0.77
+  weaponLength: 0.939
   weaponDamage: 1
   damageLayers:
     serializedVersion: 2
@@ -75,13 +75,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8272943599224061569}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5500198, y: 0.42975202, z: -0.049349997}
+  m_LocalRotation: {x: -0.7071068, y: -0.00000053441164, z: -0.0000014718966, w: 0.7071067}
+  m_LocalPosition: {x: 0.021204846, y: -0.01299955, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8272943599223628453}
-  m_RootOrder: 2
+  m_Father: {fileID: 8272943599223628459}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &8272943599218848725
 SkinnedMeshRenderer:
@@ -290,7 +290,6 @@ Transform:
   m_Children:
   - {fileID: 8272943599223628535}
   - {fileID: 8272943599223628451}
-  - {fileID: 8272943599223628449}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -347,7 +346,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8272943599224061573}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 0.2
+  m_Radius: 0.8
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -377,6 +376,7 @@ MonoBehaviour:
   updateTargetSpeed: 0.1
   damping: 1
   animator: {fileID: 0}
+  setDestination: 0
 --- !u!114 &4532303055065267354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   target: {fileID: 0}
-  attackRange: 1.5
+  attackRange: 1.8
   animationFinnishTime: 1
 --- !u!1 &8272943599224061575
 GameObject:
@@ -485,6 +485,7 @@ Transform:
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8272943599223628449}
   - {fileID: 8272943599223628463}
   - {fileID: 8272943599223628461}
   - {fileID: 7141042586713740025}

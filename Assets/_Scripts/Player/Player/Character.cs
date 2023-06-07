@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
     private float animationFinnishTime = 0.9f;
 
     private float runningModifier = 0.5f;
-    
+
 
     public void Awake(){
 
@@ -50,7 +50,8 @@ public class Character : MonoBehaviour
     }
 
     private void Start(){
-        playerInput.OnMouseClick += HandleMouseClick;
+        playerInput.OnMouseLeftClick += HandleLeftMouseClick;
+        
         playerInput.OnFly += HandleFlyClick;
     }
 
@@ -195,7 +196,7 @@ public class Character : MonoBehaviour
 
     }
 
-    private void HandleMouseClick(){
+    private void HandleLeftMouseClick(){
 
 
         if(!isAttacking){
@@ -207,6 +208,7 @@ public class Character : MonoBehaviour
         
 
     }
+
 
     private void Attack(){
         

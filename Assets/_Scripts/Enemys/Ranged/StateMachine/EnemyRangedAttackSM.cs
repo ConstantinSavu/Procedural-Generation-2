@@ -11,6 +11,7 @@ public class EnemyRangedAttackSM : EnemyAttack
     public FireRangedAttack fireRangedAttack;
 
     [SerializeField] public Crossbow crossBow;
+    [SerializeField] public NavMeshEnemyMovement navMeshEnemyMovement;
 
     private void Awake() {
         
@@ -20,7 +21,7 @@ public class EnemyRangedAttackSM : EnemyAttack
         fireRangedAttack = new FireRangedAttack(this);
 
         crossBow = GetComponentInChildren<Crossbow>();
-        
+        navMeshEnemyMovement = GetComponentInChildren<NavMeshEnemyMovement>();
     }
 
     protected override BaseState GetInitialState(){

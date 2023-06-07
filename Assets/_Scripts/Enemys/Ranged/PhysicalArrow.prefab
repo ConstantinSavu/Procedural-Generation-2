@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1066716141857119512}
   - component: {fileID: 1066716141858340372}
   - component: {fileID: 1066716141859393542}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Arrow_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5003862726991439713}
   - component: {fileID: -13464334259831464}
   - component: {fileID: 2335038098561295100}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PhysicalArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,8 +110,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2599239795827488996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.118, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1066716141857119512}
@@ -144,7 +144,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &-13464334259831464
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -160,8 +160,8 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.07
@@ -180,3 +180,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894179aa91526834d87126c92975fd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToLiveInSeconds: 60
+  timeToLiveAfterPlayerHitInSeconds: 1
+  damageValue: 1
+  arrowScale: {x: 0.5, y: 0.5, z: 0.5}
+  minRandomAngle: -4.1
+  maxRandomAngle: 4.1
+  globalArrowSpeed: {x: 0, y: 5, z: 20}
+  maxArrowSpeed: {x: 0, y: 5, z: 20}
+  inWater: 0
+  waterBuoyancy: {x: -0, y: 8.175, z: -0}
+  waterEnterDampen: 10
+  waterMask:
+    serializedVersion: 2
+    m_Bits: 16
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  target: {fileID: 0}
