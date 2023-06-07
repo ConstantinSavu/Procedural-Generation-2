@@ -66,14 +66,14 @@ public class GameManager : MonoBehaviour
 
         RaycastHit hit;
 
-        CreateNavMeshes();
+        //CreateNavMeshes();
         
         if (Physics.Raycast(raycastStartposition, Vector3.down, out hit, rayCastLength))
         {
             
             SpawnPlayer(hit);
             StartCheckingTheMap();
-            SpawnEnemy(player);
+            //SpawnEnemy(player);
             
 
             
@@ -151,18 +151,10 @@ public class GameManager : MonoBehaviour
     IEnumerator CheckIfShouldLoadNextPosition(){
 
         yield return new WaitForSeconds(detectionTime);
-
-        if(
-            Mathf.Abs(currentChunkCenter.x - player.transform.position.x) > world.worldData.worldSettings.chunkSize.x ||
-            Mathf.Abs(currentChunkCenter.y - player.transform.position.y) > world.worldData.worldSettings.chunkSize.y ||
-            Mathf.Abs(currentChunkCenter.z - player.transform.position.z) > world.worldData.worldSettings.chunkSize.z
-        ){
-
-            if(loadAdditionalChunks){
-                world.LoadAdditionalChunksRequest(player);
-            }
-            
-            
+        
+        if(loadAdditionalChunks){
+            Debug.Log("Request additional chunks");
+            world.StartGenerateWorldTask(player.transform.position);
         }
         else{
             StartCoroutine(CheckIfShouldLoadNextPosition());

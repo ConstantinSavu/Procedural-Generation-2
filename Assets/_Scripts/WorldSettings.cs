@@ -9,6 +9,7 @@ public class WorldSettings : ScriptableObject
     public Vector3Int startingPosition = new Vector3Int(0, 0, 0);
     public Vector3Int chunkSize = new Vector3Int(Constants.chunkWidth, Constants.chunkHeight, Constants.chunkDepth);
     public Vector3 voxelSize = new Vector3(1f, 1f, 1f);
+    [HideInInspector] public Vector3 actualChunkSize;
     [HideInInspector] public Vector3 inverseVoxelSize;
     public Vector3Int chunkDrawingRange = new Vector3Int(8, 8, 8);
 

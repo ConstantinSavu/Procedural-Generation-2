@@ -29,6 +29,10 @@ public class World : MonoBehaviour
     public struct WorldData{
         public ConcurrentDictionary<Vector3Int, ChunkData> chunkDataDictionary;
         public ConcurrentDictionary<Vector3Int, ChunkRenderer> chunkDictionary;
+        public ConcurrentQueue<MeshData> meshDataQueue;
+        public ConcurrentQueue<Vector3> loadPositionsQueue;
+
+
         public WorldSettings worldSettings;
     };
 
@@ -57,9 +61,17 @@ public class World : MonoBehaviour
         worldData = new WorldData{
             worldSettings = this.worldSettings,
             chunkDataDictionary = new ConcurrentDictionary<Vector3Int, ChunkData>(),
-            chunkDictionary = new ConcurrentDictionary<Vector3Int, ChunkRenderer>()
+            chunkDictionary = new ConcurrentDictionary<Vector3Int, ChunkRenderer>(),
+            meshDataQueue = new ConcurrentQueue<MeshData>(),
+            loadPositionsQueue = new ConcurrentQueue<Vector3>()
+
         };
+        
+        worldData.loadPositionsQueue.Enqueue(worldSettings.startingPosition);
+
         IsWorldCreated = false;
+
+        worldSettings.actualChunkSize = Vector3.Scale(worldSettings.chunkSize, worldSettings.voxelSize);
 
         CalculateVoxelSizeInverse();
 
@@ -67,10 +79,53 @@ public class World : MonoBehaviour
         worldSettings.maxMapDimensions = Vector3.Scale(worldSettings.voxelMaxMapDimensions, worldSettings.voxelSize);
     }
 
-    public async void GenerateWorld(){
+    bool isFirstWorldDataReady = false;
+    Queue<Task> generateWorldTaskQueue = new Queue<Task>();
 
+    void Update()
+    {
+        if(isFirstWorldDataReady && !IsWorldCreated){
+
+            StartCoroutine(ChunkCreationCoroutine());
+            IsWorldCreated = true;
+            OnWorldCreated?.Invoke();
+        }
+
+        if(generateWorldTaskQueue.Count > 0){
+            Task generateWorldTask = generateWorldTaskQueue.Peek();
+            if(generateWorldTask.IsCompletedSuccessfully){
+                generateWorldTask = generateWorldTaskQueue.Dequeue();
+                generateWorldTask.Dispose();
+            }
+        }
+    }
+    
+    public void GenerateWorld()
+    {
         IsWorldCreated = false;
-        await GenerateWorld(worldSettings.startingPosition);
+        
+        
+        StartGenerateWorldTask(worldSettings.startingPosition);
+        
+    }
+
+    public void StartGenerateWorldTask(Vector3 position){
+        Task generateWorldTask = new Task(() => GenerateWorldTask(position));
+        generateWorldTask.Start();
+
+        generateWorldTaskQueue.Enqueue(generateWorldTask);
+    }
+
+    private void GenerateWorldTask(Vector3 position)
+    {
+        
+        GenerateWorld(Vector3Int.RoundToInt(position));
+        
+
+        if(isFirstWorldDataReady == false){
+            isFirstWorldDataReady = true;
+        }
+
         
     }
 
@@ -90,13 +145,9 @@ public class World : MonoBehaviour
     }
     
 
-    private async Task GenerateWorld(Vector3Int position){
-
-        WorldGenerationData worldGenerationData = await Task.Run(() => GetWorldGenerationDataAroundPlayer(position),taskTokenSource.Token);
-
-        if(!IsWorldCreated){
-            ChunkInstantiation(worldGenerationData);
-        }
+    private void GenerateWorld(Vector3Int position){
+        
+        WorldGenerationData worldGenerationData = GetWorldGenerationDataAroundPlayer(position);
 
         foreach(var pos in worldGenerationData.chunkPositionsToRemove){
             WorldDataHelper.RemoveChunk(this, pos);
@@ -109,16 +160,9 @@ public class World : MonoBehaviour
         var watch = System.Diagnostics.Stopwatch.StartNew();
         ConcurrentDictionary<Vector3Int, ChunkData> dataDictionary = null;
         
-        try
-        {
-            dataDictionary = await CalculateWorldChunkData(worldGenerationData.chunkDataPositionsToCreate);
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("Task cancelled");
-            Debug.Log(ex.Message);
-            return;
-        }
+        
+        dataDictionary = CalculateWorldChunkData(worldGenerationData.chunkDataPositionsToCreate);
+        
 
         foreach (var calculatedData in dataDictionary)
         {
@@ -134,49 +178,54 @@ public class World : MonoBehaviour
         Debug.Log("WorldData " + elapsedMs);
 
         watch = System.Diagnostics.Stopwatch.StartNew();
-        ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary = new ConcurrentDictionary<Vector3Int, MeshData>();
 
         List<ChunkData> dataToRender = worldData.chunkDataDictionary
             .Where(keyvaluepair => worldGenerationData.chunkPositionsToCreate.Contains(keyvaluepair.Key))
             .Select(keyvalpair => keyvalpair.Value)
             .ToList();
 
-        try{
-            meshDataDictionary = await CreateMeshData(dataToRender);
-        }
-        catch(Exception ex){
-            Debug.Log("Task cancelled");
-            Debug.Log(ex.Message);
-            return;
-        }
+        
+        CreateMeshData(dataToRender);
+        
         watch.Stop();
         elapsedMs = watch.ElapsedMilliseconds;
         Debug.Log("MeshData " + elapsedMs);
 
         
-        StartCoroutine(ChunkCreationCoroutine(meshDataDictionary));
-        watch.Stop();
         
-
     }
-    void ChunkInstantiation(WorldGenerationData worldGenerationData){
-        
-        foreach(Vector3Int position in worldGenerationData.chunkPositionsToCreate){
-            
-            ChunkRenderer chunkRenderer = worldRenderer.InstantiateChunk(position);
-            worldData.chunkDictionary.TryAdd(position, chunkRenderer);
 
+
+    IEnumerator ChunkCreationCoroutine() 
+    {
+        while(true){
+            yield return meshDataToChunkRenderer();
+
+            if(IsWorldCreated == false)
+            {
+                IsWorldCreated = true;
+                OnWorldCreated?.Invoke();
+            }
+            else{
+                OnNewChunksGenerated?.Invoke();
+            }
+
+            yield return null;
         }
 
     }
 
-    IEnumerator ChunkCreationCoroutine(ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary) 
-    {
+    IEnumerator meshDataToChunkRenderer(){
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        foreach (var item in meshDataDictionary)
+        while(!worldData.meshDataQueue.IsEmpty)
         {
-            Vector3Int position = item.Key;
-            MeshData meshData = item.Value;
+            
+            MeshData meshData;
+            if(!worldData.meshDataQueue.TryDequeue(out meshData)){
+                break;
+            }
+
+            Vector3Int position = meshData.worldPosition;
 
             if(!worldData.chunkDataDictionary.ContainsKey(position)){
                 continue;
@@ -188,14 +237,10 @@ public class World : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
-        Debug.Log("ChunkRenderer " + elapsedMs);
-        if (IsWorldCreated == false)
-        {
-            IsWorldCreated = true;
-            OnWorldCreated?.Invoke();
-        }
+        
     }
 
     private void AddOutOfChunkBoundsVoxel(ChunkData chunkData)
@@ -226,60 +271,43 @@ public class World : MonoBehaviour
    
     
 
-    private Task<ConcurrentDictionary<Vector3Int, ChunkData>> CalculateWorldChunkData(List<Vector3Int> chunkDataPositionsToCreate){
+    ConcurrentDictionary<Vector3Int, ChunkData> CalculateWorldChunkData(List<Vector3Int> chunkDataPositionsToCreate){
 
         ConcurrentDictionary<Vector3Int, ChunkData> dictionary = new ConcurrentDictionary<Vector3Int, ChunkData>();
-
-        return Task.Run(() => 
+     
+        Parallel.ForEach(chunkDataPositionsToCreate, pos =>
         {
-            Parallel.ForEach(chunkDataPositionsToCreate, pos =>
+            if (taskTokenSource.Token.IsCancellationRequested)
             {
-                if (taskTokenSource.Token.IsCancellationRequested)
-                {
-                    taskTokenSource.Token.ThrowIfCancellationRequested();
-                }
-                ChunkData data = new ChunkData(worldData.worldSettings.chunkSize, this, pos);
-                ChunkData newData = terrainGenerator.GenerateChunkData(data);
-                dictionary.TryAdd(pos, newData);
-            });
-            return dictionary;
-        },
-        taskTokenSource.Token
-        );
-
-    }
-
-    private Task<ConcurrentDictionary<Vector3Int, MeshData>> CreateMeshData(List<ChunkData> dataToRender){
-
-
-        ConcurrentDictionary<Vector3Int, MeshData> meshDictionary = new ConcurrentDictionary<Vector3Int, MeshData>();
+                taskTokenSource.Token.ThrowIfCancellationRequested();
+            }
+            ChunkData data = new ChunkData(worldData.worldSettings.chunkSize, this, pos);
+            ChunkData newData = terrainGenerator.GenerateChunkData(data);
+            dictionary.TryAdd(pos, newData);
+        });
+        return dictionary;
         
-        return Task.Run(() =>
-        {
-            
-            Parallel.ForEach(dataToRender, data =>
-            {
 
-                if(taskTokenSource.Token.IsCancellationRequested){
-                    taskTokenSource.Token.ThrowIfCancellationRequested();
-                }
-
-                MeshData meshData = Chunk.GetChunkMeshData(data);
-                meshDictionary.TryAdd(data.worldPosition, meshData);
-
-            });
-
-            return meshDictionary;
-        },
-        taskTokenSource.Token
-        );
-
+    
     }
 
-    public async void LoadAdditionalChunksRequest(GameObject player){
-        Debug.Log("Requesting more chunks");
-        await GenerateWorld(Vector3Int.RoundToInt(player.transform.position));
-        OnNewChunksGenerated?.Invoke();
+    void CreateMeshData(List<ChunkData> dataToRender){
+
+            
+        Parallel.ForEach(dataToRender, data =>
+        {
+
+            if(taskTokenSource.Token.IsCancellationRequested){
+                taskTokenSource.Token.ThrowIfCancellationRequested();
+            }
+
+            MeshData meshData = Chunk.GetChunkMeshData(data);
+            meshData.worldPosition = data.worldPosition;
+            worldData.meshDataQueue.Enqueue(meshData);
+
+        });
+
+
     }
 
     public bool SetVoxel(RaycastHit hit, VoxelType voxelType){
