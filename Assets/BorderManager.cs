@@ -39,7 +39,7 @@ public class BorderManager : MonoBehaviour
 
         
         eastBorder.transform.Rotate(Vector3.right * 90);
-        eastBorder.transform.position = Vector3.forward * (scale.z/2 +  + world.worldSettings.chunkSize.z * world.worldSettings.voxelSize.z);
+        eastBorder.transform.position = Vector3.forward * (scale.z/2 - 2 * world.worldSettings.chunkSize.z * world.worldSettings.voxelSize.z);
         scale.y = 0.1f;
         eastBorder.transform.localScale = scale * 10;
 
@@ -47,9 +47,11 @@ public class BorderManager : MonoBehaviour
 
         
         westBorder.transform.Rotate(Vector3.right * 90);
-        westBorder.transform.position = -Vector3.forward * (scale.z/2);
+        westBorder.transform.position = -Vector3.forward * (scale.z/2 + 3 * world.worldSettings.chunkSize.z * world.worldSettings.voxelSize.z);
         scale.y = 0.1f;
         westBorder.transform.localScale = scale * 10;
+
+        
         
 
     }

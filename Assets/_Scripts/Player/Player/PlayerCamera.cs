@@ -29,11 +29,11 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField]
     public VolumeProfile solidProfile;
     public Color solidFogColor = Color.gray;
-    public float solidFogEnd = 200f;
+    public float solidFogEnd = 300f;
 
     public VolumeProfile waterProfile;
     public Color waterFogColor = Color.blue;
-    public float waterFogEnd = 100f;
+    public float waterFogEnd = 200f;
 
     float verticalRotation = 0f;
 

@@ -8,6 +8,8 @@ public class PauseManager : MonoBehaviour
     [SerializeField] World world;
     [SerializeField] GameObject gamePauseCanvas;
 
+    [SerializeField] public bool showGameIsPaused;
+
     private float originalTimeScale;
 
     void Awake()
@@ -15,6 +17,7 @@ public class PauseManager : MonoBehaviour
         gameIsPaused = false;
         Time.timeScale = 1f;
         gamePauseCanvas.SetActive(false);
+        showGameIsPaused = gameIsPaused;
     }
 
     void Start(){
@@ -24,9 +27,14 @@ public class PauseManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
+        
         if(!world.IsWorldCreated){
                 return;
+        }
+        showGameIsPaused = gameIsPaused;
+        if(PlayerManager.playerDied){
+            return;
         }
 
         if(Input.GetKeyDown(KeyCode.Escape)){
@@ -42,7 +50,9 @@ public class PauseManager : MonoBehaviour
     }
 
     public void Resume(){
+        
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 1f;
         gameIsPaused = false;
         gamePauseCanvas.SetActive(false);
@@ -50,6 +60,7 @@ public class PauseManager : MonoBehaviour
 
     public void Pause(){
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0f;
         gameIsPaused = true;
         gamePauseCanvas.SetActive(true);

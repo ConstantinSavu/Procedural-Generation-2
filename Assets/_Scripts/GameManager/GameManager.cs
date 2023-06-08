@@ -39,7 +39,8 @@ public class GameManager : MonoBehaviour
         playerManager.SetupPlayerManager(world, camera_VM);
 
         Transform player = playerManager.GetPlayer();
-        enemySpawner.SetupEnemySpawner(player, spawnedEnemies);
+        Transform tagetForEnemies = player.Find("TargetForEnemies");
+        enemySpawner.SetupEnemySpawner(tagetForEnemies, spawnedEnemies);
         borderManager.SetupBorder(world);
 
     }

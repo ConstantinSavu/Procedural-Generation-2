@@ -25,7 +25,7 @@ public class EnemyDamageDealer : MonoBehaviour
             RaycastHit hit;
             
             if(Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, damageLayers.value)){
-                Debug.Log("Player hit");
+                
                 hasDealtDamage = true;
                 HealthSystem healthSystem;
                 if(hit.transform.TryGetComponent<HealthSystem>(out healthSystem)){

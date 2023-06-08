@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {   
@@ -18,10 +19,28 @@ public class PlayerManager : MonoBehaviour
 
     public bool loadAdditionalChunks = false;
 
+    public static bool playerDied = false;
+
+    [SerializeField] public bool showPlayerDied;
+
+    private UnityAction onPlayerDieAction;
+
+
+    void Awake()
+    {
+        onDieCanvas.SetActive(false);
+        playerDied = false;
+        showPlayerDied = playerDied;
+        onPlayerDieAction += OnPlayerDie;
+    }
     public void SetupPlayerManager(World world, CinemachineVirtualCamera camera_VM){
         this.world = world;
         this.camera_VM = camera_VM;
         SpawnPlayer();
+    }
+
+    public void Update(){
+        showPlayerDied = playerDied;
     }
 
     public void SpawnPlayer(){
@@ -53,13 +72,30 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    [SerializeField] GameObject onDieCanvas;
+    public void OnPlayerDie(){
+        
+        onDieCanvas.SetActive(true);
+        PlayerManager.playerDied = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
+        PauseManager.gameIsPaused = true;
+    }
+
     private void SpawnPlayer(RaycastHit hit){
         GameObject playerGameObject;
         playerGameObject = Instantiate(playerPrefab, hit.point + Vector3Int.up, Quaternion.identity);
         player = playerGameObject.transform;
         PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
         playerCamera.SetCamera(camera_VM);
+
+        PlayerHealthSystem playerHealthSystem = player.GetComponentInChildren<PlayerHealthSystem>();
+        onPlayerDieAction = OnPlayerDie;
+        playerHealthSystem.Setup(onPlayerDieAction);
     }
+
+    
 
     private void SpawnPlayer(Vector3 spawnPosition){
         GameObject playerGameObject;
@@ -67,6 +103,10 @@ public class PlayerManager : MonoBehaviour
         player = playerGameObject.transform;
         PlayerCamera playerCamera = player.GetComponentInChildren<PlayerCamera>();
         playerCamera.SetCamera(camera_VM);
+
+        PlayerHealthSystem playerHealthSystem = player.GetComponentInChildren<PlayerHealthSystem>();
+        onPlayerDieAction = OnPlayerDie;
+        playerHealthSystem.Setup(onPlayerDieAction);
     }
 
     public Transform GetPlayer(){

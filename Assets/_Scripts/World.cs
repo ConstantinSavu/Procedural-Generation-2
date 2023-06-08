@@ -341,7 +341,7 @@ public class World : MonoBehaviour
     private Vector3Int GetBlockPosition(RaycastHit hit){
 
         Vector3 hitPos = Vector3.Scale(hit.point, this.worldSettings.inverseVoxelSize);
-        Vector3 hitNormal = Vector3.Scale(hit.normal, this.worldSettings.inverseVoxelSize);
+        Vector3 hitNormal = Vector3.Scale(hit.normal, this.worldSettings.voxelSize);
 
         Vector3 pos = new Vector3(
             GetRealPosition(hitPos.x, hitNormal.x),
@@ -357,7 +357,7 @@ public class World : MonoBehaviour
 
         pos = Vector3.Scale(pos, this.worldSettings.inverseVoxelSize);
 
-        return Vector3Int.RoundToInt(pos);
+        return Vector3Int.FloorToInt(pos);
 
     }
 

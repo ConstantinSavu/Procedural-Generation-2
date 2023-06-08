@@ -31,7 +31,7 @@ public class EnemyHealthSystem : HealthSystem
         }
     }
 
-    public new void TakeDamage(float damageAmount){
+    public override void TakeDamage(float damageAmount){
         health -= damageAmount;
         animator.SetTrigger("damage");
         StartCoroutine(ChangeColor(damageColor));
@@ -41,7 +41,7 @@ public class EnemyHealthSystem : HealthSystem
 
     }
 
-    public new void Die(){
+    public override void Die(){
         onDie?.Invoke();
         transform.gameObject.SetActive(false);
     }
