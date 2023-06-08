@@ -222,13 +222,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 327497404}
     - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 351649546}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: GenerateWorld
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3942632305771251648, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5101062782657478985, guid: 21b6d04cc07f52c4087ae34fde1475e8,
         type: 3}

@@ -54,6 +54,9 @@ MonoBehaviour:
   boss_prefab: {fileID: 1898913528602851103, guid: 37959a6b760175642b2ecf85f3db7729,
     type: 3}
   maxDistanceFromTarget: 50
+  onPause:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2980395646785351529
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +136,7 @@ Transform:
   - {fileID: 8784899541373646018}
   - {fileID: 5004765798983759949}
   - {fileID: 3885523187288799912}
+  - {fileID: 2089587052108718146}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -252,3 +256,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RenderedChunks: {fileID: 0}
   surfaces: []
+--- !u!1 &7519185459927851875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2089587052108718146}
+  - component: {fileID: 3225463011964649036}
+  m_Layer: 0
+  m_Name: BorderManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2089587052108718146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7519185459927851875}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9043984983959146600}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3225463011964649036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7519185459927851875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b1af5ce2a00bf45bae7a669a6a1f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  borderPrefab: {fileID: 2135205937427999932, guid: 1c67f7a8e82a2aa41855ff3d1255830a,
+    type: 3}

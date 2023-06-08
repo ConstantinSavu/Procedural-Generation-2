@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    public static bool gameIsPaused = false;
+    [SerializeField] public static bool gameIsPaused = false;
     [SerializeField] World world;
     [SerializeField] GameObject gamePauseCanvas;
 
     private float originalTimeScale;
+
+    void Awake()
+    {
+        gameIsPaused = false;
+        Time.timeScale = 1f;
+        gamePauseCanvas.SetActive(false);
+    }
+
+    void Start(){
+        gameIsPaused = false;
+        Time.timeScale = 1f;
+        gamePauseCanvas.SetActive(false);
+    }
 
     void Update()
     {
@@ -30,14 +43,13 @@ public class PauseManager : MonoBehaviour
 
     public void Resume(){
         Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = originalTimeScale;
+        Time.timeScale = 1f;
         gameIsPaused = false;
         gamePauseCanvas.SetActive(false);
     }
 
     public void Pause(){
         Cursor.lockState = CursorLockMode.None;
-        originalTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         gameIsPaused = true;
         gamePauseCanvas.SetActive(true);

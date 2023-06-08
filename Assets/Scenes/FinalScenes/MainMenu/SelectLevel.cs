@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SelectLevel : MonoBehaviour
 {
     public void LoadMainMenu(){
+        
         SceneManager.LoadScene(0);
     }
     public void LoadPlains(){
@@ -21,7 +22,7 @@ public class SelectLevel : MonoBehaviour
     }
 
     public void LoadCave(){
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
     }
 
     public void LoadNextLevel(){

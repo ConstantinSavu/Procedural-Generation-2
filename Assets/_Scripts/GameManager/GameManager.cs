@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]NavMeshManager navMeshManager;
     [SerializeField]PlayerManager playerManager;
     [SerializeField]EnemySpawner enemySpawner;
+    BorderManager borderManager;
 
     public void Awake(){
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         playerManager = GetComponentInChildren<PlayerManager>();
         navMeshManager = GetComponentInChildren<NavMeshManager>();
         enemySpawner = GetComponentInChildren<EnemySpawner>();
+        borderManager = GetComponentInChildren<BorderManager>();
     
     }
 
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         Transform player = playerManager.GetPlayer();
         enemySpawner.SetupEnemySpawner(player, spawnedEnemies);
+        borderManager.SetupBorder(world);
 
     }
 

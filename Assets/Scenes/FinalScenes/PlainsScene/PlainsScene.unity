@@ -843,11 +843,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.001
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 50
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -996,6 +996,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 14619970463700282, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 671.6229
+      objectReference: {fileID: 0}
+    - target: {fileID: 14619970463700282, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 534.1056
+      objectReference: {fileID: 0}
+    - target: {fileID: 14619970463700282, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -51.3747
+      objectReference: {fileID: 0}
+    - target: {fileID: 14619970463700282, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 23.4813
+      objectReference: {fileID: 0}
     - target: {fileID: 1081336038580588022, guid: f124838d3689059418796f972de2a32f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1104,7 +1124,17 @@ PrefabInstance:
     - target: {fileID: 1652458771041857904, guid: f124838d3689059418796f972de2a32f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 74
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2442943226692061001, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 193
+      objectReference: {fileID: 0}
+    - target: {fileID: 3536138910109316954, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -199
       objectReference: {fileID: 0}
     - target: {fileID: 3650911772731421666, guid: f124838d3689059418796f972de2a32f,
         type: 3}
@@ -1145,6 +1175,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374515363186034572, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 8289412091312778527, guid: f124838d3689059418796f972de2a32f,
         type: 3}
@@ -1240,7 +1275,7 @@ MonoBehaviour:
   biomeNoiseSettings: {fileID: 11400000, guid: 74666cb5481ccc848a8fdb27c0723bb2, type: 2}
   domainWarping: {fileID: 1481222501}
   useDomainWarping: 0
-  firstLayer: {fileID: 1573538488}
+  firstLayer: {fileID: 1921592050}
   additionalLayerHandlres:
   - {fileID: 548013548}
   structureGenerators:
@@ -1524,8 +1559,8 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
-    NearClipPlane: 0.001
+    OrthographicSize: 50
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
