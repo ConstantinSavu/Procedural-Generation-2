@@ -29,6 +29,10 @@ public static class CustomNoise
         if(noiseResult < 0f){
             Debug.Log("Unexpected noise value " + noiseResult);
         }
+
+        if(noiseResult > 1f){
+            Debug.Log("Unexpected noise value " + noiseResult);
+        }
         
     
         return noiseResult;
@@ -49,6 +53,11 @@ public static class CustomNoise
         if(noiseResult < 0f){
             Debug.Log("Unexpected noise value " + noiseResult);
         }
+
+        if(noiseResult > 1f){
+            Debug.Log("Unexpected noise value " + noiseResult);
+        }
+        
         
 
         return noiseResult;
@@ -73,9 +82,9 @@ public static class CustomNoise
         for(int i = 0; i < settings.octaves; i++){
 
             result += amplitude * Noise3D(
-                (x + settings.perlinOffset.x + settings.worldOffset.x) * frequency,
-                (y + settings.perlinOffset.y + settings.worldOffset.y) * frequency, 
-                (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency
+                (x + settings.localOffset.x + settings.worldOffset.x) * frequency,
+                (y + settings.localOffset.y + settings.worldOffset.y) * frequency, 
+                (z + settings.localOffset.z + settings.worldOffset.z) * frequency
             );
 
             totalAmplitude += amplitude;
@@ -108,7 +117,7 @@ public static class CustomNoise
 
             //result += Mathf.PerlinNoise((x + settings.perlinOffset.x + settings.worldOffset.x) * frequency, (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency) * amplitude;
 
-            noiseResult = Noise2D((x + settings.perlinOffset.x + settings.worldOffset.x) * frequency, (z + settings.perlinOffset.z + settings.worldOffset.z) * frequency);
+            noiseResult = Noise2D((x + settings.localOffset.x + settings.worldOffset.x) * frequency, (z + settings.localOffset.z + settings.worldOffset.z) * frequency);
 
             result +=  noiseResult * amplitude;
            

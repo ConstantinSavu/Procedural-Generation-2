@@ -258,6 +258,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4775126311332359082, guid: d43e9bef6cf8dc74dbbc13269406cc57,
         type: 3}
+      propertyPath: rayDistance
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775126311332359082, guid: d43e9bef6cf8dc74dbbc13269406cc57,
+        type: 3}
       propertyPath: groundMask.m_Bits
       value: 1544
       objectReference: {fileID: 0}

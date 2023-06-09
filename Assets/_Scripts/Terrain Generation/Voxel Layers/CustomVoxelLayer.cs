@@ -5,8 +5,13 @@ using UnityEngine;
 public class CustomVoxelLayer : VoxelLayerHandler
 {
     
-    [Range(0,1)]
+    
     public float customVoxelThreshold = 0.2f;
+    private float maxCustomVoxelThreshold = 1000;
+
+    public bool invertNoise = false;
+
+    private float normalizedCustomVoxelThreshold;
     public VoxelType customVoxelType;
 
     [SerializeField]
@@ -16,20 +21,27 @@ public class CustomVoxelLayer : VoxelLayerHandler
 
     public bool useDomainWarping = false;
 
+    [SerializeField] HashSet<VoxelType> canReplace;
+    [SerializeField] HashSet<VoxelType> cannotReplace;
+
+    public void Awake(){
+        normalizedCustomVoxelThreshold = customVoxelThreshold / maxCustomVoxelThreshold;
+    }
+
     protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
 
         VoxelType currentVoxel = Chunk.GetVoxelFromChunkCoordinates(data, pos);
 
-        if(currentVoxel == VoxelType.Bedrock){
+        if(cannotReplace.Contains(currentVoxel)){
             return false;
         }
 
-        if(currentVoxel == VoxelType.Water){
-            return false;
-        }
+        if(canReplace.Count != 0){
 
-        if(currentVoxel == VoxelType.Sand){
-           return false; 
+            if(!canReplace.Contains(currentVoxel)){
+                return false;
+            }
+
         }
 
         VoxelType voxelType;
@@ -64,16 +76,41 @@ public class CustomVoxelLayer : VoxelLayerHandler
             ),
             customVoxelSettings
             );
+
+            customVoxelNoise = CustomNoise.Redistribution(customVoxelNoise, customVoxelSettings);
         }
 
-        if(customVoxelNoise < customVoxelThreshold){
+
+        if(!invertNoise){
+            if(customVoxelNoise < normalizedCustomVoxelThreshold){
             return false;
+            }
         }
-
+        else{
+            if(customVoxelNoise > normalizedCustomVoxelThreshold){
+            return false;
+            }
+        }
+        
+        
         voxelType = customVoxelType;
 
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
         return true;
+    }
+
+    private void OnValidate() {
+
+        if(customVoxelThreshold < 0){
+            customVoxelThreshold = 0;
+        }
+
+        if(customVoxelThreshold > maxCustomVoxelThreshold){
+            customVoxelThreshold = maxCustomVoxelThreshold;
+        }
+
+        normalizedCustomVoxelThreshold = customVoxelThreshold / maxCustomVoxelThreshold;
+
     }
 
 }

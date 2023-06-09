@@ -403,6 +403,11 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 8356040492075142023, guid: f124838d3689059418796f972de2a32f,
+        type: 3}
+      propertyPath: MainMenu
+      value: 
+      objectReference: {fileID: 4367830512662039491}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3955304762843132523, guid: f124838d3689059418796f972de2a32f, type: 3}

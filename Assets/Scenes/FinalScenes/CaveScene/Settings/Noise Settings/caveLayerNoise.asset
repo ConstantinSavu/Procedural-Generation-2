@@ -12,17 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
   m_Name: caveLayerNoise
   m_EditorClassIdentifier: 
-  noiseZoom: {x: 0.8, y: 0.8, z: 0.8}
-  perlinOffset: {x: 944, y: 15073, z: -2566}
+  noiseZoom: {x: 1, y: 2, z: 1}
+  localOffset: {x: 944, y: 100, z: -2566}
   worldOffset: {x: 0, y: 0, z: 0}
-  amplitudeMultiplyer: 1.97
-  frequencyMultyplier: 2.46
-  octaves: 3
-  exponent: 0.49
-  redistributionModifier: 1.24
-  offset: {x: 0, y: 0, z: 0}
+  amplitudeMultiplyer: 0.5
+  frequencyMultyplier: 1.5
+  octaves: 5
+  exponent: 1
+  redistributionModifier: 1
   minDimension: {x: 0, y: 0, z: 0}
   maxDimension: {x: 1, y: 1, z: 1}
-  skewExponent: 4
-  useSkew: 1
-  threshold: 0.5

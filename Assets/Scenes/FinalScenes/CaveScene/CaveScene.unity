@@ -202,6 +202,77 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &157296605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 157296606}
+  - component: {fileID: 157296608}
+  - component: {fileID: 157296607}
+  m_Layer: 0
+  m_Name: ThinCaveLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &157296606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157296605}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1946748574}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157296607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157296605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2629635e44dcec4e9d4b5d85a504685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseDomainX: {fileID: 11400000, guid: 217a7072f86078f468aaea0bf73c97a2, type: 2}
+  noiseDomainY: {fileID: 11400000, guid: a3569c78a123c0d4385f31e165da2a70, type: 2}
+  noiseDomainZ: {fileID: 11400000, guid: a3cd40c8be4244b4ab692bf27600ac2b, type: 2}
+  amplitude: {x: 1, y: 1, z: 1}
+  noiseType: 0
+  domainWarpType: 0
+--- !u!114 &157296608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157296605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7dd164777aed04c94f760b6348e4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Next: {fileID: 0}
+  customVoxelThreshold: 500
+  invertNoise: 0
+  customVoxelType: 1
+  customVoxelSettings: {fileID: 11400000, guid: 7dd45fd6e0a61d6449eba29b87612d04,
+    type: 2}
+  domainWarping: {fileID: 157296607}
+  useDomainWarping: 0
 --- !u!114 &166169544 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
@@ -440,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
   customVoxelThreshold: 0.602
+  invertNoise: 0
   customVoxelType: 6
   customVoxelSettings: {fileID: 11400000, guid: f3f9136c95c475e4a8ecca871910aeca,
     type: 2}
@@ -749,7 +821,7 @@ GameObject:
   - component: {fileID: 922873186}
   - component: {fileID: 922873185}
   m_Layer: 0
-  m_Name: CaveLayer
+  m_Name: BigCaveLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,7 +873,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
-  customVoxelThreshold: 0.404
+  customVoxelThreshold: 600
+  invertNoise: 0
   customVoxelType: 1
   customVoxelSettings: {fileID: 11400000, guid: 86f1f86c08142cb468b1e06fe4e0f0fd,
     type: 2}
@@ -1368,7 +1441,7 @@ PrefabInstance:
     - target: {fileID: 1652458771041857904, guid: f124838d3689059418796f972de2a32f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 71.9
+      value: 39.1
       objectReference: {fileID: 0}
     - target: {fileID: 2135562991360962765, guid: f124838d3689059418796f972de2a32f,
         type: 3}
@@ -1705,13 +1778,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527525ac0d4acd5429363c70932910a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biomeNoiseSettings: {fileID: 11400000, guid: f3b071cb33539c44ca5c040388a1e95f, type: 2}
+  biomeNoiseSettings: {fileID: 11400000, guid: 7d4b83175bcefa14d9b602d6e35a7eed, type: 2}
   domainWarping: {fileID: 1481222501}
   useDomainWarping: 0
-  firstLayer: {fileID: 1921592050}
+  firstLayer: {fileID: 1573538488}
   additionalLayerHandlres:
   - {fileID: 922873186}
-  - {fileID: 548013548}
   structureGenerators:
   - {fileID: 1070553035}
 --- !u!4 &1481222500
@@ -2020,7 +2092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 449002225}
-  surfaceVoxelType: 5
+  surfaceVoxelType: 2
 --- !u!4 &1810373517
 Transform:
   m_ObjectHideFlags: 0
@@ -2182,6 +2254,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 922873184}
+  - {fileID: 157296606}
   - {fileID: 548013549}
   m_Father: {fileID: 1481222500}
   m_RootOrder: 4
@@ -2272,3 +2345,9 @@ MonoBehaviour:
   Next: {fileID: 0}
   terrainHeightLimit: 60
   treeStrucutre: {fileID: 11400000, guid: 1896fc1ded6bd5b4abdd20f04c7e2f34, type: 2}
+  pseudoRandomOffset: 626622
+  angleChangeList:
+  - {x: 0, y: 90, z: 0}
+  - {x: 0, y: 180, z: 0}
+  - {x: 0, y: 270, z: 0}
+  - {x: 0, y: 360, z: 0}

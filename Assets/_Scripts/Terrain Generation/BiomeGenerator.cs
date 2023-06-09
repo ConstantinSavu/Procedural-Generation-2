@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class BiomeGenerator : MonoBehaviour
 {
-
-    
-    
-    
     public NoiseSettings biomeNoiseSettings;
 
     public DomainWarping domainWarping;
@@ -80,8 +76,6 @@ public class BiomeGenerator : MonoBehaviour
 
         }
 
-        
-
         //Redistribute terrain
         //float terrain = CustomNoise.ResistributeNoise(terrainNoise, biomeNoiseSettings);
 
@@ -91,48 +85,6 @@ public class BiomeGenerator : MonoBehaviour
         int final_terrain_value = CustomNoise.MapNormalizedValueToInt(terrainNoise, biomeNoiseSettings.minDimension.y, biomeNoiseSettings.maxDimension.y);
 
         return final_terrain_value;
-
-        /*
-        biomeNoiseSettings.minDimension.y = Mathf.Clamp(
-            biomeNoiseSettings.minDimension.y,
-            0,
-            1
-        );
-
-        biomeNoiseSettings.maxDimension.y = Mathf.Clamp(
-            biomeNoiseSettings.maxDimension.y,
-            biomeNoiseSettings.minDimension.y,
-            1
-        );
-
-        float minDimension = CustomNoise.MapNormalizedValue(
-            biomeNoiseSettings.minDimension.y,
-            (float)data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y, 
-            (float)data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y
-        );
-
-        float maxDimension = CustomNoise.MapNormalizedValue(
-            biomeNoiseSettings.maxDimension.y,
-            (float)data.worldReference.worldData.worldSettings.VoxelMinMapDimensions.y, 
-            (float)data.worldReference.worldData.worldSettings.VoxelMaxMapDimensions.y
-        );
-
-        int intMinDimensions = Mathf.CeilToInt(minDimension);
-        int intMaxDimensions = Mathf.FloorToInt(maxDimension);
-
-
-
-        //Map terrain value to minimum and maximum values for biome
-        int final_terrain_value = CustomNoise.MapNormalizedValueToInt(terrain, intMinDimensions, intMaxDimensions);
-
-        final_terrain_value = Mathf.Clamp(
-            final_terrain_value + biomeNoiseSettings.offset.y,
-            intMinDimensions,
-            intMaxDimensions-1
-        );
-
-        return final_terrain_value;
-        */
 
     }
 

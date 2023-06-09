@@ -14,7 +14,7 @@ public class BedrockLayerHandler : VoxelLayerHandler
             Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
             return true;
         }
-
+        /*
         if(worldPos.z  == end.z){
             Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
             return true;
@@ -34,7 +34,7 @@ public class BedrockLayerHandler : VoxelLayerHandler
             Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
             return true;
         }
-        
+        */
         
         return false;
 
