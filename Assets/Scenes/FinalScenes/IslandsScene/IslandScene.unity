@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.1723033, g: 0.25543958, b: 0.3773585, a: 1}
+  m_AmbientSkyColor: {r: 0.4498932, g: 0.5539458, b: 0.7075472, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 56113b3b655ab7349bab4d7d405c258a, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 6225fa8890cf025489e57d3aa1d87260, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -367,11 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bd56d8b8fbcf24da5e196cd77f11a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biomeNoiseSettings: {fileID: 11400000, guid: 8c15caf3e42ce4349aa949d285d8c6e3, type: 2}
-  domainWarping: {fileID: 191596912}
-  useDomainWarping: 1
-  firstLayer: {fileID: 0}
-  additionalLayerHandlres: []
 --- !u!114 &191596912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +492,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnChunkUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1203318165}
+        m_TargetAssemblyTypeName: NavMeshManager, Assembly-CSharp
+        m_MethodName: UpdateNavMesh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &327497405
 Transform:
   m_ObjectHideFlags: 0
@@ -557,6 +567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
+  canReplace: 
+  cannotReplace: 
   nearGroundVoxelType: 3
   underGroundVoxelType: 5
   nearGroundOffset: 5
@@ -603,7 +615,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
-  customVoxelThreshold: 0.602
+  canReplace: 
+  cannotReplace: 
+  customVoxelThreshold: 602
+  invertNoise: 0
   customVoxelType: 5
   customVoxelSettings: {fileID: 11400000, guid: f3f9136c95c475e4a8ecca871910aeca,
     type: 2}
@@ -672,6 +687,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1921592050}
+  canReplace: 
+  cannotReplace: 
 --- !u!4 &655229429
 Transform:
   m_ObjectHideFlags: 0
@@ -1092,14 +1109,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127567169}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.053455494, y: 0.9464345, z: -0.21763183, w: -0.23246658}
   m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.9, y: 207.6, z: 0}
 --- !u!114 &1127567172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1178,8 +1195,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
+      propertyPath: spawnDelay
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: enemiesToDefeat
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
       propertyPath: maxSpawnedEnemies
-      value: 6
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7745811926837255906, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
@@ -1757,6 +1784,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 655229428}
+  canReplace: 
+  cannotReplace: 
 --- !u!114 &1605820597 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3610002203638918568, guid: 38a24dc074d7b984ca4c0d353d1412dd,
@@ -1805,6 +1834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 449002225}
+  canReplace: 
+  cannotReplace: 
   surfaceVoxelType: 2
 --- !u!4 &1810373517
 Transform:
@@ -1851,6 +1882,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1810373515}
+  canReplace: 
+  cannotReplace: 
 --- !u!4 &1921592051
 Transform:
   m_ObjectHideFlags: 0

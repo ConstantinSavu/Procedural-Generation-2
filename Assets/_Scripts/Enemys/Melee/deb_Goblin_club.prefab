@@ -372,9 +372,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  targetMaxDistance: 40
+  targetMaxDistance: 10000
   updateTargetSpeed: 0.1
   damping: 1
+  TimeToLive: 100
   setDestination: 0
 --- !u!114 &4532303055065267354
 MonoBehaviour:

@@ -16,7 +16,14 @@ public enum VoxelType{
     Water,
     Sand,
     Bedrock,
-    Cactus
+    Cactus,
+    Clay,
+    Diamond,
+    Gold,
+    Uranium,
+    DarkStone,
+    Gravel,
+    RedSand
 
 
 }

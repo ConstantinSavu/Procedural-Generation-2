@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class HealthSystem : MonoBehaviour
 {
     protected Animator animator;
-    public float health = 3f;
+    public int health = 3;
 
     // Start is called before the first frame update
     void Awake()
@@ -15,7 +15,7 @@ public abstract class HealthSystem : MonoBehaviour
 
         
     }
-    public abstract void TakeDamage(float damageAmount);
+    public abstract void TakeDamage(int damageAmount);
 
     
     public abstract void Die();

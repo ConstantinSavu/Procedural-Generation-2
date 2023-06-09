@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(NavMeshEnemyMovement))]
 
 [RequireComponent(typeof(EnemyHealthSystem))]
 
+
 public class Enemy : PoolableObject
 {
+    
+    
     public Transform target;
+    [SerializeField] EnemyType enemyType;
 
     NavMeshEnemyMovement navMeshEnemyMovement;
     EnemyAttack enemyAttack;
@@ -17,6 +23,8 @@ public class Enemy : PoolableObject
     EnemyHealthSystem enemyTakeDamage;
 
     Animator animator;
+    public UnityEvent<EnemyType> onDie;
+
 
     void Awake()
     {
@@ -52,6 +60,7 @@ public class Enemy : PoolableObject
     public override void OnDisable()
     {
         base.OnDisable();
+        onDie?.Invoke(enemyType);
         navMeshEnemyMovement.DiableAgent();
 
     }

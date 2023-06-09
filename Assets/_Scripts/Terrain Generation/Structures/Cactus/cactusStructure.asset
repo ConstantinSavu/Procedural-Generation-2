@@ -22,8 +22,6 @@ MonoBehaviour:
   - voxelType: 12
     voxelPosition: {x: 0, y: 3, z: 0}
   - voxelType: 12
-    voxelPosition: {x: 0, y: 3, z: 0}
-  - voxelType: 12
     voxelPosition: {x: 1, y: 2, z: 0}
   - voxelType: 12
     voxelPosition: {x: 2, y: 2, z: 0}
@@ -41,3 +39,9 @@ MonoBehaviour:
     voxelPosition: {x: -2, y: 3, z: 0}
   - voxelType: 12
     voxelPosition: {x: -2, y: 4, z: 0}
+  - voxelType: 12
+    voxelPosition: {x: 0, y: 3, z: 0}
+  - voxelType: 12
+    voxelPosition: {x: 0, y: 4, z: 0}
+  - voxelType: 12
+    voxelPosition: {x: 0, y: 5, z: 0}

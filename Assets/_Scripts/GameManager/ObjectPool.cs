@@ -30,13 +30,13 @@ public class ObjectPool{
             
 
             poolableObject.Parent = this;
-            EnemyHealthSystem health;
-
-            if(poolableObject.TryGetComponent<EnemyHealthSystem>(out health)){
-                health.onDie.AddListener(enemySpawner.OnEnemyDieEvent);
-            }
+            Enemy enemy;
 
             poolableObject.gameObject.SetActive(false);
+
+            if(poolableObject.TryGetComponent<Enemy>(out enemy)){
+                enemy.onDie.AddListener(enemySpawner.OnEnemyDieEvent);
+            }
             
 
         }

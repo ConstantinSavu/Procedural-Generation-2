@@ -350,6 +350,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  enemyType: 2
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &6010394055031038019
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -385,9 +389,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  targetMaxDistance: 40
+  targetMaxDistance: 10000
   updateTargetSpeed: 0.1
   damping: 1
+  TimeToLive: 100
   setDestination: 0
 --- !u!114 &6142662853013399993
 MonoBehaviour:
@@ -403,9 +408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 6
   originalColorName: _BaseColor
-  onDie:
-    m_PersistentCalls:
-      m_Calls: []
   damageColor: {r: 1, g: 0, b: 0, a: 0}
   changeColorTime: 0.5
 --- !u!136 &510811038710377420

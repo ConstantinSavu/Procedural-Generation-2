@@ -21,24 +21,24 @@ public class CustomVoxelLayer : VoxelLayerHandler
 
     public bool useDomainWarping = false;
 
-    [SerializeField] HashSet<VoxelType> canReplace;
-    [SerializeField] HashSet<VoxelType> cannotReplace;
 
     public void Awake(){
+        canReplaceHashSet = new HashSet<VoxelType>(canReplace);
+        cannotReplaceHashSet = new HashSet<VoxelType>(cannotReplace);
         normalizedCustomVoxelThreshold = customVoxelThreshold / maxCustomVoxelThreshold;
     }
 
-    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
+    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight, ref VoxelType currentVoxel){
 
-        VoxelType currentVoxel = Chunk.GetVoxelFromChunkCoordinates(data, pos);
+        
 
-        if(cannotReplace.Contains(currentVoxel)){
+        if(cannotReplaceHashSet.Contains(currentVoxel)){
             return false;
         }
 
-        if(canReplace.Count != 0){
+        if(canReplaceHashSet.Count != 0){
 
-            if(!canReplace.Contains(currentVoxel)){
+            if(!canReplaceHashSet.Contains(currentVoxel)){
                 return false;
             }
 
@@ -94,12 +94,17 @@ public class CustomVoxelLayer : VoxelLayerHandler
         
         
         voxelType = customVoxelType;
+        currentVoxel = voxelType;
 
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
+        
         return true;
     }
 
     private void OnValidate() {
+
+        canReplaceHashSet = new HashSet<VoxelType>(canReplace);
+        cannotReplaceHashSet = new HashSet<VoxelType>(cannotReplace);
 
         if(customVoxelThreshold < 0){
             customVoxelThreshold = 0;

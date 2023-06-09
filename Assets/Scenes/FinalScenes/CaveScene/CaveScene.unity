@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.5235315, g: 0.6194613, b: 0.8113208, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientIntensity: 0.2
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 56113b3b655ab7349bab4d7d405c258a, type: 2}
   m_HaloStrength: 0.5
@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23089361, g: 0.6025145, b: 0.9881196, a: 1}
+  m_Sun: {fileID: 1127567170}
+  m_IndirectSpecularColor: {r: 0.232446, g: 0.608467, b: 0.9876717, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -265,9 +265,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7dd164777aed04c94f760b6348e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 0}
-  customVoxelThreshold: 500
-  invertNoise: 0
+  Next: {fileID: 548013548}
+  canReplace: 
+  cannotReplace: 0b000000
+  customVoxelThreshold: 600
+  invertNoise: 1
   customVoxelType: 1
   customVoxelSettings: {fileID: 11400000, guid: 7dd45fd6e0a61d6449eba29b87612d04,
     type: 2}
@@ -476,7 +478,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
-  nearGroundVoxelType: 5
+  canReplace: 
+  cannotReplace: 
+  nearGroundVoxelType: 3
   underGroundVoxelType: 5
   nearGroundOffset: 5
 --- !u!1 &548013547
@@ -491,7 +495,7 @@ GameObject:
   - component: {fileID: 548013548}
   - component: {fileID: 548013550}
   m_Layer: 0
-  m_Name: StoneLayer
+  m_Name: DirtLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,11 +513,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7dd164777aed04c94f760b6348e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 0}
-  customVoxelThreshold: 0.602
+  Next: {fileID: 695269265}
+  canReplace: 050000000a000000
+  cannotReplace: 01000000
+  customVoxelThreshold: 526.4
   invertNoise: 0
-  customVoxelType: 6
-  customVoxelSettings: {fileID: 11400000, guid: f3f9136c95c475e4a8ecca871910aeca,
+  customVoxelType: 13
+  customVoxelSettings: {fileID: 11400000, guid: ea613ef785240364394a80ea53bf0383,
     type: 2}
   domainWarping: {fileID: 548013550}
   useDomainWarping: 0
@@ -741,6 +747,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1817465cf29e94e868c0ecc67d5ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &695269262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695269263}
+  - component: {fileID: 695269265}
+  - component: {fileID: 695269264}
+  m_Layer: 0
+  m_Name: ClayLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &695269263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695269262}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1946748574}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &695269264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695269262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2629635e44dcec4e9d4b5d85a504685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseDomainX: {fileID: 11400000, guid: 217a7072f86078f468aaea0bf73c97a2, type: 2}
+  noiseDomainY: {fileID: 11400000, guid: a3569c78a123c0d4385f31e165da2a70, type: 2}
+  noiseDomainZ: {fileID: 11400000, guid: a3cd40c8be4244b4ab692bf27600ac2b, type: 2}
+  amplitude: {x: 1, y: 1, z: 1}
+  noiseType: 2
+  domainWarpType: 0
+--- !u!114 &695269265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695269262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7dd164777aed04c94f760b6348e4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Next: {fileID: 0}
+  canReplace: 050000000a00000003000000
+  cannotReplace: 01000000
+  customVoxelThreshold: 653
+  invertNoise: 0
+  customVoxelType: 3
+  customVoxelSettings: {fileID: 11400000, guid: 5c59511e8a303e949af97addcf7f2cfb,
+    type: 2}
+  domainWarping: {fileID: 695269264}
+  useDomainWarping: 0
 --- !u!1 &812524172
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +951,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7dd164777aed04c94f760b6348e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Next: {fileID: 0}
+  Next: {fileID: 157296608}
+  canReplace: 
+  cannotReplace: 0b000000
   customVoxelThreshold: 600
   invertNoise: 0
   customVoxelType: 1
@@ -1246,7 +1327,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.6
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -1294,14 +1375,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127567169}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.053455494, y: 0.9464345, z: -0.21763183, w: -0.23246658}
   m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.9, y: 207.6, z: 0}
 --- !u!114 &1127567172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1972,6 +2053,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1921592050}
+  canReplace: 
+  cannotReplace: 
 --- !u!1 &1605820596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,6 +2175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 449002225}
+  canReplace: 
+  cannotReplace: 
   surfaceVoxelType: 2
 --- !u!4 &1810373517
 Transform:
@@ -2210,6 +2295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1810373515}
+  canReplace: 
+  cannotReplace: 
 --- !u!4 &1921592051
 Transform:
   m_ObjectHideFlags: 0
@@ -2256,6 +2343,7 @@ Transform:
   - {fileID: 922873184}
   - {fileID: 157296606}
   - {fileID: 548013549}
+  - {fileID: 695269263}
   m_Father: {fileID: 1481222500}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

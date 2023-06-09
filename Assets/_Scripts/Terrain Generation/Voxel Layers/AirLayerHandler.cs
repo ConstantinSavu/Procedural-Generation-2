@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AirLayerHandler : VoxelLayerHandler
 {
-    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
+    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight, ref VoxelType currentVoxel){
 
         int worldPosY = pos.y + data.worldPosition.y;
 
@@ -14,6 +14,8 @@ public class AirLayerHandler : VoxelLayerHandler
 
         VoxelType voxelType;
         voxelType = VoxelType.Air;
+
+        currentVoxel = voxelType;
 
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
         return true;

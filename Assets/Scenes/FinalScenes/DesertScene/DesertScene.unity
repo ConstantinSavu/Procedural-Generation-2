@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 56113b3b655ab7349bab4d7d405c258a, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 528363c5c1cf6a7458140c6851c77b68, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1127567170}
-  m_IndirectSpecularColor: {r: 0.23089361, g: 0.6025145, b: 0.9881196, a: 1}
+  m_IndirectSpecularColor: {r: 0.1563906, g: 0.1491877, b: 0.35315627, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -425,11 +425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bd56d8b8fbcf24da5e196cd77f11a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biomeNoiseSettings: {fileID: 11400000, guid: 8c15caf3e42ce4349aa949d285d8c6e3, type: 2}
-  domainWarping: {fileID: 191596912}
-  useDomainWarping: 1
-  firstLayer: {fileID: 0}
-  additionalLayerHandlres: []
 --- !u!114 &191596912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,7 +604,7 @@ PrefabInstance:
     - target: {fileID: 1652458771041857904, guid: f124838d3689059418796f972de2a32f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 70.3
+      value: 36.6
       objectReference: {fileID: 0}
     - target: {fileID: 3650911772731421666, guid: f124838d3689059418796f972de2a32f,
         type: 3}
@@ -802,6 +797,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
+  canReplace: 
+  cannotReplace: 
   nearGroundVoxelType: 10
   underGroundVoxelType: 5
   nearGroundOffset: 5
@@ -836,8 +833,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
-  customVoxelThreshold: 0.602
-  customVoxelType: 5
+  canReplace: 
+  cannotReplace: 
+  customVoxelThreshold: 602
+  invertNoise: 0
+  customVoxelType: 10
   customVoxelSettings: {fileID: 11400000, guid: f3f9136c95c475e4a8ecca871910aeca,
     type: 2}
   domainWarping: {fileID: 548013550}
@@ -1116,8 +1116,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
+      propertyPath: spawnDelay
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
       propertyPath: maxSpawnedEnemies
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
@@ -1344,14 +1349,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127567169}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalRotation: {x: 0.07713726, y: -0.43363068, z: 0.037289605, w: 0.89700824}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 9.83, y: -51.6, z: 0}
 --- !u!114 &1127567172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1587,6 +1592,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4367830512662039491, guid: 099c2c0e80d92e6419231827950142f8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043264931081234778, guid: 099c2c0e80d92e6419231827950142f8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6775064595747794511, guid: 099c2c0e80d92e6419231827950142f8,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1983,6 +1998,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1921592050}
+  canReplace: 
+  cannotReplace: 
 --- !u!1 &1605820596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,6 +2120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 449002225}
+  canReplace: 
+  cannotReplace: 
   surfaceVoxelType: 10
 --- !u!4 &1810373517
 Transform:
@@ -2221,6 +2240,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1810373515}
+  canReplace: 
+  cannotReplace: 
 --- !u!4 &1921592051
 Transform:
   m_ObjectHideFlags: 0

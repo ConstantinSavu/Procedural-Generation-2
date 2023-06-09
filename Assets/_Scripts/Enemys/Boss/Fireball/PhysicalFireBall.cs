@@ -8,7 +8,7 @@ public class PhysicalFireBall : MonoBehaviour
     [SerializeField] public float timeToLiveInSeconds = 10f;
     [SerializeField] public float timeToLiveAfterPlayerHitInSeconds = 1f;
     [SerializeField] public float timeAfterHit = 2f;
-    [SerializeField] public float damageValue = 1f;
+    [SerializeField] public int damageValue = 1;
     [SerializeField] public Vector3 fireBallScale =  new Vector3(0.5f, 0.5f, 0.5f);
 
     [SerializeField] [Range(0, -180f)]

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDelay: 1
   maxSpawnedEnemies: 10
+  enemiesToDefeat: 7
   enemiesDefeated: 0
   enemySpawnMethod: 0
   enemySpawnList:
@@ -53,10 +54,22 @@ MonoBehaviour:
   - {fileID: 3903256040973739323, guid: fdc44accc5c24f3428dcc026330a1cb0, type: 3}
   boss_prefab: {fileID: 1898913528602851103, guid: 37959a6b760175642b2ecf85f3db7729,
     type: 3}
-  maxDistanceFromTarget: 50
+  maxSpawnDistanceFromTarget: 50
   onPause:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 175405513236544034}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2980395646785351529
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   world: {fileID: 0}
   gamePauseCanvas: {fileID: 0}
+  showGameIsPaused: 0
 --- !u!1 &5387488865899813273
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +224,8 @@ MonoBehaviour:
     type: 3}
   player: {fileID: 0}
   loadAdditionalChunks: 0
+  showPlayerDied: 0
+  onDieCanvas: {fileID: 0}
 --- !u!1 &7518695313595629332
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RenderedChunks: {fileID: 0}
-  surfaces: []
+  surface: {fileID: 0}
 --- !u!1 &7519185459927851875
 GameObject:
   m_ObjectHideFlags: 0

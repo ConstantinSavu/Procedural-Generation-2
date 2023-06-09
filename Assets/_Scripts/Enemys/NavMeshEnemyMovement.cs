@@ -15,6 +15,8 @@ public class NavMeshEnemyMovement : MonoBehaviour
     private Animator animator;
     private Coroutine followCoroutine;
 
+    public float TimeToLive = 100;
+
     [SerializeField] bool setDestination;
 
     private void Awake(){
@@ -102,6 +104,11 @@ public class NavMeshEnemyMovement : MonoBehaviour
         if(setDestination){
             try{
                 agent.SetDestination(target.position);
+
+                if(!agent.hasPath){
+                
+                }
+                
             }
             catch(Exception e){
                 Debug.Log(e.Message);
@@ -113,6 +120,11 @@ public class NavMeshEnemyMovement : MonoBehaviour
         followCoroutine = StartCoroutine(FollowTarget());
         
         
+    }
+
+    IEnumerator dieTimer(float time){
+        yield return new WaitForSeconds(time);
+        transform.gameObject.SetActive(false);
     }
 
     internal void DiableAgent()

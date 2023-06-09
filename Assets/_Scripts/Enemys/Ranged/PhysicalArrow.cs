@@ -5,7 +5,7 @@ using UnityEngine;
 public class PhysicalArrow : Projectile
 {
     [SerializeField] public float timeToLiveAfterPlayerHit = 1f;
-    [SerializeField] public float damageValue = 1f;
+    [SerializeField] public int damageValue = 1;
     public Transform target;
 
     Coroutine timeToLiveCoRoutine;

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class WaterLayerHandler : VoxelLayerHandler
 {
-    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
+    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight, ref VoxelType currentVoxel){
 
         VoxelType voxelType; 
 
@@ -39,6 +39,7 @@ public class WaterLayerHandler : VoxelLayerHandler
 
         }
 
+        currentVoxel = voxelType;
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
         
         return true;

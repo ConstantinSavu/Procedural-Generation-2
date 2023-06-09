@@ -7,7 +7,7 @@ public class WeaponDamageDealer : MonoBehaviour
 
     bool canDealDamage;
     bool hasDealtDamage;
-    [SerializeField] float weaponDamage;
+    [SerializeField] int weaponDamage = 1;
     // Start is called before the first frame update
     void Start()
     {

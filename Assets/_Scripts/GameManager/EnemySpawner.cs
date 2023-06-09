@@ -9,7 +9,9 @@ public class EnemySpawner : MonoBehaviour
 {   
     [SerializeField] float spawnDelay = 1f;
 
-    [SerializeField] int maxSpawnedEnemies = 10;
+    [SerializeField] int maxSpawnedEnemies = 100;
+
+    [SerializeField] int enemiesToDefeat = 7;
 
     [SerializeField] int enemiesDefeated = 0;
 
@@ -21,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Enemy boss_prefab;
     ObjectPool Boss_pool;
 
-    [SerializeField] float maxDistanceFromTarget = 50f;
+    [SerializeField] float maxSpawnDistanceFromTarget = 50f;
 
     [SerializeField] UnityEvent onPause;
 
@@ -45,7 +47,8 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Boss_pool = ObjectPool.CreateInstance(boss_prefab, 1, parent, this);
-
+        
+        enemiesDefeated = 0;
 
         StartCoroutine(SpawnEnemies(target));
     }
@@ -74,6 +77,11 @@ public class EnemySpawner : MonoBehaviour
             iter++;
 
             yield return wait;
+        }
+
+        if(!bossSpawned){
+            bossSpawned = true;
+            SpawnBoss();
         }
 
         Debug.Log("Finished Spawning");
@@ -109,6 +117,7 @@ public class EnemySpawner : MonoBehaviour
         int vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
 
         NavMeshHit hit;
+        
         if(NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, 1)){
             enemy.StartupEnemy(target, hit);
             return true;
@@ -127,32 +136,27 @@ public class EnemySpawner : MonoBehaviour
 
     
     bool bossSpawned = false;
-    public void OnEnemyDieEvent(){
+    public void OnEnemyDieEvent(EnemyType enemyType){
         enemiesDefeated++;
 
-        if(enemiesDefeated >= maxSpawnedEnemies && !bossSpawned){
+        if(enemiesDefeated >= enemiesToDefeat && !bossSpawned){
             bossSpawned = true;
             SpawnBoss();
         }
 
-        if(enemiesDefeated > maxSpawnedEnemies && bossSpawned){
+        if(enemyType == EnemyType.Boss){
+            
             KilledBoss();
         }
     }
 
     private void KilledBoss(){
 
-
+        Debug.Log("Boss killed");
         onPause?.Invoke();
         
 
     }
-
-    private IEnumerator Timer(float v1, object v2)
-    {
-        throw new NotImplementedException();
-    }
-
     private void SpawnBoss()
     {
         PoolableObject poolableObject = Boss_pool.GetObject();
@@ -175,7 +179,7 @@ public class EnemySpawner : MonoBehaviour
                 float distance = Vector3.Distance(target.position, hit.position);
                 distance = Mathf.Abs(distance);
 
-                if(distance < maxDistanceFromTarget){
+                if(distance < maxSpawnDistanceFromTarget){
                     enemy.StartupEnemy(target, hit);
                     bossFound = true;
                     break;
@@ -188,6 +192,8 @@ public class EnemySpawner : MonoBehaviour
         if(bossFound){
             return;
         }
+
+        onPause.Invoke();
         
         Debug.Log("No hit found, returning to FATHER");
         poolableObject.gameObject.SetActive(false);

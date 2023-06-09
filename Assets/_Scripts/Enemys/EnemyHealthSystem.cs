@@ -4,13 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum EnemyType{
+        Melee,
+        Ranged,
+        Boss
+
+}
 public class EnemyHealthSystem : HealthSystem
 {
     List<ColorChangeRenderer> colorChangeRenderers = new List<ColorChangeRenderer>();
     [SerializeField] String originalColorName = "_BaseColor";
-    public UnityEvent onDie; 
+    
     public Color damageColor = Color.red;
     public float changeColorTime = 0.5f;
+
+    
+
+    
 
     void Awake()
     {
@@ -31,7 +41,7 @@ public class EnemyHealthSystem : HealthSystem
         }
     }
 
-    public override void TakeDamage(float damageAmount){
+    public override void TakeDamage(int damageAmount){
         health -= damageAmount;
         animator.SetTrigger("damage");
         StartCoroutine(ChangeColor(damageColor));
@@ -42,7 +52,7 @@ public class EnemyHealthSystem : HealthSystem
     }
 
     public override void Die(){
-        onDie?.Invoke();
+        
         transform.gameObject.SetActive(false);
     }
 

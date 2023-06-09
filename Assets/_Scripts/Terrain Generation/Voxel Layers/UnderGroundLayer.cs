@@ -8,7 +8,7 @@ public class UnderGroundLayer : VoxelLayerHandler
     public VoxelType underGroundVoxelType;
     public int nearGroundOffset = 5;
 
-    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
+    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight, ref VoxelType currentVoxel){
 
         int worldPosY = pos.y + data.worldPosition.y;
 
@@ -24,6 +24,7 @@ public class UnderGroundLayer : VoxelLayerHandler
             voxelType = underGroundVoxelType;
         }
 
+        currentVoxel = voxelType;
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
         return true;
 

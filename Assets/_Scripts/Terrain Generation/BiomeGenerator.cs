@@ -21,10 +21,12 @@ public class BiomeGenerator : MonoBehaviour
         biomeNoiseSettings.worldOffset = data.worldReference.worldData.worldSettings.mapSeedOffset;
         data.noiseSettings = biomeNoiseSettings;
         
-        firstLayer.Handle(data, pos, groundPosition);
+        VoxelType currentVoxel = Chunk.GetVoxelFromChunkCoordinates(data, pos);
+
+        firstLayer.Handle(data, pos, groundPosition, ref currentVoxel);
 
         foreach(var layer in additionalLayerHandlres){
-            layer.Handle(data, pos, groundPosition);
+            layer.Handle(data, pos, groundPosition, ref currentVoxel);
         }
 
         return data;
@@ -55,7 +57,7 @@ public class BiomeGenerator : MonoBehaviour
 
     public int Get2DTerrainY(int x, int z, ChunkData data){
 
-        int heightMapIndex = x * data.chunkSize.x + z;
+        int heightMapIndex = x * data.chunkSize.z + z;
 
         if(data.heightMap[heightMapIndex] != 0){
             return data.heightMap[heightMapIndex];

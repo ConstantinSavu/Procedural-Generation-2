@@ -45,11 +45,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void OnEnemyDieEvent(){
+    public void OnEnemyDieEvent(EnemyType enemyType){
         if(enemySpawner == null){
             enemySpawner = GetComponentInChildren<EnemySpawner>();
         }
-        enemySpawner.OnEnemyDieEvent();
+        enemySpawner.OnEnemyDieEvent(enemyType);
     }
     
 

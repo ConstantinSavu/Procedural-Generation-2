@@ -4,39 +4,30 @@ using UnityEngine;
 
 public class BedrockLayerHandler : VoxelLayerHandler
 {
-    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
+    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight, ref VoxelType currentVoxel){
 
         Vector3Int worldPos = pos + data.worldPosition;
         Vector3Int start = - Vector3Int.one + (data.worldReference.worldData.worldSettings.chunkDrawingRange + Vector3Int.one) * data.worldReference.worldData.worldSettings.chunkSize;
         Vector3Int end = - (data.worldReference.worldData.worldSettings.chunkDrawingRange) * data.worldReference.worldData.worldSettings.chunkSize;
 
+        bool placeObsidian = false;
+
+        if(worldPos.y >= surfaceHeight){
+            return false;
+        }
+
         if(worldPos.y  == end.y){
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
-            return true;
-        }
-        /*
-        if(worldPos.z  == end.z){
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
-            return true;
+            placeObsidian = true;
         }
 
-        if(worldPos.x  == end.x){
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
-            return true;
+
+        if(!placeObsidian){
+            return false;
         }
 
-        if(worldPos.z  == start.z){
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
-            return true;
-        }
-
-        if(worldPos.x  == start.x){
-            Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
-            return true;
-        }
-        */
-        
-        return false;
+        currentVoxel = VoxelType.Bedrock;
+        Chunk.SetVoxelFromChunkCoordinates(data, pos, VoxelType.Bedrock);
+        return true;
 
     }
 }

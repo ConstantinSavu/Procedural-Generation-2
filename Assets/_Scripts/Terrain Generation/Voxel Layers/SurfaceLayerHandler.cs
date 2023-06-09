@@ -7,7 +7,7 @@ public class SurfaceLayerHandler : VoxelLayerHandler
 
     public VoxelType surfaceVoxelType;
 
-    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight){
+    protected override bool TryHandling(ChunkData data, Vector3Int pos, int surfaceHeight, ref VoxelType currentVoxel){
 
         int worldPosY = pos.y + data.worldPosition.y;
 
@@ -21,7 +21,7 @@ public class SurfaceLayerHandler : VoxelLayerHandler
 
         VoxelType voxelType;
         voxelType = surfaceVoxelType;
-
+        currentVoxel = voxelType;
         Chunk.SetVoxelFromChunkCoordinates(data, pos, voxelType);
         return true;
         

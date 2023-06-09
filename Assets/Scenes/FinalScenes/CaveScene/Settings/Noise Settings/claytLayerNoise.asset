@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e525d8d1586487444b6029be933791da, type: 3}
-  m_Name: thinCaveLayerNoise
+  m_Name: claytLayerNoise
   m_EditorClassIdentifier: 
-  noiseZoom: {x: 3.5, y: 7, z: 3.5}
-  localOffset: {x: -5989, y: 11567, z: -13597}
+  noiseZoom: {x: 5, y: 5, z: 5}
+  localOffset: {x: 9728, y: -6522, z: 2869}
   worldOffset: {x: 0, y: 0, z: 0}
   amplitudeMultiplyer: 0.5
   frequencyMultyplier: 1.5
   octaves: 1
   exponent: 1
-  redistributionModifier: 2
+  redistributionModifier: 1
   minDimension: {x: 0, y: 0, z: 0}
   maxDimension: {x: 1, y: 1, z: 1}

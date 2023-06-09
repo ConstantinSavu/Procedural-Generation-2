@@ -6,7 +6,7 @@ using UnityEngine;
 public class NavMeshManager : MonoBehaviour
 {
     [SerializeField] GameObject RenderedChunks;
-    [SerializeField] NavMeshSurface[] surfaces;
+    [SerializeField] NavMeshSurface surface;
 
     public void SetupNavMeshManager(GameObject RenderedChunks){
         this.RenderedChunks = RenderedChunks;
@@ -22,23 +22,21 @@ public class NavMeshManager : MonoBehaviour
 
     private void CreateNavMeshes(GameObject RenderedChunks)
     {
+        
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        
-        surfaces = RenderedChunks.GetComponentsInChildren<NavMeshSurface>();
+        watch.Start();
 
-        foreach(NavMeshSurface surface in surfaces){
-            surface.RemoveData();
-            surface.BuildNavMesh();
-            
-            surface.AddData();
-        }
-        
-        
-        
-        
+        surface = RenderedChunks.GetComponent<NavMeshSurface>();
 
+        surface.BuildNavMesh();
+        
+        
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
         Debug.Log("NavMesh " + elapsedMs);
+    }
+
+    public void UpdateNavMesh(){
+        //surface.UpdateNavMesh(surface.navMeshData);
     }
 }

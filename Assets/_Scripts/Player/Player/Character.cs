@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     public PlayerCamera playerCamera;
 
-    [SerializeField] float attackDamage = 1f;
+    [SerializeField] int attackDamage = 1;
 
 
     
@@ -251,8 +251,9 @@ public class Character : MonoBehaviour
     private void TerrainHit(RaycastHit hit){
 
         Vector3Int pos;
+        ChunkRenderer chunk;
 
-        VoxelType hitBlock = CheckTerrain(hit);
+        VoxelType hitBlock = CheckTerrain(hit, out pos, out chunk);
         
 
         if(!VoxelDataManager.voxelTextureDataDictionary[hitBlock].isDestructable){
@@ -262,7 +263,7 @@ public class Character : MonoBehaviour
         }
         
         
-        bool modifiedTerrain = ModifyTerrain(hit);
+        bool modifiedTerrain = ModifyTerrain(pos, chunk);
         
         if(!modifiedTerrain){
             Debug.Log(hitBlock);
@@ -281,14 +282,26 @@ public class Character : MonoBehaviour
 
     }
 
-    private VoxelType CheckTerrain(RaycastHit hit){
+    private bool ModifyTerrain(Vector3Int pos, ChunkRenderer chunk){
         
         if(world == null){
-            
+            return false;
+        }
+        
+        
+        return world.SetVoxel(pos, chunk, VoxelType.Air);
+
+    }
+
+    private VoxelType CheckTerrain(RaycastHit hit, out Vector3Int pos, out ChunkRenderer chunk){
+        
+        if(world == null){
+            pos = new Vector3Int(-1, -1, -1);
+            chunk = null;
             return VoxelType.Nothing;
         }
 
-        return world.CheckVoxel(hit);
+        return world.CheckVoxel(hit, out pos, out chunk);
     }
 
     

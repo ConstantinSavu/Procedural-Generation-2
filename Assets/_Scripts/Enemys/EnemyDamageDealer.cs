@@ -8,7 +8,7 @@ public class EnemyDamageDealer : MonoBehaviour
     [SerializeField] bool hasDealtDamage;
 
     [SerializeField] float weaponLength;
-    [SerializeField] float weaponDamage;
+    [SerializeField] int weaponDamage = 1;
     [SerializeField] LayerMask damageLayers;
     // Start is called before the first frame update
     void Start()

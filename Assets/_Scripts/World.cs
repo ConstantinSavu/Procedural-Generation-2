@@ -268,6 +268,7 @@ public class World : MonoBehaviour
         OnNewChunksGenerated?.Invoke();
     }
 
+    [SerializeField] UnityEvent OnChunkUpdate;
     public bool SetVoxel(RaycastHit hit, VoxelType voxelType){
 
         ChunkRenderer chunk = hit.transform.parent.GetComponent<ChunkRenderer>();
@@ -276,9 +277,20 @@ public class World : MonoBehaviour
             return false;
         }
 
-
-
         Vector3Int worldPos = GetBlockPosition(hit);
+
+        if(voxelType == VoxelType.Air){
+            
+            foreach(VoxelHelper.Direction direction in VoxelHelper.directions){
+
+                Vector3Int neighbourVoxelCoordinates = worldPos + VoxelHelper.GetDirectionVector(direction);
+                VoxelType neighbourVoxelType =  WorldDataHelper.GetVoxelFromWorldCoorinates(this, neighbourVoxelCoordinates);
+                if(neighbourVoxelType == VoxelType.Water){
+                    voxelType = VoxelType.Water;
+                }
+                
+            }
+        }
 
         WorldDataHelper.SetVoxelFromWorldCoordinates(chunk.ChunkData.worldReference, worldPos, voxelType);
         chunk.modifiedByPlayer = true;
@@ -287,21 +299,54 @@ public class World : MonoBehaviour
 
         chunk.UpdateChunk();
 
+        OnChunkUpdate?.Invoke();
+
         return true;
-
-
     }
 
-    internal VoxelType CheckVoxel(RaycastHit hit)
+    public bool SetVoxel(Vector3Int worldPos, ChunkRenderer chunk, VoxelType voxelType){
+
+        
+        if(chunk == null){
+            return false;
+        }
+
+        if(voxelType == VoxelType.Air){
+            
+            foreach(VoxelHelper.Direction direction in VoxelHelper.directions){
+
+                Vector3Int neighbourVoxelCoordinates = worldPos + VoxelHelper.GetDirectionVector(direction);
+                VoxelType neighbourVoxelType =  WorldDataHelper.GetVoxelFromWorldCoorinates(this, neighbourVoxelCoordinates);
+                if(neighbourVoxelType == VoxelType.Water){
+                    voxelType = VoxelType.Water;
+                }
+            }
+        }
+
+        WorldDataHelper.SetVoxelFromWorldCoordinates(chunk.ChunkData.worldReference, worldPos, voxelType);
+        chunk.modifiedByPlayer = true;
+
+        CheckEdges(chunk.ChunkData, worldPos);
+
+        chunk.UpdateChunk();
+
+        OnChunkUpdate?.Invoke();
+
+        return true;
+    }
+
+    internal VoxelType CheckVoxel(RaycastHit hit, out Vector3Int pos, out ChunkRenderer chunk)
     {
-        ChunkRenderer chunk = hit.transform.parent.GetComponent<ChunkRenderer>();
+        chunk = hit.transform.parent.GetComponent<ChunkRenderer>();
         
 
         if(chunk == null){
+            pos = new Vector3Int(-1, -1, -1);
             return VoxelType.Nothing;
         }
         
         Vector3Int worldPos = GetBlockPosition(hit);
+        pos = worldPos;
         return WorldDataHelper.GetVoxelFromWorldCoorinates(chunk.ChunkData.worldReference, worldPos);
 
     }

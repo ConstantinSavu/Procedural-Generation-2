@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: stoneLayerNoise
   m_EditorClassIdentifier: 
   noiseZoom: {x: 2, y: 2, z: 2}
-  perlinOffset: {x: 5000, y: 7011, z: 5158}
+  localOffset: {x: 5000, y: 7011, z: 5158}
   worldOffset: {x: 0, y: 0, z: 0}
-  amplitudeMultiplyer: 3.38
-  frequencyMultyplier: 1.2
-  octaves: 5
-  exponent: 2.11
-  redistributionModifier: 0.55
-  offset: {x: 0, y: 0, z: 0}
+  amplitudeMultiplyer: 0.5
+  frequencyMultyplier: 1.5
+  octaves: 1
+  exponent: 1
+  redistributionModifier: 1
   minDimension: {x: 0, y: 0, z: 0}
   maxDimension: {x: 1, y: 1, z: 1}
-  skewExponent: 4
-  useSkew: 1
-  threshold: 0.5
