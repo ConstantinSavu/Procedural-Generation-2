@@ -88,6 +88,10 @@ public class NavMeshEnemyMovement : MonoBehaviour
             setDestination = false;
         }
 
+        if(!agent.isActiveAndEnabled || agent.isStopped){
+            setDestination = false;
+        }
+
         if(target == null){
             Debug.Log("Awaiting target");
             setDestination = false;
@@ -97,10 +101,6 @@ public class NavMeshEnemyMovement : MonoBehaviour
             setDestination = false;
         }
 
-        if(agent.isStopped){
-            setDestination = false;
-        }
-        
         if(setDestination){
             try{
                 agent.SetDestination(target.position);
@@ -135,5 +135,15 @@ public class NavMeshEnemyMovement : MonoBehaviour
     internal void EnableAgent()
     {
         agent.enabled = true;
+    }
+
+    void OnEnable()
+    {
+        
+    }
+
+    void OnDisable()
+    {
+        DiableAgent();
     }
 }

@@ -191,6 +191,141 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &297217822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5634140992459391047, guid: 152eb6194e2add24db880e430a3d5a83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8555491984468350009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &297217827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297217822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 735682168}
+          m_TargetAssemblyTypeName: SlideshoImages, Assembly-CSharp
+          m_MethodName: ChangeSceneImage
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Islands
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!1 &374283778 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1826371369243191127, guid: 152eb6194e2add24db880e430a3d5a83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8555491984468350009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &374283783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374283778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 735682168}
+          m_TargetAssemblyTypeName: SlideshoImages, Assembly-CSharp
+          m_MethodName: ChangeSceneImage
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Plains
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!1 &735682164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1146664801301138503, guid: 152eb6194e2add24db880e430a3d5a83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8555491984468350009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &735682168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735682164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907eb69c5f0ab0048915298f2754dea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 0}
+  sceneImageList:
+  - sceneType: 0
+    sceneImage: {fileID: 21300000, guid: 96c2303850cee4842b7b465802066d8b, type: 3}
+  - sceneType: 1
+    sceneImage: {fileID: 21300000, guid: 1e85f07c111ed2944991c257c3f5f50d, type: 3}
+  - sceneType: 2
+    sceneImage: {fileID: 21300000, guid: 0ca472d793efaeb42a4774eb52758535, type: 3}
+  - sceneType: 3
+    sceneImage: {fileID: 21300000, guid: b20fd897729fba94589ffd363b3c39cb, type: 3}
+  timeBetweenSpriteChange: 5
+  spriteIndex: 0
+--- !u!1 &757816714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1314672066578857768, guid: 152eb6194e2add24db880e430a3d5a83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8555491984468350009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &757816719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757816714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 735682168}
+          m_TargetAssemblyTypeName: SlideshoImages, Assembly-CSharp
+          m_MethodName: ChangeSceneImage
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Caves
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1122288706
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +581,41 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &1836547050 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5591876835571071511, guid: 152eb6194e2add24db880e430a3d5a83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8555491984468350009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1836547055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836547050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 735682168}
+          m_TargetAssemblyTypeName: SlideshoImages, Assembly-CSharp
+          m_MethodName: ChangeSceneImage
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Desert
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &8555491984468350009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -634,10 +804,55 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1146664801301138503, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1514349089302180395, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 735682168}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StartSceneChangeCoroutine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: SlideshoImages, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673680592337545935, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1993063324990314587, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
@@ -829,6 +1044,51 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 735682168}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StopAllCoroutines
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.MonoBehaviour, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: ChangeSprite(timeBetweenSpriteChange)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135787719124407841, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5434796649925578410, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
       propertyPath: m_IsActive
@@ -969,6 +1229,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -12.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6220499904454706551, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 96c2303850cee4842b7b465802066d8b,
+        type: 3}
     - target: {fileID: 6765993792708491373, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
       propertyPath: m_fontSize
@@ -1202,5 +1468,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1146664801301138503, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 735682168}
+    - targetCorrespondingSourceObject: {fileID: 1826371369243191127, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 374283783}
+    - targetCorrespondingSourceObject: {fileID: 5591876835571071511, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1836547055}
+    - targetCorrespondingSourceObject: {fileID: 5634140992459391047, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 297217827}
+    - targetCorrespondingSourceObject: {fileID: 1314672066578857768, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 757816719}
   m_SourcePrefab: {fileID: 100100000, guid: 152eb6194e2add24db880e430a3d5a83, type: 3}

@@ -1278,6 +1278,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
+      propertyPath: spawnDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
       propertyPath: maxSpawnedEnemies
       value: 100
       objectReference: {fileID: 0}

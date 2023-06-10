@@ -65,7 +65,7 @@ MonoBehaviour:
     down: {x: 0, y: 0}
     side: {x: 1, y: 9}
     isSolid: 1
-    isTransparent: 0
+    isTransparent: 1
     generatesCollider: 1
     isLiquid: 0
     isDestructable: 1
@@ -128,7 +128,7 @@ MonoBehaviour:
     down: {x: 8, y: 7}
     side: {x: 8, y: 8}
     isSolid: 1
-    isTransparent: 0
+    isTransparent: 1
     generatesCollider: 1
     isLiquid: 0
     isDestructable: 1
@@ -192,6 +192,42 @@ MonoBehaviour:
     side: {x: 7, y: 2}
     isSolid: 1
     isTransparent: 0
+    generatesCollider: 1
+    isLiquid: 0
+    isDestructable: 1
+  - voxelType: 20
+    up: {x: 0, y: 9}
+    down: {x: 0, y: 9}
+    side: {x: 0, y: 9}
+    isSolid: 1
+    isTransparent: 1
+    generatesCollider: 1
+    isLiquid: 0
+    isDestructable: 1
+  - voxelType: 21
+    up: {x: 8, y: 4}
+    down: {x: 8, y: 4}
+    side: {x: 8, y: 4}
+    isSolid: 1
+    isTransparent: 1
+    generatesCollider: 1
+    isLiquid: 0
+    isDestructable: 1
+  - voxelType: 22
+    up: {x: 8, y: 3}
+    down: {x: 8, y: 3}
+    side: {x: 8, y: 3}
+    isSolid: 1
+    isTransparent: 1
+    generatesCollider: 1
+    isLiquid: 0
+    isDestructable: 1
+  - voxelType: 23
+    up: {x: 8, y: 2}
+    down: {x: 8, y: 2}
+    side: {x: 8, y: 2}
+    isSolid: 1
+    isTransparent: 1
     generatesCollider: 1
     isLiquid: 0
     isDestructable: 1

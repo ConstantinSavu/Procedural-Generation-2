@@ -13,6 +13,11 @@ public class CurrentStructureLayer : StructreLayerHandler
         copyCurrentStructure = Instantiate(currentStructure);
     }
 
+    public void ReloadStrucutre(){
+        Destroy(copyCurrentStructure);
+        copyCurrentStructure = Instantiate(currentStructure);
+    }
+
     public Vector3 angleChange = new Vector3(90f, 90f, 90f);
     protected override bool TryHandling(ChunkData data, Vector3Int treePos, BiomeGenerator biomeGenerator)
     {

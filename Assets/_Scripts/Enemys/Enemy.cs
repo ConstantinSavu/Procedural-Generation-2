@@ -22,6 +22,8 @@ public class Enemy : PoolableObject
 
     EnemyHealthSystem enemyTakeDamage;
 
+    Collider Collider;
+
     Animator animator;
     public UnityEvent<EnemyType> onDie;
 
@@ -32,6 +34,7 @@ public class Enemy : PoolableObject
         navMeshEnemyMovement = GetComponent<NavMeshEnemyMovement>();
         enemyAttack = GetComponent<EnemyAttack>();
         enemyTakeDamage = GetComponent<EnemyHealthSystem>();
+        Collider = GetComponent<Collider>();
 
         if(target != null){
             StartupEnemy(target);
@@ -57,12 +60,43 @@ public class Enemy : PoolableObject
         enemyTakeDamage.Setup(animator);
     }
 
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        onDie?.Invoke(enemyType);
-        navMeshEnemyMovement.DiableAgent();
+    public void EnemyDeath(){
+        animator.SetLayerWeight(1, 0f);
+        animator.SetTrigger("death");
 
+        navMeshEnemyMovement.DiableAgent();
+        navMeshEnemyMovement.enabled = false;
+        enemyAttack.enabled = false;
+        enemyTakeDamage.enabled = false;
+        Collider.enabled = false;
+        onDie?.Invoke(enemyType);
+        
+        StartCoroutine(DeathTimer(5f));
+    }
+
+    public override void OnDisable()
+    {   
+        
+        navMeshEnemyMovement.enabled = false;
+        enemyAttack.enabled = false;
+        enemyTakeDamage.enabled = false;
+        Collider.enabled = false;
+        base.OnDisable();
+        
+    }
+
+    private void OnEnable() {
+        
+        navMeshEnemyMovement.enabled = true;
+        enemyAttack.enabled = true;
+        enemyTakeDamage.enabled = true;
+        Collider.enabled = true;
+    }
+
+    protected IEnumerator DeathTimer(float seconds){
+        yield return new WaitForSeconds(seconds);
+        transform.gameObject.SetActive(false);
+        
     }
 
 

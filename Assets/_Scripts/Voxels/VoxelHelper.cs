@@ -119,7 +119,7 @@ public class VoxelHelper
             upNeighbourVoxelCoordinates = normalPos + Vector3Int.up;
             upNeighbour = Chunk.GetVoxelFromChunkCoordinates(chunk, upNeighbourVoxelCoordinates);
 
-            if(!VoxelDataManager.voxelTextureDataDictionary[upNeighbour].isLiquid){
+            if(VoxelDataManager.voxelTextureDataDictionary[upNeighbour].voxelType == VoxelType.Air){
                positiveOffset = positiveDrawLowerOffset; 
             }
 
@@ -128,12 +128,15 @@ public class VoxelHelper
 
         }
 
-        if(VoxelDataManager.voxelTextureDataDictionary[voxelType].isTransparent){
-            meshData.transparentMesh = GetFaceDataIn(direction, chunk, pos, meshData.transparentMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
-            return meshData;
-        }
+        
 
         if(!VoxelDataManager.voxelTextureDataDictionary[neighbourVoxelType].isLiquid){
+
+            if(VoxelDataManager.voxelTextureDataDictionary[voxelType].isTransparent){
+                meshData.transparentMesh = GetFaceDataIn(direction, chunk, pos, meshData.transparentMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+                return meshData;
+            }
+
             meshData.solidMesh = GetFaceDataIn(direction, chunk, pos, meshData.solidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
             return meshData;
         }
@@ -142,7 +145,7 @@ public class VoxelHelper
         upNeighbourVoxelCoordinates = neighbourVoxelCoordinates + Vector3Int.up;
         upNeighbour = Chunk.GetVoxelFromChunkCoordinates(chunk, upNeighbourVoxelCoordinates);
 
-        if(VoxelDataManager.voxelTextureDataDictionary[upNeighbour].isLiquid){
+        if(VoxelDataManager.voxelTextureDataDictionary[upNeighbour].voxelType != VoxelType.Air){
             
             meshData.underLiquidMesh = GetFaceDataIn(direction, chunk, pos, meshData.underLiquidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
             return meshData;
@@ -161,7 +164,13 @@ public class VoxelHelper
         negativeTextureOffset = defaultNegativeDrawLowerTextureOffset;
         
 
-        meshData.solidMesh = GetFaceDataIn(direction, chunk, pos, meshData.solidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+        if(VoxelDataManager.voxelTextureDataDictionary[voxelType].isTransparent){
+            meshData.transparentMesh = GetFaceDataIn(direction, chunk, pos, meshData.transparentMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+            
+        }
+        else{
+            meshData.solidMesh = GetFaceDataIn(direction, chunk, pos, meshData.solidMesh, voxelType, positiveOffset, negativeOffset, positiveTextureOffset, negativeTextureOffset);
+        }
 
 
         positiveOffset = positiveDrawLowerOffset;

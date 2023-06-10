@@ -58,6 +58,11 @@ public class EnemyBossAttack : EnemyAttack
     
 
     public void StartDealDamage(){
+
+        if(!enabled){
+            return;
+        }
+
         if(enemyDamageDealer == null){
             enemyDamageDealer = GetComponentInChildren<EnemyDamageDealer>();
         }
@@ -66,6 +71,11 @@ public class EnemyBossAttack : EnemyAttack
     }
 
     public void EndDealDamage(){
+        
+        if(!enabled){
+            return;
+        }
+
         if(enemyDamageDealer == null){
             enemyDamageDealer = GetComponentInChildren<EnemyDamageDealer>();
         }
@@ -73,6 +83,11 @@ public class EnemyBossAttack : EnemyAttack
     }
 
     public void Throw(){
+
+        if(!enabled){
+            return;
+        }
+        
         Vector3 lookPos = target.position - projectileSpawnPoint.position;
         
         lookPos.Normalize();

@@ -19,11 +19,13 @@ public class EnemyHealthSystem : HealthSystem
     public float changeColorTime = 0.5f;
 
     
-
+    Enemy enemy;
     
 
     void Awake()
     {
+
+        enemy = GetComponent<Enemy>();
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         animator = transform.GetComponentInChildren<Animator>();
 
@@ -43,17 +45,28 @@ public class EnemyHealthSystem : HealthSystem
 
     public override void TakeDamage(int damageAmount){
         health -= damageAmount;
-        animator.SetTrigger("damage");
+        
+        
+        
         StartCoroutine(ChangeColor(damageColor));
+        
         if(health <= 0){
             Die();
+            return;
         }
+
+        animator.SetTrigger("damage");
 
     }
 
     public override void Die(){
         
-        transform.gameObject.SetActive(false);
+        if(enemy == null){
+            enemy = GetComponent<Enemy>();
+        }
+
+        
+        enemy.EnemyDeath();
     }
 
     IEnumerator ChangeColor(Color color){

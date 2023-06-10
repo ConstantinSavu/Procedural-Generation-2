@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5624545392406965494}
   - component: {fileID: 421171496954455585}
   - component: {fileID: 360270975755514238}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DestroySmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4849,7 +4849,7 @@ GameObject:
   - component: {fileID: 7888969047907770996}
   - component: {fileID: 1655498521399046380}
   - component: {fileID: 3910868274819942097}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PhysicalFireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4938,12 +4938,12 @@ MonoBehaviour:
   timeToLiveInSeconds: 100
   timeToLiveAfterPlayerHitInSeconds: 1
   timeAfterHit: 2
-  damageValue: 1
+  damageValue: 3
   fireBallScale: {x: 0.3, y: 0.3, z: 0.3}
   minRandomAngle: -5
   maxRandomAngle: 5
-  globalFireBallSpeed: {x: 0, y: 20, z: 20}
-  maxFireBallSpeed: {x: 0, y: 20, z: 20}
+  globalFireBallSpeed: {x: 0, y: 0, z: 20}
+  maxFireBallSpeed: {x: 0, y: 0, z: 20}
   waterMask:
     serializedVersion: 2
     m_Bits: 0
@@ -5024,20 +5024,45 @@ PrefabInstance:
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1388299243617334115, guid: 9f64ab8e457bd68478202da6365cebae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559847105960783610, guid: 9f64ab8e457bd68478202da6365cebae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2340721642508375018, guid: 9f64ab8e457bd68478202da6365cebae,
         type: 3}
       propertyPath: scalingMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379700983161889307, guid: 9f64ab8e457bd68478202da6365cebae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3439839842594411842, guid: 9f64ab8e457bd68478202da6365cebae,
         type: 3}
       propertyPath: m_Name
       value: Fire_Orb
       objectReference: {fileID: 0}
+    - target: {fileID: 3439839842594411842, guid: 9f64ab8e457bd68478202da6365cebae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4124770274246323631, guid: 9f64ab8e457bd68478202da6365cebae,
         type: 3}
       propertyPath: m_Name
       value: Fire_Orb
+      objectReference: {fileID: 0}
+    - target: {fileID: 4124770274246323631, guid: 9f64ab8e457bd68478202da6365cebae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4232070224594134811, guid: 9f64ab8e457bd68478202da6365cebae,
         type: 3}
@@ -5068,6 +5093,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809063288441593744, guid: 9f64ab8e457bd68478202da6365cebae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8059009829441315374, guid: 9f64ab8e457bd68478202da6365cebae, type: 3}

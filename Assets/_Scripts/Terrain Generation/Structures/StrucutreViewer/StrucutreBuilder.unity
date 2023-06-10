@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23089361, g: 0.6025145, b: 0.9881196, a: 1}
+  m_IndirectSpecularColor: {r: 0.23172745, g: 0.6027576, b: 0.9881196, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -309,6 +309,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnChunkUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &327497405
 Transform:
   m_ObjectHideFlags: 0
@@ -369,6 +372,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
+  canReplace: 
+  cannotReplace: 
   nearGroundVoxelType: 0
   underGroundVoxelType: 3
   nearGroundOffset: 5
@@ -402,7 +407,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
+  canReplace: 
+  cannotReplace: 
   customVoxelThreshold: 0.514
+  invertNoise: 0
   customVoxelType: 5
   customVoxelSettings: {fileID: 11400000, guid: f3f9136c95c475e4a8ecca871910aeca,
     type: 2}
@@ -465,6 +473,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1921592050}
+  canReplace: 
+  cannotReplace: 
 --- !u!4 &655229429
 Transform:
   m_ObjectHideFlags: 0
@@ -1005,14 +1015,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290169196}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.030812968, y: 0.9751481, z: -0.19357146, w: -0.1032805}
+  m_LocalPosition: {x: 1.0000005, y: 4.87, z: 6.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.575, y: 191.843, z: -1.248}
 --- !u!114 &1290169200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1212,6 +1222,18 @@ MonoBehaviour:
       - m_Target: {fileID: 327497404}
         m_TargetAssemblyTypeName: World, Assembly-CSharp
         m_MethodName: GenerateWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2048010277}
+        m_TargetAssemblyTypeName: CurrentStructureLayer, Assembly-CSharp
+        m_MethodName: ReloadStrucutre
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1491,6 +1513,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 655229428}
+  canReplace: 
+  cannotReplace: 
 --- !u!1 &1810373514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,6 +1545,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 449002225}
+  canReplace: 
+  cannotReplace: 
   surfaceVoxelType: 2
 --- !u!4 &1810373517
 Transform:
@@ -1567,6 +1593,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1810373515}
+  canReplace: 
+  cannotReplace: 
 --- !u!4 &1921592051
 Transform:
   m_ObjectHideFlags: 0
@@ -1671,7 +1699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
-  currentStructure: {fileID: 11400000, guid: 145168c062f31754abf01d9fb59d3bf0, type: 2}
+  currentStructure: {fileID: 11400000, guid: 6ef11a4d31152a846858efbf6164a483, type: 2}
   angleChange: {x: 0, y: 0, z: 0}
 --- !u!1001 &77705598311181288
 PrefabInstance:

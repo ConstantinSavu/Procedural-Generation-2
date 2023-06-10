@@ -9,6 +9,11 @@ public class EnemyMeleeAttack : EnemyAttack
     EnemyDamageDealer enemyDamageDealer = null;
 
     public void Update(){
+
+        if(!enabled){
+            return;
+        }
+
         if(isAttacking && animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinnishTime){
             isAttacking = false;
 
@@ -24,6 +29,11 @@ public class EnemyMeleeAttack : EnemyAttack
     }
 
     public void StartDealDamage(){
+
+        if(!enabled){
+            return;
+        }
+        
         if(enemyDamageDealer == null){
             enemyDamageDealer = GetComponentInChildren<EnemyDamageDealer>();
         }
@@ -32,6 +42,11 @@ public class EnemyMeleeAttack : EnemyAttack
     }
 
     public void EndDealDamage(){
+
+        if(!enabled){
+            return;
+        }
+
         if(enemyDamageDealer == null){
             enemyDamageDealer = GetComponentInChildren<EnemyDamageDealer>();
         }
@@ -41,6 +56,8 @@ public class EnemyMeleeAttack : EnemyAttack
     protected virtual void Attack()
     {
         animator.SetTrigger("isAttacking");
+
+        
 
         StopCoroutine(ResetAttackWaiting());
         StartCoroutine(ResetAttackWaiting());

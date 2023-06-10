@@ -35,19 +35,19 @@ public class PlayerInput : MonoBehaviour
     }
 
     private void GetFlyInput(){
-
+        #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.F)){
             OnFly?.Invoke();
         }
-
+        #endif
     }
 
     private void GetRunInput(){
-        RunningPressed = Input.GetKey(KeyCode.LeftControl);
+        RunningPressed = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void GetCrouchInput(){
-        CrouchingingPressed = Input.GetKey(KeyCode.LeftShift);
+        CrouchingingPressed = Input.GetKey(KeyCode.LeftControl);
     }
 
     private void GetJumpInput(){

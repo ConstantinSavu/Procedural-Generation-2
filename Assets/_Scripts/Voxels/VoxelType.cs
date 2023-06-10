@@ -23,7 +23,11 @@ public enum VoxelType{
     Uranium,
     DarkStone,
     Gravel,
-    RedSand
+    RedSand,
+    PinkCoral,
+    YellowCoral,
+    RedCoral,
+    OrangeCoral
 
 
 }
