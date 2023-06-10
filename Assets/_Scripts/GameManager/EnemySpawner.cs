@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using TMPro;
 
 public class EnemySpawner : MonoBehaviour
 {   
     [SerializeField] float spawnDelay = 1f;
 
     [SerializeField] int maxSpawnedEnemies = 100;
+
+    [SerializeField] int enemiesSpawned = 0;
 
     [SerializeField] int enemiesToDefeat = 7;
 
@@ -27,15 +30,27 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] UnityEvent onPause;
 
+    [SerializeField] GameObject showEnemyCanvas;
+    [SerializeField] TextMeshProUGUI showEnemiesSpawned;
+    [SerializeField] TextMeshProUGUI showEnemiesDefeated;
+    [SerializeField] TextMeshProUGUI showBossDefeated;
+
     private Dictionary<int, ObjectPool> enemyObjectPools = new Dictionary<int, ObjectPool>();
     NavMeshTriangulation triangulation;
+
+    private void Awake() {
+        showEnemiesSpawned.text = "0";
+        showEnemiesDefeated.text = "0/" + enemiesToDefeat;
+        showEnemyCanvas.SetActive(false);
+        
+    }
     public void SetupEnemySpawner(Transform target, Transform parent){
 
         
 
         triangulation = NavMesh.CalculateTriangulation();
         this.target = target;
-
+        showEnemyCanvas.SetActive(true);
         for(int i = 0; i < enemySpawnList.Count; i++){
             ObjectPool enemy = ObjectPool.CreateInstance(
                 enemySpawnList[i],
@@ -64,7 +79,10 @@ public class EnemySpawner : MonoBehaviour
 
         while(spawnedEnemies < maxSpawnedEnemies && iter < maxIter){
             
-            
+             if(bossSpawned){
+                break;
+            }
+
             if(enemySpawnMethod == SpawnMethod.Random){
                 spawnIndex = GetRandomEnemyIndex();
             }
@@ -119,6 +137,8 @@ public class EnemySpawner : MonoBehaviour
         NavMeshHit hit;
         
         if(NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, 1)){
+            enemiesSpawned++;
+            showEnemiesSpawned.text = enemiesSpawned.ToString();
             enemy.StartupEnemy(target, hit);
             return true;
         }
@@ -139,19 +159,24 @@ public class EnemySpawner : MonoBehaviour
     public void OnEnemyDieEvent(EnemyType enemyType){
         enemiesDefeated++;
 
+        if(enemyType != EnemyType.Boss && enemiesDefeated <= enemiesToDefeat){
+            showEnemiesDefeated.text = enemiesDefeated + "/" + enemiesToDefeat;
+        }
+
         if(enemiesDefeated >= enemiesToDefeat && !bossSpawned){
             bossSpawned = true;
             SpawnBoss();
         }
 
         if(enemyType == EnemyType.Boss){
-            
             KilledBoss();
         }
     }
 
     private void KilledBoss(){
 
+        showBossDefeated.text = "Boss Defeated";
+        showBossDefeated.color = Color.green;
         Debug.Log("Boss killed");
         onPause?.Invoke();
         
@@ -159,6 +184,9 @@ public class EnemySpawner : MonoBehaviour
     }
     private void SpawnBoss()
     {
+
+        showBossDefeated.text = "Boss Spawned";
+        showBossDefeated.color = Color.red;
         PoolableObject poolableObject = Boss_pool.GetObject();
 
         if(poolableObject == null){

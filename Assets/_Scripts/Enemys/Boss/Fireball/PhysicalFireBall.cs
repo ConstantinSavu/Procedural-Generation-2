@@ -83,9 +83,9 @@ public class PhysicalFireBall : MonoBehaviour
             target.position
         );
 
-        Vector3 localArrowSpeed = Vector3.Scale(difference, globalFireBallSpeed);
+        Vector3 localFireBall = Vector3.Scale(difference, globalFireBallSpeed);
 
-        Vector3 resultantSpeed = Vector3Clamp(localArrowSpeed, Vector3.zero, maxFireBallSpeed);
+        Vector3 resultantSpeed = Vector3Clamp(localFireBall, Vector3.zero, maxFireBallSpeed);
        
         Vector3 resultatSpeed = resultantSpeed.x * transform.right +   
                                 resultantSpeed.y * transform.up +      

@@ -49,18 +49,39 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    void OnGUI()
+    {
+        if(!world.IsWorldCreated){
+            return;
+        }
+
+        if(PlayerManager.playerDied){
+            return;
+        }
+
+        if(gameIsPaused){
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;    
+        }
+        else{
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;    
+        }
+    }
+
     public void Resume(){
-        
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        
         Time.timeScale = 1f;
         gameIsPaused = false;
         gamePauseCanvas.SetActive(false);
     }
 
     public void Pause(){
-        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         Time.timeScale = 0f;
         gameIsPaused = true;
         gamePauseCanvas.SetActive(true);

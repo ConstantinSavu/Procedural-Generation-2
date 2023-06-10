@@ -418,6 +418,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnChunkUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &327497405
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,6 +1116,126 @@ PrefabInstance:
       propertyPath: gamePauseCanvas
       value: 
       objectReference: {fileID: 995218565}
+    - target: {fileID: 1969370196862783560, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969370196862783560, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969370196862783560, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969370196862783560, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969370196862783560, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969370196862783560, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378325918440655880, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378325918440655880, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378325918440655880, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378325918440655880, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378325918440655880, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378325918440655880, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449268931532932749, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449268931532932749, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449268931532932749, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449268931532932749, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449268931532932749, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449268931532932749, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726973201594451024, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726973201594451024, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726973201594451024, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726973201594451024, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726973201594451024, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726973201594451024, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5362224788333928072, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: world
@@ -1153,11 +1276,76 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: maxSpawnedEnemies
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366905589994457982, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366905589994457982, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366905589994457982, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366905589994457982, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366905589994457982, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366905589994457982, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7745811926837255906, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: onDieCanvas
       value: 
       objectReference: {fileID: 1957826955}
+    - target: {fileID: 8455207870593398078, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455207870593398078, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455207870593398078, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455207870593398078, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455207870593398078, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455207870593398078, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9043984983959146600, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: m_RootOrder
@@ -1641,8 +1829,8 @@ Camera:
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 50
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2095,11 +2283,11 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 50
     NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
     FocusDistance: 10

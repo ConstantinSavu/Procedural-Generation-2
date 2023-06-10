@@ -4943,7 +4943,7 @@ MonoBehaviour:
   minRandomAngle: -5
   maxRandomAngle: 5
   globalFireBallSpeed: {x: 0, y: 20, z: 20}
-  maxFireBallSpeed: {x: 0, y: 5, z: 20}
+  maxFireBallSpeed: {x: 0, y: 20, z: 20}
   waterMask:
     serializedVersion: 2
     m_Bits: 0

@@ -232,6 +232,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1527375850046633457, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 2197731848391357516, guid: 6460c515644c2624c9d4b7868f9b7443,
         type: 3}
       propertyPath: m_Name
@@ -262,6 +267,46 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5831500569502708426, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831500569502708426, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831500569502708426, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8507588083243331233}
+    - target: {fileID: 5831500569502708426, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1511299087385479907}
+    - target: {fileID: 5831500569502708426, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831500569502708426, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReloadLevel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6605146452599423757, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -54.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953740377572129188, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8714667261862117669, guid: 6460c515644c2624c9d4b7868f9b7443,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -275,7 +320,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 87219331219071615, guid: 6460c515644c2624c9d4b7868f9b7443,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8507588083243331233}
   m_SourcePrefab: {fileID: 100100000, guid: 6460c515644c2624c9d4b7868f9b7443, type: 3}
 --- !u!224 &14619970463700282 stripped
 RectTransform:
@@ -283,6 +332,24 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 278346045814441089}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &209768968825317118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 87219331219071615, guid: 6460c515644c2624c9d4b7868f9b7443,
+    type: 3}
+  m_PrefabInstance: {fileID: 278346045814441089}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8507588083243331233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209768968825317118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aedf82000df1b05429eb641593b31255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2135562991360962765 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2197731848391357516, guid: 6460c515644c2624c9d4b7868f9b7443,
