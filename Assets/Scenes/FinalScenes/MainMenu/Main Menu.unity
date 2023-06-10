@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1643371226}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -291,6 +291,7 @@ MonoBehaviour:
     sceneImage: {fileID: 21300000, guid: b20fd897729fba94589ffd363b3c39cb, type: 3}
   timeBetweenSpriteChange: 5
   spriteIndex: 0
+  startSlideShowOnEnable: 1
 --- !u!1 &757816714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1314672066578857768, guid: 152eb6194e2add24db880e430a3d5a83,
@@ -899,6 +900,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2465714597776290258, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465714597776290258, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465714597776290258, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2743512857745257405, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1254,6 +1270,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSizeBase
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6808670016512347338, guid: 152eb6194e2add24db880e430a3d5a83,
+        type: 3}
+      propertyPath: m_IgnoreReversedGraphics
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6873031707394253450, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}

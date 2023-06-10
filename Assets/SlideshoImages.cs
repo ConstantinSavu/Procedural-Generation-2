@@ -21,7 +21,7 @@ public class SlideshoImages : MonoBehaviour
 {
     public Image panel;
     [SerializeField] public List<SceneImage> sceneImageList;
-    private Dictionary<SceneType, Sprite> sceneImageDictionary = new Dictionary<SceneType, Sprite>();
+    private Dictionary<SceneType, Sprite> sceneImageDictionary;
     public float timeBetweenSpriteChange = 5f;
 
     public int spriteIndex = 0;
@@ -35,6 +35,11 @@ public class SlideshoImages : MonoBehaviour
         }
 
         panel.sprite = sceneImageList[spriteIndex].sceneImage;
+
+        sceneImageDictionary = new Dictionary<SceneType, Sprite>();
+        foreach(var item in sceneImageList){
+            sceneImageDictionary.Add(item.sceneType, item.sceneImage);
+        }
 
     }
 
