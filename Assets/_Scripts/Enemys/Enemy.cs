@@ -50,15 +50,17 @@ public class Enemy : PoolableObject
         enemyTakeDamage.Setup(animator);
     }
 
-    public void StartupEnemy(Transform target, NavMeshHit hit){
+    public void StartupEnemy(Transform target, NavMeshHit hit, NavMeshTriangulation triangulation){
         
         this.target = target;
 
-        navMeshEnemyMovement.Setup(target, animator, hit);
+        navMeshEnemyMovement.Setup(target, animator, hit, triangulation);
         enemyAttack.Setup(target, animator);
 
         enemyTakeDamage.Setup(animator);
     }
+
+    
 
     public void EnemyDeath(){
         animator.SetLayerWeight(1, 0f);

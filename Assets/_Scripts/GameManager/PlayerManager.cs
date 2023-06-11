@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {   
@@ -24,7 +25,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] public bool showPlayerDied;
 
     private UnityAction onPlayerDieAction;
-
+    
+    [SerializeField] Toggle toggle;
 
     void Awake()
     {
@@ -36,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     public void SetupPlayerManager(World world, CinemachineVirtualCamera camera_VM){
         this.world = world;
         this.camera_VM = camera_VM;
+        loadAdditionalChunks = toggle.isOn;
         SpawnPlayer();
     }
 

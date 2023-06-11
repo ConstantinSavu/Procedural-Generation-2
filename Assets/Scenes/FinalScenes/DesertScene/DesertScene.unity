@@ -380,6 +380,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21b6d04cc07f52c4087ae34fde1475e8, type: 3}
+--- !u!114 &189781708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6660653957127953115, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 189781707}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &217402477
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +674,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Seed: 
+  stringSeed: 
+  intSeed: 0
   inputField: {fileID: 1003271613}
   OnChunkUpdate:
     m_PersistentCalls:
@@ -1276,7 +1289,7 @@ PrefabInstance:
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: spawnDelay
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
@@ -1383,6 +1396,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -45
       objectReference: {fileID: 0}
+    - target: {fileID: 7745811926837255906, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 189781708}
     - target: {fileID: 7745811926837255906, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: onDieCanvas
@@ -2096,7 +2114,7 @@ MonoBehaviour:
   biomeNoiseSettings: {fileID: 11400000, guid: d1611f4a389db6c40a72d6fef0716f7e, type: 2}
   domainWarping: {fileID: 1481222501}
   useDomainWarping: 0
-  firstLayer: {fileID: 1921592050}
+  firstLayer: {fileID: 1573538488}
   additionalLayerHandlres:
   - {fileID: 548013548}
   structureGenerators:

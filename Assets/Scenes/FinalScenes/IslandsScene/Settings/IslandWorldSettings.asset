@@ -17,9 +17,9 @@ MonoBehaviour:
   voxelSize: {x: 1, y: 1, z: 1}
   inverseVoxelSize: {x: 1, y: 1, z: 1}
   chunkDrawingRange: {x: 10, y: 0, z: 10}
-  mapSeedOffset: {x: 1000, y: 2555, z: 30000}
+  mapSeedOffset: {x: 4193, y: -9694, z: 4004}
   waterThreshold: 25
   voxelMinMapDimensions: {x: 0, y: 0, z: 0}
-  voxelMaxMapDimensions: {x: 0, y: 40, z: 0}
+  voxelMaxMapDimensions: {x: 0, y: 38, z: 0}
   minMapDimensions: {x: 0, y: 0, z: 0}
-  maxMapDimensions: {x: 0, y: 40, z: 0}
+  maxMapDimensions: {x: 0, y: 38, z: 0}

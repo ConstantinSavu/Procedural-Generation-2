@@ -14,7 +14,7 @@ public class NavMeshEnemyMovement : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private Coroutine followCoroutine;
-
+    NavMeshTriangulation triangulation;
     public float TimeToLive = 100;
 
     [SerializeField] bool setDestination;
@@ -30,17 +30,18 @@ public class NavMeshEnemyMovement : MonoBehaviour
         this.target = target;
         this.animator = animator;
         agent.enabled = true;
-        this.StartFollowing();
+
+        this.StartFollowing(triangulation);
 
     }
 
-    public void Setup(Transform target, Animator animator, NavMeshHit hit){
+    public void Setup(Transform target, Animator animator, NavMeshHit hit, NavMeshTriangulation triangulation){
 
         this.target = target;
         this.animator = animator;
         agent.Warp(hit.position);
         agent.enabled = true;
-        this.StartFollowing();
+        this.StartFollowing(triangulation);
 
     }
 
@@ -60,9 +61,9 @@ public class NavMeshEnemyMovement : MonoBehaviour
         }
     }
 
-    public void StartFollowing(){
+    public void StartFollowing(NavMeshTriangulation triangulation){
         if(followCoroutine == null){
-            followCoroutine = StartCoroutine(FollowTarget());
+            followCoroutine = StartCoroutine(FollowTarget(triangulation));
             return;
         }
 
@@ -78,7 +79,7 @@ public class NavMeshEnemyMovement : MonoBehaviour
         agent.isStopped = false;
     }
 
-    private IEnumerator FollowTarget()
+    private IEnumerator FollowTarget(NavMeshTriangulation triangulation)
     {
         yield return new WaitForSeconds(updateTargetSpeed);
         
@@ -106,7 +107,7 @@ public class NavMeshEnemyMovement : MonoBehaviour
                 agent.SetDestination(target.position);
 
                 if(!agent.hasPath){
-                
+                    
                 }
                 
             }
@@ -117,7 +118,7 @@ public class NavMeshEnemyMovement : MonoBehaviour
 
         }
 
-        followCoroutine = StartCoroutine(FollowTarget());
+        followCoroutine = StartCoroutine(FollowTarget(triangulation));
         
         
     }

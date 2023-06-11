@@ -54,17 +54,27 @@ public class World : MonoBehaviour
         return data;
     }
 
-    [SerializeField] private string Seed;
+    [SerializeField] private string stringSeed;
+
+    [SerializeField] private int intSeed;
     [SerializeField] TMP_InputField inputField;
     public void GetSeed(){
-        Seed = inputField.text;
+        stringSeed = inputField.text;
     }
 
     public void SetSeed(){
+        
+        if(stringSeed == ""){
+            
+            System.Random intRandomSeedGenerator = new System.Random();
+            intSeed = intRandomSeedGenerator.Next();
+        }
+        else{
+            intSeed = stringSeed.GetHashCode();
+        }
+        
 
-        int seed = Seed.GetHashCode();
-
-        System.Random seedGenerator = new System.Random(seed);
+        System.Random seedGenerator = new System.Random(intSeed);
 
         int xOffset = seedGenerator.Next(-10000, 10000);
         int yOffset = seedGenerator.Next(-10000, 10000);

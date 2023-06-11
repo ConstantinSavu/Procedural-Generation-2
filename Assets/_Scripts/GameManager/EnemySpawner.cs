@@ -115,7 +115,8 @@ public class EnemySpawner : MonoBehaviour
         return spawnedEnemiesIndex % enemySpawnList.Count;
     }
 
-    
+    public int maxSpawnAttempts = 10000;
+    public float maxSpawnDistance = 60f;
     private bool DoSpawnEnemy(int index, Transform target){
 
         PoolableObject poolableObject = enemyObjectPools[index].GetObject();
@@ -132,14 +133,36 @@ public class EnemySpawner : MonoBehaviour
             return false;
         }
 
-        int vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
-
+        int iter = 0;
+        int vertexIndex;
         NavMeshHit hit;
-        
-        if(NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, 1)){
+        bool res;
+
+        while(iter < maxSpawnAttempts){
+
+            vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
+
+            
+            res = NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, 1);
+
+            if(res && Vector3.Distance(hit.position, target.position) <= maxSpawnDistance){
+                enemiesSpawned++;
+                showEnemiesSpawned.text = enemiesSpawned.ToString();
+                enemy.StartupEnemy(target, hit, triangulation);
+                return true;
+            }
+
+            iter++;
+        }
+
+        vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
+
+        res = NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, 1);
+
+        if(res){
             enemiesSpawned++;
             showEnemiesSpawned.text = enemiesSpawned.ToString();
-            enemy.StartupEnemy(target, hit);
+            enemy.StartupEnemy(target, hit, triangulation);
             return true;
         }
 
@@ -208,7 +231,7 @@ public class EnemySpawner : MonoBehaviour
                 distance = Mathf.Abs(distance);
 
                 if(distance < maxSpawnDistanceFromTarget){
-                    enemy.StartupEnemy(target, hit);
+                    enemy.StartupEnemy(target, hit, triangulation);
                     bossFound = true;
                     break;
                 }

@@ -1108,8 +1108,11 @@ PrefabInstance:
         four different biomes, each proceduraly generated. Your goal is to explore
         the levels and to defeat a number of enemies and a boss. After defeating
         the boss you can keep exploring the level and killing whatever enemies are
-        left.\n\nYou can choose the order in which you play the levels.\n\nTo move
-        you can use the WASD keys, or the arrow keys.\nSpace is used for jump.\nLeft
+        left or go to the next level of your choice.\n\nYou can choose the order
+        in which you play the levels. For each level you can input a seed that controls
+        how your world will generate. Leave the input blank for a random seed. I
+        would apreciate it if you could explore each level with the same seed twice.\n\nTo
+        move you can use the WASD keys, or the arrow keys.\nSpace is used for jump.\nLeft
         Shift is used for sprint.\nRightClick attacks\nLeftClick will shoot a light
         sphere that sticks to walls.\n\nAfter you finish playing the game, I would
         really appreciate it if you could fill out the Google form I sent you. It
@@ -1129,7 +1132,7 @@ PrefabInstance:
     - target: {fileID: 4829230523900648289, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.7892087
+      value: 0.82436866
       objectReference: {fileID: 0}
     - target: {fileID: 4833605874739928588, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
@@ -1269,7 +1272,7 @@ PrefabInstance:
     - target: {fileID: 5683914009352223217, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 543.99365
+      value: 681.98376
       objectReference: {fileID: 0}
     - target: {fileID: 5683914009352223217, guid: 152eb6194e2add24db880e430a3d5a83,
         type: 3}

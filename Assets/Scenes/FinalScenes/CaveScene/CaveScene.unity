@@ -418,7 +418,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Seed: 
+  stringSeed: 
+  intSeed: 0
   inputField: {fileID: 1618631465}
   OnChunkUpdate:
     m_PersistentCalls:
@@ -740,6 +741,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21b6d04cc07f52c4087ae34fde1475e8, type: 3}
+--- !u!114 &628899515 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6660653957127953115, guid: 21b6d04cc07f52c4087ae34fde1475e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 628899514}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &676853878 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 175405513236544034, guid: 0acc0e4c107e3454691250501b05bab0,
@@ -1281,7 +1294,7 @@ PrefabInstance:
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: spawnDelay
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6161709210701028262, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
@@ -1318,6 +1331,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7745811926837255906, guid: 0acc0e4c107e3454691250501b05bab0,
+        type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 628899515}
     - target: {fileID: 7745811926837255906, guid: 0acc0e4c107e3454691250501b05bab0,
         type: 3}
       propertyPath: onDieCanvas
