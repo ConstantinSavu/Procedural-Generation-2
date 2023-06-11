@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class World : MonoBehaviour
@@ -53,6 +54,32 @@ public class World : MonoBehaviour
         return data;
     }
 
+    [SerializeField] private string Seed;
+    [SerializeField] TMP_InputField inputField;
+    public void GetSeed(){
+        Seed = inputField.text;
+    }
+
+    public void SetSeed(){
+
+        int seed = Seed.GetHashCode();
+
+        System.Random seedGenerator = new System.Random(seed);
+
+        int xOffset = seedGenerator.Next(-10000, 10000);
+        int yOffset = seedGenerator.Next(-10000, 10000);
+        int zOffset = seedGenerator.Next(-10000, 10000);
+
+        worldSettings.mapSeedOffset.x = xOffset;
+        worldSettings.mapSeedOffset.y = yOffset;
+        worldSettings.mapSeedOffset.z = zOffset;
+
+        worldData.worldSettings.mapSeedOffset.x = xOffset;
+        worldData.worldSettings.mapSeedOffset.y = yOffset;
+        worldData.worldSettings.mapSeedOffset.z = zOffset;
+
+    }
+
     private void Awake(){
         worldData = new WorldData{
             worldSettings = this.worldSettings,
@@ -70,6 +97,8 @@ public class World : MonoBehaviour
     public async void GenerateWorld(){
 
         IsWorldCreated = false;
+        GetSeed();
+        SetSeed();
         await GenerateWorld(worldSettings.startingPosition);
         
     }
