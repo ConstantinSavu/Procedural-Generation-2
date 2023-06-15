@@ -211,6 +211,8 @@ MonoBehaviour:
   showEnemiesSpawned: {fileID: 3321330893939394527}
   showEnemiesDefeated: {fileID: 1707676428137553159}
   showBossDefeated: {fileID: 8621080372921026211}
+  maxSpawnAttempts: 10000
+  maxSpawnDistance: 60
 --- !u!1 &2980395646785351529
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,6 +733,7 @@ MonoBehaviour:
   player: {fileID: 0}
   loadAdditionalChunks: 0
   showPlayerDied: 0
+  toggle: {fileID: 0}
   onDieCanvas: {fileID: 0}
 --- !u!1 &6178355213151955304
 GameObject:
@@ -1409,7 +1412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemies Spanwned:'
+  m_text: 'Enemies Spawned:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
