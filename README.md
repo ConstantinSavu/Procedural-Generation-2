@@ -1,6 +1,6 @@
 # 3D Adventure game with procedural generation
 
-!Game Screenshot
+![Game Screenshot](Documentatie/Screenshot 2023-06-10 223401.png)
 
 This project represents my Diploma Project.
 
