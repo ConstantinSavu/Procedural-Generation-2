@@ -62,3 +62,10 @@ In this project, we explore the fascinating world of **procedural generation** i
 ## Conclusion
 
 This project aims to contribute to both academic and practical knowledge of procedural generation in video game design. We hope to inspire fellow developers and demonstrate the immense potential—and occasional limitations—of this powerful technique.
+
+## Game Scenes
+
+![Plains Scene](Documentatie/Screenshot%202023-06-10%20195222.png)
+![Desert Scene](/Documentatie/Screenshot%202023-06-10%20195354.png)
+![Islands Scene](Documentatie/Screenshot%202023-06-10%20223401.png)
+![Cave Scene](Documentatie/Screenshot%202023-06-10%20224656.png)
