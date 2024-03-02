@@ -65,7 +65,11 @@ This project aims to contribute to both academic and practical knowledge of proc
 
 ## Game Scenes
 
+### Plains Scene
 ![Plains Scene](Documentatie/Screenshot%202023-06-10%20195222.png)
+### Desert Scene
 ![Desert Scene](/Documentatie/Screenshot%202023-06-10%20195354.png)
+### Islands Scene
 ![Islands Scene](Documentatie/Screenshot%202023-06-10%20223401.png)
+### Cave Scene
 ![Cave Scene](Documentatie/Screenshot%202023-06-10%20224656.png)
