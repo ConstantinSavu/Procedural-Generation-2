@@ -2,7 +2,7 @@
 
 ![Game Screenshot](Documentatie/Screenshot%202023-06-10%20223401.png)
 
-This project represents my Diploma Project.
+This project represents my Diploma Project. For more details check the Documentation Folder.
 
 In this project, we explore the fascinating world of **procedural generation** in 3D adventure games. Our game showcases the capabilities and challenges of procedural content generation in video game design.
 
